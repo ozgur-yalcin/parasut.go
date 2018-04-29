@@ -1,5 +1,5 @@
 # parasut
-An easy-to-use parasut.com API (Paraşüt v4) with golang
+An easy-to-use parasut.com API (v4) with golang
 
 
 # Bağlantı ve kimlik doğrulama bilgileri (/config/config.go)
