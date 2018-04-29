@@ -160,6 +160,19 @@ type Request struct {
 			} `json:"contact_people,omitempty"`
 		} `json:"relationships,omitempty"`
 	}
+	Employees struct {
+		Data struct {
+			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
+			Attr struct {
+				Name     string `json:"name,omitempty"`
+				TCKN     string `json:"tckn,omitempty"`
+				Email    string `json:"email,omitempty"`
+				IBAN     string `json:"iban,omitempty"`
+				Archived bool   `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
 }
 
 type Response struct {
@@ -338,6 +351,7 @@ type Response struct {
 				CreatedAt  string      `json:"created_at,omitempty"`
 				UpdatedAt  string      `json:"updated_at,omitempty"`
 				Name       string      `json:"name,omitempty"`
+				TCKN       string      `json:"tckn,omitempty"`
 				Email      string      `json:"email,omitempty"`
 				IBAN       string      `json:"iban,omitempty"`
 				Archived   bool        `json:"archived,omitempty"`
@@ -810,5 +824,36 @@ func (api *API) CreateContact(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.Contacts)
+	return response
+}
+
+func (api *API) CreateEmployee(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/employees"
+	employeedata, _ := json.Marshal(request.Employees)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Employees)
 	return response
 }

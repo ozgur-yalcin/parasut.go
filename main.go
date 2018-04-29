@@ -80,10 +80,23 @@ func main() {
 		request.Contacts.Data.Attr.Address = ""             // Adres
 		request.Contacts.Data.Attr.Phone = ""               // Telefon
 		request.Contacts.Data.Attr.Fax = ""                 // Faks
-		request.Contacts.Data.Attr.Email = ""               // Email
+		request.Contacts.Data.Attr.Email = ""               // E-posta adresi
 		request.Contacts.Data.Attr.IBAN = ""                // IBAN numarası
 		invoice := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(invoice.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+
+	// Çalışan kaydı oluşturmak için
+	if auth {
+		request := parasut.Request{}
+		request.Employees.Data.Type = "employees"
+		request.Employees.Data.Attr.Name = ""  // İsim
+		request.Employees.Data.Attr.Email = "" // E-posta adresi
+		request.Employees.Data.Attr.TCKN = ""  // TC Kimlik Numarası
+		request.Employees.Data.Attr.IBAN = ""  // IBAN numarası
+		invoice := api.CreateEmployee(request)
+		pretty, _ := json.MarshalIndent(invoice.Employees, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
