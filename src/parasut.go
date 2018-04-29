@@ -145,7 +145,7 @@ type Request struct {
 				Archived    bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
-		RelationShips struct {
+		Relationships struct {
 			Category struct {
 				Data struct {
 					Type string `json:"type,omitempty"`
@@ -226,7 +226,7 @@ type Response struct {
 				IsAbroad               bool        `json:"is_abroad,omitempty"`
 				Archived               bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
-			RelationShips struct {
+			Relationships struct {
 				ActiveEDocument struct {
 					Data struct {
 						Type string `json:"type,omitempty"`
@@ -313,7 +313,7 @@ type Response struct {
 				Archived    bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
-		RelationShips struct {
+		Relationships struct {
 			Category struct {
 				Data struct {
 					Type string `json:"type,omitempty"`

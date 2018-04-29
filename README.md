@@ -122,8 +122,8 @@ func main() {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
 		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
+		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
 			request := parasut.Request{}
 			request.EArchives.Data.ID = docid
@@ -159,8 +159,8 @@ func main() {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
 		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
+		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
 			request := parasut.Request{}
 			request.EArchivePDF.Data.ID = docid
