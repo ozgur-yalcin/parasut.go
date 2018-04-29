@@ -7,26 +7,31 @@ import (
 )
 
 func main() {
-	request := parasut.Request{}
-	auth := request.Authorize()
+	api := parasut.API{}
+	auth := api.Authorize()
 	if auth {
-		invoiceid := "" // Satış Faturası ID
-		invoice := request.ShowSalesInvoice(invoiceid)
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
+		invoice := api.ShowSalesInvoice(request)
 		docid := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
 		doctype := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
 		if doctype == "e_archives" {
-			earchive := request.ShowEArchive(docid)
+			request := parasut.Request{}
+			request.EArchives.Data.ID = docid
+			earchive := api.ShowEArchive(request)
 			pretty, _ := json.MarshalIndent(earchive.EArchives, " ", "\t")
 			fmt.Println(string(pretty))
-			pdf := request.ShowEArchivePDF(docid)
+			pdf := api.ShowEArchivePDF(docid)
 			pdfurl := pdf.EArchivePDF.Data.Attr.URL
 			fmt.Println(pdfurl)
 		}
 		if doctype == "e_invoices" {
-			einvoice := request.ShowEInvoice(docid)
+			request := parasut.Request{}
+			request.EInvoices.Data.ID = docid
+			einvoice := api.ShowEInvoice(request)
 			pretty, _ := json.MarshalIndent(einvoice.EInvoices, " ", "\t")
 			fmt.Println(string(pretty))
-			pdf := request.ShowEInvoicePDF(docid)
+			pdf := api.ShowEInvoicePDF(docid)
 			pdfurl := pdf.EInvoicePDF.Data.Attr.URL
 			fmt.Println(pdfurl)
 		}

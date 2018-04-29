@@ -1,6 +1,7 @@
 package parasut
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 	"github.com/pasztorpisti/qs"
 )
 
-type Request struct {
+type API struct {
 	Client struct {
 		ClientID     string `json:"client_id,omitempty"`
 		ClientSecret string `json:"client_secret,omitempty"`
@@ -29,6 +30,112 @@ type Request struct {
 	}
 }
 
+type Request struct {
+	SalesInvoices struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+			Attr struct {
+				InvoiceSeries       string      `json:"invoice_series,omitempty"`
+				InvoiceID           json.Number `json:"invoice_id,omitempty"`
+				ExchangeRate        json.Number `json:"exchange_rate,omitempty"`
+				WithholdingRate     json.Number `json:"withholding_rate,omitempty"`
+				VatWithholdingRate  json.Number `json:"vat_withholding_rate,omitempty"`
+				TotalDiscount       json.Number `json:"total_discount,omitempty"`
+				InvoiceDiscount     json.Number `json:"invoice_discount,omitempty"`
+				InvoiceDiscountType string      `json:"invoice_discount_type,omitempty"`
+				Currency            string      `json:"currency,omitempty"`
+				ItemType            string      `json:"item_type,omitempty"`
+				Description         string      `json:"description,omitempty"`
+				IssueDate           string      `json:"issue_date,omitempty"`
+				DueDate             string      `json:"due_date,omitempty"`
+				BillingAddress      string      `json:"billing_address,omitempty"`
+				BillingPhone        string      `json:"billing_phone,omitempty"`
+				BillingFax          string      `json:"billing_fax,omitempty"`
+				TaxOffice           string      `json:"tax_office,omitempty"`
+				TaxNumber           string      `json:"tax_number,omitempty"`
+				City                string      `json:"city,omitempty"`
+				District            string      `json:"district,omitempty"`
+				OrderNo             string      `json:"order_no,omitempty"`
+				OrderDate           string      `json:"order_date,omitempty"`
+				ShipmentAddress     string      `json:"shipment_addres,omitempty"`
+				IsAbroad            bool        `json:"is_abroad,omitempty"`
+				Archived            bool        `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+	EArchives struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+			Attr struct {
+				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
+				VatExemptionReasonCode string `json:"vat_exemption_reason_code,omitempty"`
+				VatExemptionReason     string `json:"vat_exemption_reason,omitempty"`
+				Note                   string `json:"note,omitempty"`
+				ExciseDutyCodes        struct {
+					Product             string `json:"product,omitempty"`
+					SalesExciseDutyCode string `json:"sales_excise_duty_code,omitempty"`
+				} `json:"excise_duty_codes,omitempty"`
+				InternetSale struct {
+					URL             string `json:"url,omitempty"`
+					PaymentType     string `json:"payment_type,omitempty"`
+					PaymentPlatform string `json:"payment_platform,omitempty"`
+					PaymentDate     string `json:"payment_date,omitempty"`
+				} `json:"internet_sale,omitempty"`
+				Shipment struct {
+					Title string `json:"title,omitempty"`
+					Name  string `json:"name,omitempty"`
+					VKN   string `json:"vkn,omitempty"`
+					TCKN  string `json:"tckn,omitempty"`
+					Date  string `json:"date,omitempty"`
+				} `json:"shipment,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+	EInvoices struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+			Attr struct {
+				To                     string `json:"to,omitempty"`
+				Scenario               string `json:"scenario,omitempty"`
+				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
+				VatExemptionReasonCode string `json:"vat_exemption_reason_code,omitempty"`
+				VatExemptionReason     string `json:"vat_exemption_reason,omitempty"`
+				Note                   string `json:"note,omitempty"`
+				ExciseDutyCodes        struct {
+					Product             string `json:"product,omitempty"`
+					SalesExciseDutyCode string `json:"sales_excise_duty_code,omitempty"`
+				} `json:"excise_duty_codes,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+	Contacts struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+			Attr struct {
+				Name        string `json:"name,omitempty"`
+				ShortName   string `json:"short_name,omitempty"`
+				Email       string `json:"email,omitempty"`
+				AccountType string `json:"account_type,omitempty"`
+				ContactType string `json:"contact_type,omitempty"`
+				IBAN        string `json:"iban,omitempty"`
+				TaxOffice   string `json:"tax_office,omitempty"`
+				TaxNumber   string `json:"tax_number,omitempty"`
+				City        string `json:"city,omitempty"`
+				District    string `json:"district,omitempty"`
+				Address     string `json:"address,omitempty"`
+				Phone       string `json:"phone,omitempty"`
+				Fax         string `json:"fax,omitempty"`
+				IsAbroad    bool   `json:"is_abroad,omitempty"`
+				Archived    bool   `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+}
+
 type Response struct {
 	SalesInvoices struct {
 		Errors []struct {
@@ -39,24 +146,26 @@ type Response struct {
 			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
 			Attr struct {
+				InvoiceSeries          string      `json:"invoice_series,omitempty"`
 				InvoiceNo              string      `json:"invoice_no,omitempty"`
 				InvoiceID              json.Number `json:"invoice_id,omitempty"`
 				ExchangeRate           json.Number `json:"exchange_rate,omitempty"`
 				WithholdingRate        json.Number `json:"withholding_rate,omitempty"`
 				VatWithholdingRate     json.Number `json:"vat_withholding_rate,omitempty"`
-				InvoiceDiscount        json.Number `json:"invoice_discount,omitempty"`
 				NetTotal               json.Number `json:"net_total,omitempty"`
 				GrossTotal             json.Number `json:"gross_total,omitempty"`
 				Withholding            json.Number `json:"withholding,omitempty"`
 				TotalExciseDuty        json.Number `json:"total_excise_duty,omitempty"`
 				TotalCommunicationsTax json.Number `json:"total_communications_tax,omitempty"`
 				TotalVat               json.Number `json:"total_vat,omitempty"`
-				TotalDiscount          json.Number `json:"total_discount,omitempty"`
-				TotalInvoiceDiscount   json.Number `json:"total_invoice_discount,omitempty"`
 				VatWithholding         json.Number `json:"vat_withholding,omitempty"`
 				BeforeTaxesTotal       json.Number `json:"before_taxes_total,omitempty"`
 				Remaining              json.Number `json:"remaining,omitempty"`
 				RemainingInTrl         json.Number `json:"remaining_in_trl,omitempty"`
+				TotalDiscount          json.Number `json:"total_discount,omitempty"`
+				TotalInvoiceDiscount   json.Number `json:"total_invoice_discount,omitempty"`
+				InvoiceDiscount        json.Number `json:"invoice_discount,omitempty"`
+				InvoiceDiscountType    string      `json:"invoice_discount_type,omitempty"`
 				Currency               string      `json:"currency,omitempty"`
 				PaymentStatus          string      `json:"payment_status,omitempty"`
 				ItemType               string      `json:"item_type,omitempty"`
@@ -65,8 +174,6 @@ type Response struct {
 				UpdatedAt              string      `json:"updated_at,omitempty"`
 				IssueDate              string      `json:"issue_date,omitempty"`
 				DueDate                string      `json:"due_date,omitempty"`
-				InvoiceSeries          string      `json:"invoice_series,omitempty"`
-				InvoiceDiscountType    string      `json:"invoice_discount_type,omitempty"`
 				BillingAddress         string      `json:"billing_address,omitempty"`
 				BillingPhone           string      `json:"billing_phone,omitempty"`
 				BillingFax             string      `json:"billing_fax,omitempty"`
@@ -376,37 +483,17 @@ type Response struct {
 			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
 			Attr struct {
-				CreatedAt              string `json:"created_at,omitempty"`
-				UpdatedAt              string `json:"updated_at,omitempty"`
-				PrintedAt              string `json:"printed_at,omitempty"`
-				CancellableUntil       string `json:"cancellable_until,omitempty"`
-				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
-				VatExemptionReasonCode string `json:"vat_exemption_reason_code,omitempty"`
-				VatExemptionReason     string `json:"vat_exemption_reason,omitempty"`
-				UUID                   string `json:"uuid,omitempty"`
-				VKN                    string `json:"vkn,omitempty"`
-				InvoiceNumber          string `json:"invoice_number,omitempty"`
-				Note                   string `json:"note,omitempty"`
-				Status                 string `json:"status,omitempty"`
-				ExciseDutyCodes        struct {
-					Product             string `json:"product,omitempty"`
-					SalesExciseDutyCode string `json:"sales_excise_duty_code,omitempty"`
-				} `json:"excise_duty_codes,omitempty"`
-				InternetSale struct {
-					URL             string `json:"url,omitempty"`
-					PaymentType     string `json:"payment_type,omitempty"`
-					PaymentPlatform string `json:"payment_platform,omitempty"`
-					PaymentDate     string `json:"payment_date,omitempty"`
-				} `json:"internet_sale,omitempty"`
-				Shipment struct {
-					Title string `json:"title,omitempty"`
-					Name  string `json:"name,omitempty"`
-					VKN   string `json:"vkn,omitempty"`
-					TCKN  string `json:"tckn,omitempty"`
-					Date  string `json:"date,omitempty"`
-				} `json:"shipment,omitempty"`
-				IsPrinted bool `json:"is_printed,omitempty"`
-				IsSigned  bool `json:"is_signed,omitempty"`
+				CreatedAt        string `json:"created_at,omitempty"`
+				UpdatedAt        string `json:"updated_at,omitempty"`
+				PrintedAt        string `json:"printed_at,omitempty"`
+				CancellableUntil string `json:"cancellable_until,omitempty"`
+				UUID             string `json:"uuid,omitempty"`
+				VKN              string `json:"vkn,omitempty"`
+				InvoiceNumber    string `json:"invoice_number,omitempty"`
+				Note             string `json:"note,omitempty"`
+				Status           string `json:"status,omitempty"`
+				IsPrinted        bool   `json:"is_printed,omitempty"`
+				IsSigned         bool   `json:"is_signed,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -419,35 +506,27 @@ type Response struct {
 			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
 			Attr struct {
-				ExternalID             string      `json:"external_id,omitempty"`
-				UUID                   string      `json:"uuid,omitempty"`
-				EnvUUID                string      `json:"env_uuid,omitempty"`
-				FromAddress            string      `json:"from_address,omitempty"`
-				FromVKN                string      `json:"from_vkn,omitempty"`
-				ToAddress              string      `json:"to_address,omitempty"`
-				ToVKN                  string      `json:"to_vkn,omitempty"`
-				To                     string      `json:"to,omitempty"`
-				Direction              string      `json:"direction,omitempty"`
-				Scenario               string      `json:"scenario,omitempty"`
-				ResponseType           string      `json:"response_type,omitempty"`
-				ContactName            string      `json:"contact_name,omitempty"`
-				NetTotal               json.Number `json:"net_total,omitempty"`
-				Currency               string      `json:"currency,omitempty"`
-				ItemType               string      `json:"item_type,omitempty"`
-				VatWithholdingCode     string      `json:"vat_withholding_code,omitempty"`
-				VatExemptionReasonCode string      `json:"vat_exemption_reason_code,omitempty"`
-				VatExemptionReason     string      `json:"vat_exemption_reason,omitempty"`
-				Note                   string      `json:"note,omitempty"`
-				Status                 string      `json:"status,omitempty"`
-				CreatedAt              string      `json:"created_at,omitempty"`
-				UpdatedAt              string      `json:"updated_at,omitempty"`
-				IssueDate              string      `json:"issue_date,omitempty"`
-				ExciseDutyCodes        struct {
-					Product             string `json:"product,omitempty"`
-					SalesExciseDutyCode string `json:"sales_excise_duty_code,omitempty"`
-				} `json:"excise_duty_codes,omitempty"`
-				IsExpired    bool `json:"is_expired,omitempty"`
-				IsAnswerable bool `json:"is_answerable,omitempty"`
+				ExternalID   string      `json:"external_id,omitempty"`
+				UUID         string      `json:"uuid,omitempty"`
+				EnvUUID      string      `json:"env_uuid,omitempty"`
+				FromAddress  string      `json:"from_address,omitempty"`
+				FromVKN      string      `json:"from_vkn,omitempty"`
+				ToAddress    string      `json:"to_address,omitempty"`
+				ToVKN        string      `json:"to_vkn,omitempty"`
+				Direction    string      `json:"direction,omitempty"`
+				Scenario     string      `json:"scenario,omitempty"`
+				ResponseType string      `json:"response_type,omitempty"`
+				ContactName  string      `json:"contact_name,omitempty"`
+				NetTotal     json.Number `json:"net_total,omitempty"`
+				Currency     string      `json:"currency,omitempty"`
+				ItemType     string      `json:"item_type,omitempty"`
+				Note         string      `json:"note,omitempty"`
+				Status       string      `json:"status,omitempty"`
+				CreatedAt    string      `json:"created_at,omitempty"`
+				UpdatedAt    string      `json:"updated_at,omitempty"`
+				IssueDate    string      `json:"issue_date,omitempty"`
+				IsExpired    bool        `json:"is_expired,omitempty"`
+				IsAnswerable bool        `json:"is_answerable,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -481,15 +560,15 @@ type Response struct {
 	}
 }
 
-func (request *Request) Authorize() bool {
+func (api *API) Authorize() bool {
 	var data interface{}
-	request.Client.ClientID = config.ClientID
-	request.Client.ClientSecret = config.ClientSecret
-	request.Client.Username = config.Username
-	request.Client.Password = config.Password
-	request.Client.GrantType = config.GrantType
-	request.Client.RedirectURI = config.RedirectURI
-	apidata, _ := qs.Marshal(request.Client)
+	api.Client.ClientID = config.ClientID
+	api.Client.ClientSecret = config.ClientSecret
+	api.Client.Username = config.Username
+	api.Client.Password = config.Password
+	api.Client.GrantType = config.GrantType
+	api.Client.RedirectURI = config.RedirectURI
+	apidata, _ := qs.Marshal(api.Client)
 	cli := http.Client{}
 	req, err := http.NewRequest("POST", config.TokenURL, strings.NewReader(apidata))
 	if err != nil {
@@ -509,24 +588,24 @@ func (request *Request) Authorize() bool {
 		fmt.Println(err)
 		return false
 	}
-	json.Unmarshal(bytes, &request.Authentication)
+	json.Unmarshal(bytes, &api.Authentication)
 	return true
 }
 
-func (request *Request) ShowSalesInvoice(ID string) (response Response) {
+func (api *API) ShowSalesInvoice(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + ID + "?include=active_e_document"
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=active_e_document"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+request.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer "+request.Authentication.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -543,20 +622,20 @@ func (request *Request) ShowSalesInvoice(ID string) (response Response) {
 	return response
 }
 
-func (request *Request) ShowEArchive(ID string) (response Response) {
+func (api *API) ShowEArchive(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + ID
+	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+request.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer "+request.Authentication.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -573,20 +652,20 @@ func (request *Request) ShowEArchive(ID string) (response Response) {
 	return response
 }
 
-func (request *Request) ShowEInvoice(ID string) (response Response) {
+func (api *API) ShowEInvoice(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + ID
+	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+request.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer "+request.Authentication.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -603,20 +682,20 @@ func (request *Request) ShowEInvoice(ID string) (response Response) {
 	return response
 }
 
-func (request *Request) ShowEArchivePDF(ID string) (response Response) {
+func (api *API) ShowEArchivePDF(ID string) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + ID + "/pdf"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+request.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer "+request.Authentication.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -633,20 +712,20 @@ func (request *Request) ShowEArchivePDF(ID string) (response Response) {
 	return response
 }
 
-func (request *Request) ShowEInvoicePDF(ID string) (response Response) {
+func (api *API) ShowEInvoicePDF(ID string) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + ID + "/pdf"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+request.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Bearer "+request.Authentication.AccessToken)
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -660,5 +739,36 @@ func (request *Request) ShowEInvoicePDF(ID string) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.EInvoicePDF)
+	return response
+}
+
+func (api *API) CreateContact(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/contacts"
+	contactdata, _ := json.Marshal(request.Contacts)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &api.Authentication)
 	return response
 }
