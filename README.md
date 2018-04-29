@@ -20,7 +20,8 @@ const (
 ```
 
 # Satış faturası kaydı oluşturmak için
-```gopackage main
+```go
+package main
 
 import (
 	"encoding/json"
