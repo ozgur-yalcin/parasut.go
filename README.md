@@ -19,7 +19,7 @@ const (
 )
 ```
 
-# Müşteri kaydı oluşturmak için
+# Müşteri/Tedarikçi kaydı oluşturmak için
 ```go
 package main
 
@@ -34,8 +34,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Contacts.Data.Type = "contacts"             // << Burada değişiklik yapmayınız !
-		request.Contacts.Data.Attributes.AccountType = "customer" // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Type = "contacts"                   // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Attributes.AccountType = ""         // customer (Müşteri) || supplier (Tedarikçi)
 		request.Contacts.Data.Attributes.Name = ""                // Firma Ünvanı
 		request.Contacts.Data.Attributes.ShortName = ""           // Kısa İsim
 		request.Contacts.Data.Attributes.ContactType = ""         // company (Şirket) || person (Şahıs)
