@@ -115,6 +115,29 @@ func main() {
 }
 ```
 
+# Müşteri/Tedarikçi bilgilerini görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/src"
+)
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Contacts.Data.ID = "" // Müşteri/Tedarikçi ID
+		response := api.ShowContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
 # Çalışan kaydı oluşturma
 ```go
 package main
@@ -202,7 +225,7 @@ func main() {
 }
 ```
 
-# Faturaya ait PDF url adresini görüntüleme
+# Resmileştirilmiş faturaya ait PDF url adresini görüntüleme
 ```go
 package main
 

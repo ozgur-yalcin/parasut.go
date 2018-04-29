@@ -227,6 +227,12 @@ type Request struct {
 						ID   string `json:"id,omitempty"`
 					} `json:"data,omitempty"`
 				} `json:"category,omitempty"`
+				ContactPortal struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_portal,omitempty"`
 				ContactPeople struct {
 					Data []struct {
 						Type string `json:"type,omitempty"`
@@ -248,6 +254,26 @@ type Request struct {
 				IBAN     string `json:"iban,omitempty"`
 				Archived bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ManagedByUser struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user,omitempty"`
+				ManagedByUserRole struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user_role,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 }
@@ -478,6 +504,26 @@ type Response struct {
 				IBAN       string      `json:"iban,omitempty"`
 				Archived   bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ManagedByUser struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user,omitempty"`
+				ManagedByUserRole struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user_role,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -784,6 +830,35 @@ func (api *API) Authorize() bool {
 	return true
 }
 
+func (api *API) ShowContact(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
+	cli := http.Client{}
+	req, err := http.NewRequest("GET", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Contacts)
+	return response
+}
+
 func (api *API) ShowSalesInvoice(request Request) (response Response) {
 	var (
 		apiurl string
@@ -997,7 +1072,7 @@ func (api *API) CreateEmployee(request Request) (response Response) {
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/employees"
+	apiurl = config.APIURL + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
 	employeedata, _ := json.Marshal(request.Employees)
 	cli := http.Client{}
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
