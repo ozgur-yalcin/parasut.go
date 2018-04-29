@@ -2,6 +2,23 @@
 An easy-to-use parasut.com API (Paraşüt v4) with golang
 
 
+# Bağlantı ve kimlik doğrulama bilgileri (/config/config.go)
+```go
+package config
+
+const (
+	APIURL       = "https://api.parasut.com/v4/"
+	TokenURL     = "https://api.parasut.com/oauth/token"
+	CompanyID    = "" // Paraşüt tarafından belirlenen firma numarasını yazınız
+	ClientID     = "" // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	Username     = "" // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	Password     = "" // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	GrantType    = "password" // << Burada değişiklik yapmayınız !
+	RedirectURI  = "urn:ietf:wg:oauth:2.0:oob" // << Burada değişiklik yapmayınız !
+)
+```
+
 # Müşteri kaydı oluşturmak için
 ```go
 package main
