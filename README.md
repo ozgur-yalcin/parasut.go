@@ -1,6 +1,8 @@
 # parasut
 An easy-to-use parasut.com API (Paraşüt v4) with golang
 
+
+Müşteri kaydı oluşturmak için
 ```go
 package main
 
@@ -13,8 +15,6 @@ import (
 func main() {
 	api := parasut.API{}
 	auth := api.Authorize()
-
-	// Müşteri kaydı oluşturmak için
 	if auth {
 		request := parasut.Request{}
 		request.Contacts.Data.Type = "contacts"             // << Burada değişiklik yapmayınız !
@@ -35,8 +35,22 @@ func main() {
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
 	}
+}
+```
 
-	// Çalışan kaydı oluşturmak için
+Çalışan kaydı oluşturmak için
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/src"
+)
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
 		request.Employees.Data.Type = "employees" // << Burada değişiklik yapmayınız !
@@ -48,8 +62,22 @@ func main() {
 		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
 	}
+}
+```
 
-	// Satış faturası bilgilerine ulaşmak için
+Satış faturası bilgilerine ulaşmak için
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/src"
+)
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
@@ -57,8 +85,22 @@ func main() {
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
 	}
+}
+```
 
-	// Resmileştirilmiş fatura bilgilerine ulaşmak için
+Resmileştirilmiş fatura bilgilerine ulaşmak için
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/src"
+)
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
@@ -80,8 +122,22 @@ func main() {
 			fmt.Println(string(pretty))
 		}
 	}
+}
+```
 
-	// PDF url'si görüntülemek için
+Faturaya ait PDF url adresi görüntülemek için
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/src"
+)
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
@@ -103,5 +159,5 @@ func main() {
 			fmt.Println(pdfurl)
 		}
 	}
-
 }
+```
