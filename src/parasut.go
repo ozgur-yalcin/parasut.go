@@ -830,6 +830,37 @@ func (api *API) Authorize() bool {
 	return true
 }
 
+func (api *API) CreateContact(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
+	contactdata, _ := json.Marshal(request.Contacts)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Contacts)
+	return response
+}
+
 func (api *API) ShowContact(request Request) (response Response) {
 	var (
 		apiurl string
@@ -856,6 +887,98 @@ func (api *API) ShowContact(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.Contacts)
+	return response
+}
+
+func (api *API) CreateEmployee(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
+	employeedata, _ := json.Marshal(request.Employees)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Employees)
+	return response
+}
+
+func (api *API) ShowEmployee(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
+	cli := http.Client{}
+	req, err := http.NewRequest("GET", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Employees)
+	return response
+}
+
+func (api *API) CreateSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
+	cli := http.Client{}
+	fmt.Println(string(salesinvoicedata))
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
 	return response
 }
 
@@ -1001,99 +1124,5 @@ func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.EInvoicePDF)
-	return response
-}
-
-func (api *API) CreateSalesInvoice(request Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
-	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
-	cli := http.Client{}
-	fmt.Println(string(salesinvoicedata))
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
-	return response
-}
-
-func (api *API) CreateContact(request Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
-	contactdata, _ := json.Marshal(request.Contacts)
-	cli := http.Client{}
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
-	return response
-}
-
-func (api *API) CreateEmployee(request Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
-	employeedata, _ := json.Marshal(request.Employees)
-	cli := http.Client{}
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
 	return response
 }
