@@ -1,24 +1,6 @@
 # parasut
 An easy-to-use parasut.com API (v4) with golang
 
-
-# Bağlantı ve kimlik doğrulama bilgileri (/config/config.go)
-```go
-package config
-
-const (
-	APIURL       = "https://api.parasut.com/v4/"
-	TokenURL     = "https://api.parasut.com/oauth/token"
-	CompanyID    = "" // Paraşüt tarafından belirlenen firma numarasını yazınız
-	ClientID     = "" // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	Username     = "" // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	Password     = "" // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
-	GrantType    = "password" // << Burada değişiklik yapmayınız !
-	RedirectURI  = "urn:ietf:wg:oauth:2.0:oob" // << Burada değişiklik yapmayınız !
-)
-```
-
 # Müşteri/Tedarikçi kaydı oluşturma
 ```go
 package main
@@ -26,8 +8,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -66,8 +57,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -89,8 +89,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -120,8 +129,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -143,8 +161,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -199,8 +226,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -222,8 +258,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
@@ -259,8 +304,17 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"parasut/config"
 	"parasut/src"
 )
+
+func init() {
+	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
+	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
+	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
+	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
+	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+}
 
 func main() {
 	api := parasut.API{}
