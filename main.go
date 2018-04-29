@@ -14,8 +14,8 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
-		invoice := api.ShowSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(invoice.SalesInvoices, " ", "\t")
+		response := api.ShowSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 
@@ -23,9 +23,9 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
-		invoice := api.ShowSalesInvoice(request)
-		docid := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
-		doctype := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
+		response := api.ShowSalesInvoice(request)
+		docid := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
 		if doctype == "e_archives" {
 			request := parasut.Request{}
 			request.EArchives.Data.ID = docid
@@ -36,8 +36,8 @@ func main() {
 		if doctype == "e_invoices" {
 			request := parasut.Request{}
 			request.EInvoices.Data.ID = docid
-			einvoice := api.ShowEInvoice(request)
-			pretty, _ := json.MarshalIndent(einvoice.EInvoices, " ", "\t")
+			response := api.ShowEInvoice(request)
+			pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
 			fmt.Println(string(pretty))
 		}
 	}
@@ -46,21 +46,21 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
-		invoice := api.ShowSalesInvoice(request)
-		docid := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
-		doctype := invoice.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
+		response := api.ShowSalesInvoice(request)
+		docid := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoices.Data.RelationShips.ActiveEDocument.Data.Type
 		if doctype == "e_archives" {
 			request := parasut.Request{}
 			request.EArchivePDF.Data.ID = docid
-			pdf := api.ShowEArchivePDF(request)
-			pdfurl := pdf.EArchivePDF.Data.Attr.URL
+			response := api.ShowEArchivePDF(request)
+			pdfurl := response.EArchivePDF.Data.Attr.URL
 			fmt.Println(pdfurl)
 		}
 		if doctype == "e_invoices" {
 			request := parasut.Request{}
 			request.EInvoicePDF.Data.ID = docid
-			pdf := api.ShowEInvoicePDF(request)
-			pdfurl := pdf.EInvoicePDF.Data.Attr.URL
+			response := api.ShowEInvoicePDF(request)
+			pdfurl := response.EInvoicePDF.Data.Attr.URL
 			fmt.Println(pdfurl)
 		}
 	}
@@ -82,8 +82,8 @@ func main() {
 		request.Contacts.Data.Attr.Fax = ""                 // Faks
 		request.Contacts.Data.Attr.Email = ""               // E-posta adresi
 		request.Contacts.Data.Attr.IBAN = ""                // IBAN numarası
-		invoice := api.CreateContact(request)
-		pretty, _ := json.MarshalIndent(invoice.Contacts, " ", "\t")
+		response := api.CreateContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 
@@ -95,8 +95,8 @@ func main() {
 		request.Employees.Data.Attr.Email = "" // E-posta adresi
 		request.Employees.Data.Attr.TCKN = ""  // TC Kimlik Numarası
 		request.Employees.Data.Attr.IBAN = ""  // IBAN numarası
-		invoice := api.CreateEmployee(request)
-		pretty, _ := json.MarshalIndent(invoice.Employees, " ", "\t")
+		response := api.CreateEmployee(request)
+		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
