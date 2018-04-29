@@ -34,20 +34,20 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Contacts.Data.Type = "contacts"                   // << Burada değişiklik yapmayınız !
-		request.Contacts.Data.Attributes.AccountType = ""         // customer (Müşteri) || supplier (Tedarikçi)
-		request.Contacts.Data.Attributes.Name = ""                // Firma Ünvanı
-		request.Contacts.Data.Attributes.ShortName = ""           // Kısa İsim
-		request.Contacts.Data.Attributes.ContactType = ""         // company (Şirket) || person (Şahıs)
-		request.Contacts.Data.Attributes.TaxNumber = ""           // Vergi Numarası
-		request.Contacts.Data.Attributes.TaxOffice = ""           // Vergi Dairesi
-		request.Contacts.Data.Attributes.City = ""                // İl
-		request.Contacts.Data.Attributes.District = ""            // İlçe
-		request.Contacts.Data.Attributes.Address = ""             // Adres
-		request.Contacts.Data.Attributes.Phone = ""               // Telefon
-		request.Contacts.Data.Attributes.Fax = ""                 // Faks
-		request.Contacts.Data.Attributes.Email = ""               // E-posta adresi
-		request.Contacts.Data.Attributes.IBAN = ""                // IBAN numarası
+		request.Contacts.Data.Type = "contacts"           // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Attributes.AccountType = "" // customer (Müşteri) || supplier (Tedarikçi)
+		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
+		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
+		request.Contacts.Data.Attributes.ContactType = "" // company (Şirket) || person (Şahıs)
+		request.Contacts.Data.Attributes.TaxNumber = ""   // Vergi Numarası
+		request.Contacts.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
+		request.Contacts.Data.Attributes.City = ""        // İl
+		request.Contacts.Data.Attributes.District = ""    // İlçe
+		request.Contacts.Data.Attributes.Address = ""     // Adres
+		request.Contacts.Data.Attributes.Phone = ""       // Telefon
+		request.Contacts.Data.Attributes.Fax = ""         // Faks
+		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
+		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
 		response := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
