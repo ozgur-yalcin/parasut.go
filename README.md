@@ -102,6 +102,10 @@ func main() {
 		request.Employees.Data.Attributes.Email = "" // E-posta adresi
 		request.Employees.Data.Attributes.TCKN = ""  // TC Kimlik Numarası
 		request.Employees.Data.Attributes.IBAN = ""  // IBAN numarası
+
+		request.Employees.Data.Relationships.Category.Data.Type = "item_categories"  // << Burada değişiklik yapmayınız !
+		request.Employees.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
+
 		response := api.CreateEmployee(request)
 		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
