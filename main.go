@@ -69,7 +69,7 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.Contacts.Data.Type = "contacts"
-		request.Contacts.Data.Attr.AccountType = "customer" // customer (Müşteri) || supplier (Tedarikçiler)
+		request.Contacts.Data.Attr.AccountType = "customer" // customer (Müşteri) || supplier (Tedarikçi)
 		request.Contacts.Data.Attr.Name = ""                // Firma Ünvanı
 		request.Contacts.Data.Attr.ShortName = ""           // Kısa İsim
 		request.Contacts.Data.Attr.ContactType = ""         // company (Şirket) || person (Şahıs)
