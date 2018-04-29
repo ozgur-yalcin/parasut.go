@@ -70,11 +70,11 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Employees.Data.Type = "employees" // << Burada değişiklik yapmayınız !
-		request.Employees.Data.Attributes.Name = ""     // İsim
-		request.Employees.Data.Attributes.Email = ""    // E-posta adresi
-		request.Employees.Data.Attributes.TCKN = ""     // TC Kimlik Numarası
-		request.Employees.Data.Attributes.IBAN = ""     // IBAN numarası
+		request.Employees.Data.Type = "employees"    // << Burada değişiklik yapmayınız !
+		request.Employees.Data.Attributes.Name = ""  // İsim
+		request.Employees.Data.Attributes.Email = "" // E-posta adresi
+		request.Employees.Data.Attributes.TCKN = ""  // TC Kimlik Numarası
+		request.Employees.Data.Attributes.IBAN = ""  // IBAN numarası
 		response := api.CreateEmployee(request)
 		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
