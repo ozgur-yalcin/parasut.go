@@ -62,6 +62,76 @@ type Request struct {
 				IsAbroad            bool        `json:"is_abroad,omitempty"`
 				Archived            bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Details struct {
+					Fill struct {
+						Type       string `json:"type,omitempty"`
+						ID         string `json:"id,omitempty"`
+						Attributes struct {
+							Quantity              json.Number `json:"quantity,omitempty"`
+							UnitPrice             json.Number `json:"unit_price,omitempty"`
+							VatRate               json.Number `json:"vat_rate,omitempty"`
+							DiscountValue         json.Number `json:"discount_value,omitempty"`
+							ExciseDutyValue       json.Number `json:"excise_duty_value,omitempty"`
+							CommunicationsTaxRate json.Number `json:"communications_tax_rate,omitempty"`
+							ProductID             string      `json:"product_id,omitempty"`
+							Description           string      `json:"description,omitempty"`
+							DiscountType          string      `json:"discount_type,omitempty"`
+							ExciseDutyType        string      `json:"excise_duty_type,omitempty"`
+						} `json:"attributes,omitempty"`
+						Relationships struct {
+							Product struct {
+								Data struct {
+									Type string `json:"type,omitempty"`
+									ID   string `json:"id,omitempty"`
+								} `json:"data,omitempty"`
+							} `json:"category,omitempty"`
+						} `json:"relationships,omitempty"`
+					} `json:"-"`
+					Data []struct {
+						Type       string `json:"type,omitempty"`
+						ID         string `json:"id,omitempty"`
+						Attributes struct {
+							Quantity              json.Number `json:"quantity,omitempty"`
+							UnitPrice             json.Number `json:"unit_price,omitempty"`
+							VatRate               json.Number `json:"vat_rate,omitempty"`
+							DiscountValue         json.Number `json:"discount_value,omitempty"`
+							ExciseDutyValue       json.Number `json:"excise_duty_value,omitempty"`
+							CommunicationsTaxRate json.Number `json:"communications_tax_rate,omitempty"`
+							ProductID             string      `json:"product_id,omitempty"`
+							Description           string      `json:"description,omitempty"`
+							DiscountType          string      `json:"discount_type,omitempty"`
+							ExciseDutyType        string      `json:"excise_duty_type,omitempty"`
+						} `json:"attributes,omitempty"`
+						Relationships struct {
+							Product struct {
+								Data struct {
+									Type string `json:"type,omitempty"`
+									ID   string `json:"id,omitempty"`
+								} `json:"data,omitempty"`
+							} `json:"category,omitempty"`
+						} `json:"relationships,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"details,omitempty"`
+				Contact struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact,omitempty"`
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				Tags struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"tags,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 	EArchives struct {
@@ -144,21 +214,21 @@ type Request struct {
 				IsAbroad    bool   `json:"is_abroad,omitempty"`
 				Archived    bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ContactPeople struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_people,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
-		Relationships struct {
-			Category struct {
-				Data struct {
-					Type string `json:"type,omitempty"`
-					ID   string `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-			} `json:"category,omitempty"`
-			ContactPeople struct {
-				Data []struct {
-					Type string `json:"type,omitempty"`
-					ID   string `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-			} `json:"contact_people,omitempty"`
-		} `json:"relationships,omitempty"`
 	}
 	Employees struct {
 		Data struct {
@@ -227,6 +297,48 @@ type Response struct {
 				Archived               bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
+				Details struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"details,omitempty"`
+				Contact struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact,omitempty"`
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				Tags struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"tags,omitempty"`
+				Payments struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"payments,omitempty"`
+				Sharings struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"sharings,omitempty"`
+				RecurrencePlan struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"recurrence_plan,omitempty"`
 				ActiveEDocument struct {
 					Data struct {
 						Type string `json:"type,omitempty"`
@@ -312,27 +424,27 @@ type Response struct {
 				IsAbroad    bool        `json:"is_abroad,omitempty"`
 				Archived    bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ContactPortal struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_portal,omitempty"`
+				ContactPeople struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_people,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
-		Relationships struct {
-			Category struct {
-				Data struct {
-					Type string `json:"type,omitempty"`
-					ID   string `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-			} `json:"category,omitempty"`
-			ContactPortal struct {
-				Data struct {
-					Type string `json:"type,omitempty"`
-					ID   string `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-			} `json:"contact_portal,omitempty"`
-			ContactPeople struct {
-				Data []struct {
-					Type string `json:"type,omitempty"`
-					ID   string `json:"id,omitempty"`
-				} `json:"data,omitempty"`
-			} `json:"contact_people,omitempty"`
-		} `json:"relationships,omitempty"`
 	}
 	Employees struct {
 		Errors []struct {
@@ -656,7 +768,7 @@ func (api *API) ShowSalesInvoice(request Request) (response Response) {
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=active_e_document"
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
 	cli := http.Client{}
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -796,12 +908,44 @@ func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 	return response
 }
 
+func (api *API) CreateSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
+	cli := http.Client{}
+	fmt.Println(string(salesinvoicedata))
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
 func (api *API) CreateContact(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_people"
+	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
 	contactdata, _ := json.Marshal(request.Contacts)
 	cli := http.Client{}
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))

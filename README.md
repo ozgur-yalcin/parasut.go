@@ -35,10 +35,10 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.Contacts.Data.Type = "contacts"           // << Burada değişiklik yapmayınız !
-		request.Contacts.Data.Attributes.AccountType = "" // customer (Müşteri) || supplier (Tedarikçi)
+		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
 		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
 		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
-		request.Contacts.Data.Attributes.ContactType = "" // company (Şirket) || person (Şahıs)
+		request.Contacts.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
 		request.Contacts.Data.Attributes.TaxNumber = ""   // Vergi Numarası
 		request.Contacts.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
 		request.Contacts.Data.Attributes.City = ""        // İl
@@ -48,6 +48,10 @@ func main() {
 		request.Contacts.Data.Attributes.Fax = ""         // Faks
 		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
 		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
+
+		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Relationships.Category.Data.Type = ""                 // Kategori ID (varsa)
+
 		response := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
