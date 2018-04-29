@@ -2,7 +2,7 @@
 An easy-to-use parasut.com API (Paraşüt v4) with golang
 
 
-Müşteri kaydı oluşturmak için
+# Müşteri kaydı oluşturmak için
 ```go
 package main
 
@@ -38,7 +38,7 @@ func main() {
 }
 ```
 
-Çalışan kaydı oluşturmak için
+# Çalışan kaydı oluşturmak için
 ```go
 package main
 
@@ -65,7 +65,7 @@ func main() {
 }
 ```
 
-Satış faturası bilgilerine ulaşmak için
+# Satış faturası bilgilerine ulaşmak için
 ```go
 package main
 
@@ -88,7 +88,7 @@ func main() {
 }
 ```
 
-Resmileştirilmiş fatura bilgilerine ulaşmak için
+# Resmileştirilmiş fatura bilgilerine ulaşmak için
 ```go
 package main
 
@@ -125,7 +125,7 @@ func main() {
 }
 ```
 
-Faturaya ait PDF url adresi görüntülemek için
+# Faturaya ait PDF url adresi görüntülemek için
 ```go
 package main
 
