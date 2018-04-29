@@ -19,7 +19,7 @@ const (
 )
 ```
 
-# Satış faturası kaydı oluşturmak için
+# Satış faturası kaydı oluşturma
 ```go
 package main
 
@@ -75,7 +75,7 @@ func main() {
 }
 ```
 
-# Müşteri/Tedarikçi kaydı oluşturmak için
+# Müşteri/Tedarikçi kaydı oluşturma
 ```go
 package main
 
@@ -115,7 +115,7 @@ func main() {
 }
 ```
 
-# Çalışan kaydı oluşturmak için
+# Çalışan kaydı oluşturma
 ```go
 package main
 
@@ -142,7 +142,7 @@ func main() {
 }
 ```
 
-# Satış faturası bilgilerini görüntülemek için
+# Satış faturası bilgilerini görüntüleme
 ```go
 package main
 
@@ -165,7 +165,7 @@ func main() {
 }
 ```
 
-# Resmileştirilmiş fatura bilgilerini görüntülemek için
+# Resmileştirilmiş fatura bilgilerini görüntüleme
 ```go
 package main
 
@@ -202,7 +202,7 @@ func main() {
 }
 ```
 
-# Faturaya ait PDF url adresini görüntülemek için
+# Faturaya ait PDF url adresini görüntüleme
 ```go
 package main
 

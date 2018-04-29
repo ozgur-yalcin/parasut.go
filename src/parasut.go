@@ -20,6 +20,7 @@ type API struct {
 		GrantType    string `json:"grant_type,omitempty"`
 		RedirectURI  string `json:"redirect_uri,omitempty"`
 	}
+
 	Authentication struct {
 		AccessToken  string `json:"access_token,omitempty"`
 		TokenType    string `json:"token_type,omitempty"`
@@ -134,6 +135,7 @@ type Request struct {
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EArchives struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -163,6 +165,7 @@ type Request struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EInvoices struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -181,18 +184,21 @@ type Request struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EArchivePDF struct {
 		Data struct {
 			Type string `json:"type,omitempty"`
 			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EInvoicePDF struct {
 		Data struct {
 			Type string `json:"type,omitempty"`
 			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Contacts struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -230,6 +236,7 @@ type Request struct {
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Employees struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -348,6 +355,7 @@ type Response struct {
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	PurchaseBills struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -392,6 +400,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Contacts struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -446,6 +455,7 @@ type Response struct {
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Employees struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -470,6 +480,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Accounts struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -498,6 +509,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Products struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -534,6 +546,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	BankFees struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -558,6 +571,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Salaries struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -582,6 +596,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Taxes struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -604,6 +619,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	Transactions struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -626,6 +642,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EInvoiceInboxes struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -646,6 +663,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EArchives struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -669,6 +687,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EInvoices struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -702,6 +721,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EArchivePDF struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -716,6 +736,7 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
 	EInvoicePDF struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
