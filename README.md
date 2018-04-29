@@ -82,7 +82,7 @@ func main() {
 }
 ```
 
-# Satış faturası bilgilerine ulaşmak için
+# Satış faturası bilgilerini görüntülemek için
 ```go
 package main
 
@@ -105,7 +105,7 @@ func main() {
 }
 ```
 
-# Resmileştirilmiş fatura bilgilerine ulaşmak için
+# Resmileştirilmiş fatura bilgilerini görüntülemek için
 ```go
 package main
 
@@ -142,7 +142,7 @@ func main() {
 }
 ```
 
-# Faturaya ait PDF url adresi görüntülemek için
+# Faturaya ait PDF url adresini görüntülemek için
 ```go
 package main
 
