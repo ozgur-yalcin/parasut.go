@@ -111,6 +111,18 @@ type Request struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+	EArchivePDF struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+		} `json:"data,omitempty"`
+	}
+	EInvoicePDF struct {
+		Data struct {
+			ID   string `json:"id,omitempty"`
+			Type string `json:"type,omitempty"`
+		} `json:"data,omitempty"`
+	}
 	Contacts struct {
 		Data struct {
 			ID   string `json:"id,omitempty"`
@@ -682,12 +694,12 @@ func (api *API) ShowEInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEArchivePDF(ID string) (response Response) {
+func (api *API) ShowEArchivePDF(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + ID + "/pdf"
+	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
 	cli := http.Client{}
 	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
@@ -712,12 +724,12 @@ func (api *API) ShowEArchivePDF(ID string) (response Response) {
 	return response
 }
 
-func (api *API) ShowEInvoicePDF(ID string) (response Response) {
+func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 	var (
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + ID + "/pdf"
+	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
 	cli := http.Client{}
 	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
 	if err != nil {
@@ -769,6 +781,6 @@ func (api *API) CreateContact(request Request) (response Response) {
 		fmt.Println(err)
 		return response
 	}
-	json.Unmarshal(bytes, &api.Authentication)
+	json.Unmarshal(bytes, &response.Contacts)
 	return response
 }
