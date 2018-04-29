@@ -85,7 +85,7 @@ type Request struct {
 									Type string `json:"type,omitempty"`
 									ID   string `json:"id,omitempty"`
 								} `json:"data,omitempty"`
-							} `json:"category,omitempty"`
+							} `json:"product,omitempty"`
 						} `json:"relationships,omitempty"`
 					} `json:"-"`
 					Data []struct {
@@ -109,7 +109,7 @@ type Request struct {
 									Type string `json:"type,omitempty"`
 									ID   string `json:"id,omitempty"`
 								} `json:"data,omitempty"`
-							} `json:"category,omitempty"`
+							} `json:"product,omitempty"`
 						} `json:"relationships,omitempty"`
 					} `json:"data,omitempty"`
 				} `json:"details,omitempty"`
