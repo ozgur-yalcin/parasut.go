@@ -13,11 +13,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Contacts.Data.Type = "contacts"           // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
 		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
 		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
 		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
@@ -40,7 +40,7 @@ func main() {
 		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
 		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
 
-		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
 		request.Contacts.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
 
 		response := api.CreateContact(request)
@@ -62,11 +62,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -94,11 +94,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -106,13 +106,13 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Employees.Data.Type = "employees"    // << Burada değişiklik yapmayınız !
+		request.Employees.Data.Type = "employees"    // << Değişiklik yapmayınız !
 		request.Employees.Data.Attributes.Name = ""  // İsim
 		request.Employees.Data.Attributes.Email = "" // E-posta adresi
 		request.Employees.Data.Attributes.TCKN = ""  // TC Kimlik Numarası
 		request.Employees.Data.Attributes.IBAN = ""  // IBAN numarası
 
-		request.Employees.Data.Relationships.Category.Data.Type = "item_categories"  // << Burada değişiklik yapmayınız !
+		request.Employees.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
 		request.Employees.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
 
 		response := api.CreateEmployee(request)
@@ -134,11 +134,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -166,11 +166,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -181,8 +181,8 @@ func main() {
 		auth := api.Authorize()
 		if auth {
 			request := parasut.Request{}
-			request.SalesInvoices.Data.Type = "sales_invoices"              // << Burada değişiklik yapmayınız !
-			request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Burada değişiklik yapmayınız !
+			request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
+			request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
 			request.SalesInvoices.Data.Attributes.TaxNumber = "11111111111" // Vergi numarası
 			request.SalesInvoices.Data.Attributes.TaxOffice = ""            // Vergi dairesi
@@ -194,16 +194,16 @@ func main() {
 			request.SalesInvoices.Data.Attributes.City = ""                 // İl
 			request.SalesInvoices.Data.Attributes.District = ""             // İlçe
 
-			request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Burada değişiklik yapmayınız !
+			request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID (varsa)
 
-			request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Burada değişiklik yapmayınız !
+			request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
-			request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.Type = "products" // << Burada değişiklik yapmayınız !
+			request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.ID = ""           // Ürün ID
 
-			request.SalesInvoices.Data.Relationships.Details.Fill.Type = "sales_invoice_details"     // << Burada değişiklik yapmayınız !
+			request.SalesInvoices.Data.Relationships.Details.Fill.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.Quantity = "0"          // Ürün miktarı
 			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
 			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.VatRate = "0"           // Ürün KDV oranı
@@ -231,11 +231,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -263,11 +263,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
@@ -309,11 +309,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {

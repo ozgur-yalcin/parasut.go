@@ -6,11 +6,11 @@ import (
 )
 
 func init() {
-	config.CompanyID = ""    // Paraşüt tarafından belirlenen firma numarasını yazınız
-	config.ClientID = ""     // Paraşüt tarafından belirlenen müşteri numarasını yazınız
-	config.ClientSecret = "" // Paraşüt tarafından belirlenen müşteri anahtarını yazınız
-	config.Username = ""     // Paraşüte giriş yaparken kullandığınız kullanıcı adını yazınız
-	config.Password = ""     // Paraşüte giriş yaparken kullandığınız şifreyi yazınız
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
 }
 
 func main() {
