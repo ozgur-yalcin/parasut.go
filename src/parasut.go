@@ -33,8 +33,8 @@ type API struct {
 type Request struct {
 	SalesInvoices struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				InvoiceSeries       string      `json:"invoice_series,omitempty"`
 				InvoiceID           json.Number `json:"invoice_id,omitempty"`
@@ -66,8 +66,8 @@ type Request struct {
 	}
 	EArchives struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
 				VatExemptionReasonCode string `json:"vat_exemption_reason_code,omitempty"`
@@ -95,8 +95,8 @@ type Request struct {
 	}
 	EInvoices struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				To                     string `json:"to,omitempty"`
 				Scenario               string `json:"scenario,omitempty"`
@@ -113,20 +113,20 @@ type Request struct {
 	}
 	EArchivePDF struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
 	EInvoicePDF struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
 	Contacts struct {
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Name        string `json:"name,omitempty"`
 				ShortName   string `json:"short_name,omitempty"`
@@ -145,6 +145,20 @@ type Request struct {
 				Archived    bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
+		RelationShips struct {
+			Category struct {
+				Data struct {
+					Type string `json:"type,omitempty"`
+					ID   string `json:"id,omitempty"`
+				} `json:"data,omitempty"`
+			} `json:"category,omitempty"`
+			ContactPeople struct {
+				Data []struct {
+					Type string `json:"type,omitempty"`
+					ID   string `json:"id,omitempty"`
+				} `json:"data,omitempty"`
+			} `json:"contact_people,omitempty"`
+		} `json:"relationships,omitempty"`
 	}
 }
 
@@ -155,8 +169,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				InvoiceSeries          string      `json:"invoice_series,omitempty"`
 				InvoiceNo              string      `json:"invoice_no,omitempty"`
@@ -202,8 +216,8 @@ type Response struct {
 			RelationShips struct {
 				ActiveEDocument struct {
 					Data struct {
-						ID   string `json:"id,omitempty"`
 						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
 					} `json:"data,omitempty"`
 				} `json:"active_e_document,omitempty"`
 			} `json:"relationships,omitempty"`
@@ -215,8 +229,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				TotalPaid                   json.Number `json:"total_paid,omitempty"`
 				NetTotal                    json.Number `json:"net_total,omitempty"`
@@ -259,8 +273,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Balance     json.Number `json:"balance,omitempty"`
 				TrlBalance  json.Number `json:"trl_balance,omitempty"`
@@ -286,6 +300,26 @@ type Response struct {
 				Archived    bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
+		RelationShips struct {
+			Category struct {
+				Data struct {
+					Type string `json:"type,omitempty"`
+					ID   string `json:"id,omitempty"`
+				} `json:"data,omitempty"`
+			} `json:"category,omitempty"`
+			ContactPortal struct {
+				Data struct {
+					Type string `json:"type,omitempty"`
+					ID   string `json:"id,omitempty"`
+				} `json:"data,omitempty"`
+			} `json:"contact_portal,omitempty"`
+			ContactPeople struct {
+				Data []struct {
+					Type string `json:"type,omitempty"`
+					ID   string `json:"id,omitempty"`
+				} `json:"data,omitempty"`
+			} `json:"contact_people,omitempty"`
+		} `json:"relationships,omitempty"`
 	}
 	Employees struct {
 		Errors []struct {
@@ -293,8 +327,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Balance    json.Number `json:"balance,omitempty"`
 				TrlBalance json.Number `json:"trl_balance,omitempty"`
@@ -316,8 +350,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Balance             json.Number `json:"balance,omitempty"`
 				UsedFor             string      `json:"used_for,omitempty"`
@@ -344,8 +378,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				CreatedAt                   string      `json:"created_at,omitempty"`
 				UpdatedAt                   string      `json:"updated_at,omitempty"`
@@ -380,8 +414,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
@@ -404,8 +438,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
@@ -428,8 +462,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
@@ -450,8 +484,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				TransactionType   string      `json:"transaction_type,omitempty"`
 				HumanizedTypeName string      `json:"humanized_type_name,omitempty"`
@@ -472,8 +506,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				VKN                 string `json:"vkn,omitempty"`
 				EInvoiceAddress     string `json:"e_invoice_address,omitempty"`
@@ -492,8 +526,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				CreatedAt        string `json:"created_at,omitempty"`
 				UpdatedAt        string `json:"updated_at,omitempty"`
@@ -515,8 +549,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				ExternalID   string      `json:"external_id,omitempty"`
 				UUID         string      `json:"uuid,omitempty"`
@@ -548,8 +582,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				URL       string `json:"url,omitempty"`
 				ExpiresAt string `json:"expires_at,omitempty"`
@@ -562,8 +596,8 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			ID   string `json:"id,omitempty"`
 			Type string `json:"type,omitempty"`
+			ID   string `json:"id,omitempty"`
 			Attr struct {
 				URL       string `json:"url,omitempty"`
 				ExpiresAt string `json:"expires_at,omitempty"`
@@ -587,7 +621,6 @@ func (api *API) Authorize() bool {
 		fmt.Println(err)
 		return false
 	}
-	req.Header.Set("Accept", "application/json")
 	res, err := cli.Do(req)
 	if err != nil {
 		fmt.Println(err)
@@ -611,12 +644,11 @@ func (api *API) ShowSalesInvoice(request Request) (response Response) {
 	)
 	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=active_e_document"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
@@ -641,12 +673,11 @@ func (api *API) ShowEArchive(request Request) (response Response) {
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
@@ -671,12 +702,11 @@ func (api *API) ShowEInvoice(request Request) (response Response) {
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
@@ -701,12 +731,11 @@ func (api *API) ShowEArchivePDF(request Request) (response Response) {
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
@@ -731,12 +760,11 @@ func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 	)
 	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
 	cli := http.Client{}
-	req, err := http.NewRequest("GET", apiurl, strings.NewReader("access_token="+api.Authentication.AccessToken))
+	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
@@ -759,7 +787,7 @@ func (api *API) CreateContact(request Request) (response Response) {
 		apiurl string
 		data   interface{}
 	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts"
+	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_people"
 	contactdata, _ := json.Marshal(request.Contacts)
 	cli := http.Client{}
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
@@ -767,7 +795,7 @@ func (api *API) CreateContact(request Request) (response Response) {
 		fmt.Println(err)
 		return response
 	}
-	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {

@@ -64,4 +64,26 @@ func main() {
 			fmt.Println(pdfurl)
 		}
 	}
+
+	// Müşteri kaydı oluşturmak için
+	if auth {
+		request := parasut.Request{}
+		request.Contacts.Data.Type = "contacts"
+		request.Contacts.Data.Attr.AccountType = "customer" // customer (Müşteri) || supplier (Tedarikçiler)
+		request.Contacts.Data.Attr.Name = ""                // Firma Ünvanı
+		request.Contacts.Data.Attr.ShortName = ""           // Kısa İsim
+		request.Contacts.Data.Attr.ContactType = ""         // company (Şirket) || person (Şahıs)
+		request.Contacts.Data.Attr.TaxNumber = ""           // Vergi Numarası
+		request.Contacts.Data.Attr.TaxOffice = ""           // Vergi Dairesi
+		request.Contacts.Data.Attr.City = ""                // İl
+		request.Contacts.Data.Attr.District = ""            // İlçe
+		request.Contacts.Data.Attr.Address = ""             // Adres
+		request.Contacts.Data.Attr.Phone = ""               // Telefon
+		request.Contacts.Data.Attr.Fax = ""                 // Faks
+		request.Contacts.Data.Attr.Email = ""               // Email
+		request.Contacts.Data.Attr.IBAN = ""                // IBAN numarası
+		invoice := api.CreateContact(request)
+		pretty, _ := json.MarshalIndent(invoice.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
 }
