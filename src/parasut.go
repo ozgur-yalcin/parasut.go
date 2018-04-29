@@ -33,9 +33,9 @@ type API struct {
 type Request struct {
 	SalesInvoices struct {
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				InvoiceSeries       string      `json:"invoice_series,omitempty"`
 				InvoiceID           json.Number `json:"invoice_id,omitempty"`
 				ExchangeRate        json.Number `json:"exchange_rate,omitempty"`
@@ -66,9 +66,9 @@ type Request struct {
 	}
 	EArchives struct {
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
 				VatExemptionReasonCode string `json:"vat_exemption_reason_code,omitempty"`
 				VatExemptionReason     string `json:"vat_exemption_reason,omitempty"`
@@ -95,9 +95,9 @@ type Request struct {
 	}
 	EInvoices struct {
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				To                     string `json:"to,omitempty"`
 				Scenario               string `json:"scenario,omitempty"`
 				VatWithholdingCode     string `json:"vat_withholding_code,omitempty"`
@@ -125,9 +125,9 @@ type Request struct {
 	}
 	Contacts struct {
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Name        string `json:"name,omitempty"`
 				ShortName   string `json:"short_name,omitempty"`
 				Email       string `json:"email,omitempty"`
@@ -162,9 +162,9 @@ type Request struct {
 	}
 	Employees struct {
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Name     string `json:"name,omitempty"`
 				TCKN     string `json:"tckn,omitempty"`
 				Email    string `json:"email,omitempty"`
@@ -182,9 +182,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				InvoiceSeries          string      `json:"invoice_series,omitempty"`
 				InvoiceNo              string      `json:"invoice_no,omitempty"`
 				InvoiceID              json.Number `json:"invoice_id,omitempty"`
@@ -242,9 +242,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				TotalPaid                   json.Number `json:"total_paid,omitempty"`
 				NetTotal                    json.Number `json:"net_total,omitempty"`
 				GrossTotal                  json.Number `json:"gross_total,omitempty"`
@@ -286,9 +286,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Balance     json.Number `json:"balance,omitempty"`
 				TrlBalance  json.Number `json:"trl_balance,omitempty"`
 				UsdBalance  json.Number `json:"usd_balance,omitempty"`
@@ -340,9 +340,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Balance    json.Number `json:"balance,omitempty"`
 				TrlBalance json.Number `json:"trl_balance,omitempty"`
 				UsdBalance json.Number `json:"usd_balance,omitempty"`
@@ -364,9 +364,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Balance             json.Number `json:"balance,omitempty"`
 				UsedFor             string      `json:"used_for,omitempty"`
 				LastUsedAt          string      `json:"last_used_at,omitempty"`
@@ -392,9 +392,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				CreatedAt                   string      `json:"created_at,omitempty"`
 				UpdatedAt                   string      `json:"updated_at,omitempty"`
 				Code                        string      `json:"code,omitempty"`
@@ -428,9 +428,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
 				TotalPaid      json.Number `json:"total_paid,omitempty"`
@@ -452,9 +452,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
 				TotalPaid      json.Number `json:"total_paid,omitempty"`
@@ -476,9 +476,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				Remaining      json.Number `json:"remaining,omitempty"`
 				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
 				TotalPaid      json.Number `json:"total_paid,omitempty"`
@@ -498,9 +498,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				TransactionType   string      `json:"transaction_type,omitempty"`
 				HumanizedTypeName string      `json:"humanized_type_name,omitempty"`
 				CreatedAt         string      `json:"created_at,omitempty"`
@@ -520,9 +520,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				VKN                 string `json:"vkn,omitempty"`
 				EInvoiceAddress     string `json:"e_invoice_address,omitempty"`
 				Name                string `json:"name,omitempty"`
@@ -540,9 +540,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				CreatedAt        string `json:"created_at,omitempty"`
 				UpdatedAt        string `json:"updated_at,omitempty"`
 				PrintedAt        string `json:"printed_at,omitempty"`
@@ -563,9 +563,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				ExternalID   string      `json:"external_id,omitempty"`
 				UUID         string      `json:"uuid,omitempty"`
 				EnvUUID      string      `json:"env_uuid,omitempty"`
@@ -596,9 +596,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				URL       string `json:"url,omitempty"`
 				ExpiresAt string `json:"expires_at,omitempty"`
 			} `json:"attributes,omitempty"`
@@ -610,9 +610,9 @@ type Response struct {
 			Detail string `json:"detail,omitempty"`
 		} `json:"errors,omitempty"`
 		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-			Attr struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
 				URL       string `json:"url,omitempty"`
 				ExpiresAt string `json:"expires_at,omitempty"`
 			} `json:"attributes,omitempty"`

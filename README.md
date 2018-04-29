@@ -35,19 +35,19 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.Contacts.Data.Type = "contacts"             // << Burada değişiklik yapmayınız !
-		request.Contacts.Data.Attr.AccountType = "customer" // << Burada değişiklik yapmayınız !
-		request.Contacts.Data.Attr.Name = ""                // Firma Ünvanı
-		request.Contacts.Data.Attr.ShortName = ""           // Kısa İsim
-		request.Contacts.Data.Attr.ContactType = ""         // company (Şirket) || person (Şahıs)
-		request.Contacts.Data.Attr.TaxNumber = ""           // Vergi Numarası
-		request.Contacts.Data.Attr.TaxOffice = ""           // Vergi Dairesi
-		request.Contacts.Data.Attr.City = ""                // İl
-		request.Contacts.Data.Attr.District = ""            // İlçe
-		request.Contacts.Data.Attr.Address = ""             // Adres
-		request.Contacts.Data.Attr.Phone = ""               // Telefon
-		request.Contacts.Data.Attr.Fax = ""                 // Faks
-		request.Contacts.Data.Attr.Email = ""               // E-posta adresi
-		request.Contacts.Data.Attr.IBAN = ""                // IBAN numarası
+		request.Contacts.Data.Attributes.AccountType = "customer" // << Burada değişiklik yapmayınız !
+		request.Contacts.Data.Attributes.Name = ""                // Firma Ünvanı
+		request.Contacts.Data.Attributes.ShortName = ""           // Kısa İsim
+		request.Contacts.Data.Attributes.ContactType = ""         // company (Şirket) || person (Şahıs)
+		request.Contacts.Data.Attributes.TaxNumber = ""           // Vergi Numarası
+		request.Contacts.Data.Attributes.TaxOffice = ""           // Vergi Dairesi
+		request.Contacts.Data.Attributes.City = ""                // İl
+		request.Contacts.Data.Attributes.District = ""            // İlçe
+		request.Contacts.Data.Attributes.Address = ""             // Adres
+		request.Contacts.Data.Attributes.Phone = ""               // Telefon
+		request.Contacts.Data.Attributes.Fax = ""                 // Faks
+		request.Contacts.Data.Attributes.Email = ""               // E-posta adresi
+		request.Contacts.Data.Attributes.IBAN = ""                // IBAN numarası
 		response := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
@@ -71,10 +71,10 @@ func main() {
 	if auth {
 		request := parasut.Request{}
 		request.Employees.Data.Type = "employees" // << Burada değişiklik yapmayınız !
-		request.Employees.Data.Attr.Name = ""     // İsim
-		request.Employees.Data.Attr.Email = ""    // E-posta adresi
-		request.Employees.Data.Attr.TCKN = ""     // TC Kimlik Numarası
-		request.Employees.Data.Attr.IBAN = ""     // IBAN numarası
+		request.Employees.Data.Attributes.Name = ""     // İsim
+		request.Employees.Data.Attributes.Email = ""    // E-posta adresi
+		request.Employees.Data.Attributes.TCKN = ""     // TC Kimlik Numarası
+		request.Employees.Data.Attributes.IBAN = ""     // IBAN numarası
 		response := api.CreateEmployee(request)
 		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
@@ -165,14 +165,14 @@ func main() {
 			request := parasut.Request{}
 			request.EArchivePDF.Data.ID = docid
 			response := api.ShowEArchivePDF(request)
-			pdfurl := response.EArchivePDF.Data.Attr.URL
+			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
 		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
 			request := parasut.Request{}
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
-			pdfurl := response.EInvoicePDF.Data.Attr.URL
+			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
 	}
