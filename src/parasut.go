@@ -32,6 +32,84 @@ type API struct {
 }
 
 type Request struct {
+	Contacts struct {
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Name        string `json:"name,omitempty"`
+				ShortName   string `json:"short_name,omitempty"`
+				Email       string `json:"email,omitempty"`
+				AccountType string `json:"account_type,omitempty"`
+				ContactType string `json:"contact_type,omitempty"`
+				IBAN        string `json:"iban,omitempty"`
+				TaxOffice   string `json:"tax_office,omitempty"`
+				TaxNumber   string `json:"tax_number,omitempty"`
+				City        string `json:"city,omitempty"`
+				District    string `json:"district,omitempty"`
+				Address     string `json:"address,omitempty"`
+				Phone       string `json:"phone,omitempty"`
+				Fax         string `json:"fax,omitempty"`
+				IsAbroad    bool   `json:"is_abroad,omitempty"`
+				Archived    bool   `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ContactPortal struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_portal,omitempty"`
+				ContactPeople struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact_people,omitempty"`
+			} `json:"relationships,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	Employees struct {
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Name     string `json:"name,omitempty"`
+				TCKN     string `json:"tckn,omitempty"`
+				Email    string `json:"email,omitempty"`
+				IBAN     string `json:"iban,omitempty"`
+				Archived bool   `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				ManagedByUser struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user,omitempty"`
+				ManagedByUserRole struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"managed_by_user_role,omitempty"`
+			} `json:"relationships,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
 	SalesInvoices struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -136,6 +214,36 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
+	Payments struct {
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Description  string `json:"description,omitempty"`
+				AccountID    string `json:"account_id,omitempty"`
+				Date         string `json:"date,omitempty"`
+				Amount       string `json:"amount,omitempty"`
+				Currency     string `json:"currency,omitempty"`
+				ExchangeRate string `json:"exchange_rate,omitempty"`
+				Notes        string `json:"notes,omitempty"`
+			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Payable struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"payable,omitempty"`
+				Transaction struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"transaction,omitempty"`
+			} `json:"relationships,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
 	EArchives struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
@@ -198,235 +306,9 @@ type Request struct {
 			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
-
-	Contacts struct {
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Name        string `json:"name,omitempty"`
-				ShortName   string `json:"short_name,omitempty"`
-				Email       string `json:"email,omitempty"`
-				AccountType string `json:"account_type,omitempty"`
-				ContactType string `json:"contact_type,omitempty"`
-				IBAN        string `json:"iban,omitempty"`
-				TaxOffice   string `json:"tax_office,omitempty"`
-				TaxNumber   string `json:"tax_number,omitempty"`
-				City        string `json:"city,omitempty"`
-				District    string `json:"district,omitempty"`
-				Address     string `json:"address,omitempty"`
-				Phone       string `json:"phone,omitempty"`
-				Fax         string `json:"fax,omitempty"`
-				IsAbroad    bool   `json:"is_abroad,omitempty"`
-				Archived    bool   `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ContactPortal struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_portal,omitempty"`
-				ContactPeople struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_people,omitempty"`
-			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Employees struct {
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Name     string `json:"name,omitempty"`
-				TCKN     string `json:"tckn,omitempty"`
-				Email    string `json:"email,omitempty"`
-				IBAN     string `json:"iban,omitempty"`
-				Archived bool   `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ManagedByUser struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user,omitempty"`
-				ManagedByUserRole struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user_role,omitempty"`
-			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
 }
 
 type Response struct {
-	SalesInvoices struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				InvoiceSeries          string      `json:"invoice_series,omitempty"`
-				InvoiceNo              string      `json:"invoice_no,omitempty"`
-				InvoiceID              json.Number `json:"invoice_id,omitempty"`
-				ExchangeRate           json.Number `json:"exchange_rate,omitempty"`
-				WithholdingRate        json.Number `json:"withholding_rate,omitempty"`
-				VatWithholdingRate     json.Number `json:"vat_withholding_rate,omitempty"`
-				NetTotal               json.Number `json:"net_total,omitempty"`
-				GrossTotal             json.Number `json:"gross_total,omitempty"`
-				Withholding            json.Number `json:"withholding,omitempty"`
-				TotalExciseDuty        json.Number `json:"total_excise_duty,omitempty"`
-				TotalCommunicationsTax json.Number `json:"total_communications_tax,omitempty"`
-				TotalVat               json.Number `json:"total_vat,omitempty"`
-				VatWithholding         json.Number `json:"vat_withholding,omitempty"`
-				BeforeTaxesTotal       json.Number `json:"before_taxes_total,omitempty"`
-				Remaining              json.Number `json:"remaining,omitempty"`
-				RemainingInTrl         json.Number `json:"remaining_in_trl,omitempty"`
-				TotalDiscount          json.Number `json:"total_discount,omitempty"`
-				TotalInvoiceDiscount   json.Number `json:"total_invoice_discount,omitempty"`
-				InvoiceDiscount        json.Number `json:"invoice_discount,omitempty"`
-				InvoiceDiscountType    string      `json:"invoice_discount_type,omitempty"`
-				Currency               string      `json:"currency,omitempty"`
-				PaymentStatus          string      `json:"payment_status,omitempty"`
-				ItemType               string      `json:"item_type,omitempty"`
-				Description            string      `json:"description,omitempty"`
-				CreatedAt              string      `json:"created_at,omitempty"`
-				UpdatedAt              string      `json:"updated_at,omitempty"`
-				IssueDate              string      `json:"issue_date,omitempty"`
-				DueDate                string      `json:"due_date,omitempty"`
-				BillingAddress         string      `json:"billing_address,omitempty"`
-				BillingPhone           string      `json:"billing_phone,omitempty"`
-				BillingFax             string      `json:"billing_fax,omitempty"`
-				TaxOffice              string      `json:"tax_office,omitempty"`
-				TaxNumber              string      `json:"tax_number,omitempty"`
-				City                   string      `json:"city,omitempty"`
-				District               string      `json:"district,omitempty"`
-				OrderNo                string      `json:"order_no,omitempty"`
-				OrderDate              string      `json:"order_date,omitempty"`
-				ShipmentAddress        string      `json:"shipment_addres,omitempty"`
-				IsAbroad               bool        `json:"is_abroad,omitempty"`
-				Archived               bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-			Relationships struct {
-				Details struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"details,omitempty"`
-				Contact struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact,omitempty"`
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				Tags struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"tags,omitempty"`
-				Payments struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"payments,omitempty"`
-				Sharings struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"sharings,omitempty"`
-				RecurrencePlan struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"recurrence_plan,omitempty"`
-				ActiveEDocument struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"active_e_document,omitempty"`
-			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	PurchaseBills struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				TotalPaid                   json.Number `json:"total_paid,omitempty"`
-				NetTotal                    json.Number `json:"net_total,omitempty"`
-				GrossTotal                  json.Number `json:"gross_total,omitempty"`
-				TotalExciseDuty             json.Number `json:"total_excise_duty,omitempty"`
-				TotalCommunicationsTax      json.Number `json:"total_communications_tax,omitempty"`
-				TotalVat                    json.Number `json:"total_vat,omitempty"`
-				TotalDiscount               json.Number `json:"total_discount,omitempty"`
-				TotalInvoiceDiscount        json.Number `json:"total_invoice_discount,omitempty"`
-				Remaining                   json.Number `json:"remaining,omitempty"`
-				RemainingInTrl              json.Number `json:"remaining_in_trl,omitempty"`
-				SharingsCount               json.Number `json:"sharings_count,omitempty"`
-				EInvoicesCount              json.Number `json:"e_invoices_count,omitempty"`
-				RemainingReimbursement      json.Number `json:"remaining_reimbursement,omitempty"`
-				RemainingReimbursementInTrl json.Number `json:"remaining_reimbursement_in_trl,omitempty"`
-				ExchangeRate                json.Number `json:"exchange_rate,omitempty"`
-				VatWithholding              json.Number `json:"vat_withholding,omitempty"`
-				Withholding                 json.Number `json:"withholding,omitempty"`
-				WithholdingRate             json.Number `json:"withholding_rate,omitempty"`
-				VatWithholdingRate          json.Number `json:"vat_withholding_rate,omitempty"`
-				InvoiceDiscount             json.Number `json:"invoice_discount,omitempty"`
-				PaymentStatus               string      `json:"payment_status,omitempty"`
-				CreatedAt                   string      `json:"created_at,omitempty"`
-				UpdatedAt                   string      `json:"updated_at,omitempty"`
-				ItemType                    string      `json:"item_type,omitempty"`
-				Description                 string      `json:"description,omitempty"`
-				IssueDate                   string      `json:"issue_date,omitempty"`
-				DueDate                     string      `json:"due_date,omitempty"`
-				InvoiceNo                   string      `json:"invoice_no,omitempty"`
-				Currency                    string      `json:"currency,omitempty"`
-				InvoiceDiscountType         string      `json:"invoice_discount_type,omitempty"`
-				IsDetailed                  bool        `json:"is_detailed,omitempty"`
-				Archived                    bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
 	Contacts struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -685,6 +567,184 @@ type Response struct {
 				DebitCurrency     string      `json:"debit_currency,omitempty"`
 				CreditAmount      json.Number `json:"credit_amount,omitempty"`
 				CreditCurrency    string      `json:"credit_currency,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	Payments struct {
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Description  string `json:"description,omitempty"`
+				AccountID    string `json:"account_id,omitempty"`
+				Date         string `json:"date,omitempty"`
+				Amount       string `json:"amount,omitempty"`
+				Currency     string `json:"currency,omitempty"`
+				ExchangeRate string `json:"exchange_rate,omitempty"`
+				Notes        string `json:"notes,omitempty"`
+			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Payable struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"payable,omitempty"`
+				Transaction struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"transaction,omitempty"`
+			} `json:"relationships,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	SalesInvoices struct {
+		Errors []struct {
+			Title  string `json:"title,omitempty"`
+			Detail string `json:"detail,omitempty"`
+		} `json:"errors,omitempty"`
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				InvoiceSeries          string      `json:"invoice_series,omitempty"`
+				InvoiceNo              string      `json:"invoice_no,omitempty"`
+				InvoiceID              json.Number `json:"invoice_id,omitempty"`
+				ExchangeRate           json.Number `json:"exchange_rate,omitempty"`
+				WithholdingRate        json.Number `json:"withholding_rate,omitempty"`
+				VatWithholdingRate     json.Number `json:"vat_withholding_rate,omitempty"`
+				NetTotal               json.Number `json:"net_total,omitempty"`
+				GrossTotal             json.Number `json:"gross_total,omitempty"`
+				Withholding            json.Number `json:"withholding,omitempty"`
+				TotalExciseDuty        json.Number `json:"total_excise_duty,omitempty"`
+				TotalCommunicationsTax json.Number `json:"total_communications_tax,omitempty"`
+				TotalVat               json.Number `json:"total_vat,omitempty"`
+				VatWithholding         json.Number `json:"vat_withholding,omitempty"`
+				BeforeTaxesTotal       json.Number `json:"before_taxes_total,omitempty"`
+				Remaining              json.Number `json:"remaining,omitempty"`
+				RemainingInTrl         json.Number `json:"remaining_in_trl,omitempty"`
+				TotalDiscount          json.Number `json:"total_discount,omitempty"`
+				TotalInvoiceDiscount   json.Number `json:"total_invoice_discount,omitempty"`
+				InvoiceDiscount        json.Number `json:"invoice_discount,omitempty"`
+				InvoiceDiscountType    string      `json:"invoice_discount_type,omitempty"`
+				Currency               string      `json:"currency,omitempty"`
+				PaymentStatus          string      `json:"payment_status,omitempty"`
+				ItemType               string      `json:"item_type,omitempty"`
+				Description            string      `json:"description,omitempty"`
+				CreatedAt              string      `json:"created_at,omitempty"`
+				UpdatedAt              string      `json:"updated_at,omitempty"`
+				IssueDate              string      `json:"issue_date,omitempty"`
+				DueDate                string      `json:"due_date,omitempty"`
+				BillingAddress         string      `json:"billing_address,omitempty"`
+				BillingPhone           string      `json:"billing_phone,omitempty"`
+				BillingFax             string      `json:"billing_fax,omitempty"`
+				TaxOffice              string      `json:"tax_office,omitempty"`
+				TaxNumber              string      `json:"tax_number,omitempty"`
+				City                   string      `json:"city,omitempty"`
+				District               string      `json:"district,omitempty"`
+				OrderNo                string      `json:"order_no,omitempty"`
+				OrderDate              string      `json:"order_date,omitempty"`
+				ShipmentAddress        string      `json:"shipment_addres,omitempty"`
+				IsAbroad               bool        `json:"is_abroad,omitempty"`
+				Archived               bool        `json:"archived,omitempty"`
+			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Details struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"details,omitempty"`
+				Contact struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"contact,omitempty"`
+				Category struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"category,omitempty"`
+				Tags struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"tags,omitempty"`
+				Payments struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"payments,omitempty"`
+				Sharings struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"sharings,omitempty"`
+				RecurrencePlan struct {
+					Data []struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"recurrence_plan,omitempty"`
+				ActiveEDocument struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"active_e_document,omitempty"`
+			} `json:"relationships,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	PurchaseBills struct {
+		Errors []struct {
+			Title  string `json:"title,omitempty"`
+			Detail string `json:"detail,omitempty"`
+		} `json:"errors,omitempty"`
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				TotalPaid                   json.Number `json:"total_paid,omitempty"`
+				NetTotal                    json.Number `json:"net_total,omitempty"`
+				GrossTotal                  json.Number `json:"gross_total,omitempty"`
+				TotalExciseDuty             json.Number `json:"total_excise_duty,omitempty"`
+				TotalCommunicationsTax      json.Number `json:"total_communications_tax,omitempty"`
+				TotalVat                    json.Number `json:"total_vat,omitempty"`
+				TotalDiscount               json.Number `json:"total_discount,omitempty"`
+				TotalInvoiceDiscount        json.Number `json:"total_invoice_discount,omitempty"`
+				Remaining                   json.Number `json:"remaining,omitempty"`
+				RemainingInTrl              json.Number `json:"remaining_in_trl,omitempty"`
+				SharingsCount               json.Number `json:"sharings_count,omitempty"`
+				EInvoicesCount              json.Number `json:"e_invoices_count,omitempty"`
+				RemainingReimbursement      json.Number `json:"remaining_reimbursement,omitempty"`
+				RemainingReimbursementInTrl json.Number `json:"remaining_reimbursement_in_trl,omitempty"`
+				ExchangeRate                json.Number `json:"exchange_rate,omitempty"`
+				VatWithholding              json.Number `json:"vat_withholding,omitempty"`
+				Withholding                 json.Number `json:"withholding,omitempty"`
+				WithholdingRate             json.Number `json:"withholding_rate,omitempty"`
+				VatWithholdingRate          json.Number `json:"vat_withholding_rate,omitempty"`
+				InvoiceDiscount             json.Number `json:"invoice_discount,omitempty"`
+				PaymentStatus               string      `json:"payment_status,omitempty"`
+				CreatedAt                   string      `json:"created_at,omitempty"`
+				UpdatedAt                   string      `json:"updated_at,omitempty"`
+				ItemType                    string      `json:"item_type,omitempty"`
+				Description                 string      `json:"description,omitempty"`
+				IssueDate                   string      `json:"issue_date,omitempty"`
+				DueDate                     string      `json:"due_date,omitempty"`
+				InvoiceNo                   string      `json:"invoice_no,omitempty"`
+				Currency                    string      `json:"currency,omitempty"`
+				InvoiceDiscountType         string      `json:"invoice_discount_type,omitempty"`
+				IsDetailed                  bool        `json:"is_detailed,omitempty"`
+				Archived                    bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -1008,6 +1068,38 @@ func (api *API) ShowSalesInvoice(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
+func (api *API) PaySalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
+	paymentdata, _ := json.Marshal(request.Payments)
+	cli := http.Client{}
+	fmt.Println(string(paymentdata))
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.Payments)
 	return response
 }
 

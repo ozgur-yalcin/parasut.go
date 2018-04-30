@@ -195,7 +195,7 @@ func main() {
 			request.SalesInvoices.Data.Attributes.District = ""             // İlçe
 
 			request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID (varsa)
+			request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
 			request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 			request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
@@ -246,6 +246,46 @@ func main() {
 		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
 		response := api.ShowSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Satış faturasına ödeme kaydı oluşturma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = ""                    // Satış Faturası ID
+		request.Payments.Data.Type = "payments"               // << Değişiklik yapmayınız !
+		request.Payments.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
+		request.Payments.Data.Attributes.Description = ""     // Ödeme açıklaması
+		request.Payments.Data.Attributes.Date = ""            // Ödeme tarihi (Yıl-Ay-Gün)
+		request.Payments.Data.Attributes.Amount = ""          // Ödeme tutarı
+		request.Payments.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
+		request.Payments.Data.Attributes.ExchangeRate = "1.0" // Döviz Kuru
+		response := api.PaySalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.Payments, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
