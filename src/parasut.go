@@ -306,6 +306,16 @@ type Request struct {
 			ID   string `json:"id,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
+	EInvoiceInboxes struct {
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				VKN string `json:"vkn,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
 }
 
 type Response struct {
@@ -749,27 +759,6 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	EInvoiceInboxes struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				VKN                 string `json:"vkn,omitempty"`
-				EInvoiceAddress     string `json:"e_invoice_address,omitempty"`
-				Name                string `json:"name,omitempty"`
-				InboxType           string `json:"inbox_type,omitempty"`
-				AddressRegisteredAt string `json:"address_registered_at,omitempty"`
-				RegisteredAt        string `json:"registered_at,omitempty"`
-				CreatedAt           string `json:"created_at,omitempty"`
-				UpdatedAt           string `json:"updated_at,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
 	EArchives struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -854,6 +843,27 @@ type Response struct {
 			Attributes struct {
 				URL       string `json:"url,omitempty"`
 				ExpiresAt string `json:"expires_at,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	EInvoiceInboxes struct {
+		Errors []struct {
+			Title  string `json:"title,omitempty"`
+			Detail string `json:"detail,omitempty"`
+		} `json:"errors,omitempty"`
+		Data []struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				VKN                 string `json:"vkn,omitempty"`
+				EInvoiceAddress     string `json:"e_invoice_address,omitempty"`
+				Name                string `json:"name,omitempty"`
+				InboxType           string `json:"inbox_type,omitempty"`
+				AddressRegisteredAt string `json:"address_registered_at,omitempty"`
+				RegisteredAt        string `json:"registered_at,omitempty"`
+				CreatedAt           string `json:"created_at,omitempty"`
+				UpdatedAt           string `json:"updated_at,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -1018,7 +1028,6 @@ func (api *API) CreateSalesInvoice(request Request) (response Response) {
 	apiurl = config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
 	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
 	cli := http.Client{}
-	fmt.Println(string(salesinvoicedata))
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
 	if err != nil {
 		fmt.Println(err)
@@ -1079,7 +1088,6 @@ func (api *API) PaySalesInvoice(request Request) (response Response) {
 	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
 	paymentdata, _ := json.Marshal(request.Payments)
 	cli := http.Client{}
-	fmt.Println(string(paymentdata))
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
 	if err != nil {
 		fmt.Println(err)
@@ -1216,5 +1224,34 @@ func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.EInvoicePDF)
+	return response
+}
+
+func (api *API) ListEInvoiceInboxes(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
+	cli := http.Client{}
+	req, err := http.NewRequest("GET", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.EInvoiceInboxes)
 	return response
 }

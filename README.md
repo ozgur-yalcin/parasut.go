@@ -286,6 +286,39 @@ func main() {
 }
 ```
 
+# Vergi numarasına göre E-Fatura mükellefine ait bilgileri görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
+		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası
+		response := api.ListEInvoiceInboxes(request)
+		pretty, _ := json.MarshalIndent(response.EInvoiceInboxes, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
 # Resmileştirilmiş fatura bilgilerini görüntüleme
 ```go
 package main
@@ -317,8 +350,8 @@ func main() {
 		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
 			request := parasut.Request{}
 			request.EArchives.Data.ID = docid
-			earchive := api.ShowEArchive(request)
-			pretty, _ := json.MarshalIndent(earchive.EArchives, " ", "\t")
+			response := api.ShowEArchive(request)
+			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
 			fmt.Println(string(pretty))
 		}
 		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
