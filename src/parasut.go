@@ -248,6 +248,14 @@ type Request struct {
 					Date  string `json:"date,omitempty"`
 				} `json:"shipment,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				SalesInvoice struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"sales_invoice,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -266,7 +274,28 @@ type Request struct {
 					Product             string `json:"product,omitempty"`
 					SalesExciseDutyCode string `json:"sales_excise_duty_code,omitempty"`
 				} `json:"excise_duty_codes,omitempty"`
+				InternetSale struct {
+					URL             string `json:"url,omitempty"`
+					PaymentType     string `json:"payment_type,omitempty"`
+					PaymentPlatform string `json:"payment_platform,omitempty"`
+					PaymentDate     string `json:"payment_date,omitempty"`
+				} `json:"internet_sale,omitempty"`
+				Shipment struct {
+					Title string `json:"title,omitempty"`
+					Name  string `json:"name,omitempty"`
+					VKN   string `json:"vkn,omitempty"`
+					TCKN  string `json:"tckn,omitempty"`
+					Date  string `json:"date,omitempty"`
+				} `json:"shipment,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Invoice struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"invoice,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -757,6 +786,14 @@ type Response struct {
 				IsPrinted        bool   `json:"is_printed,omitempty"`
 				IsSigned         bool   `json:"is_signed,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				SalesInvoice struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"sales_invoice,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -791,6 +828,14 @@ type Response struct {
 				IsExpired    bool        `json:"is_expired,omitempty"`
 				IsAnswerable bool        `json:"is_answerable,omitempty"`
 			} `json:"attributes,omitempty"`
+			Relationships struct {
+				Invoice struct {
+					Data struct {
+						Type string `json:"type,omitempty"`
+						ID   string `json:"id,omitempty"`
+					} `json:"data,omitempty"`
+				} `json:"invoice,omitempty"`
+			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -1040,6 +1085,126 @@ func (api *API) ShowSalesInvoice(request Request) (response Response) {
 		fmt.Println(err)
 		return response
 	}
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
+func (api *API) CancelSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
+	cli := http.Client{}
+	req, err := http.NewRequest("DELETE", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
+func (api *API) DeleteSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
+	cli := http.Client{}
+	req, err := http.NewRequest("DELETE", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
+func (api *API) ArchiveSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
+	cli := http.Client{}
+	req, err := http.NewRequest("PATCH", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.SalesInvoices)
+	return response
+}
+
+func (api *API) UnarchiveSalesInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
+	cli := http.Client{}
+	req, err := http.NewRequest("PATCH", apiurl, nil)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {

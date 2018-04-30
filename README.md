@@ -50,7 +50,7 @@ func main() {
 }
 ```
 
-# Müşteri/Tedarikçi bilgilerini görüntüleme
+# Müşteri/Tedarikçi kaydını görüntüleme
 ```go
 package main
 
@@ -122,7 +122,7 @@ func main() {
 }
 ```
 
-# Çalışan bilgilerini görüntüleme
+# Çalışan kaydını görüntüleme
 ```go
 package main
 
@@ -181,7 +181,7 @@ func main() {
 		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
-		request.SalesInvoices.Data.Attributes.TaxNumber = "11111111111" // Vergi numarası
+		request.SalesInvoices.Data.Attributes.TaxNumber = ""            // Vergi numarası
 		request.SalesInvoices.Data.Attributes.TaxOffice = ""            // Vergi dairesi
 		request.SalesInvoices.Data.Attributes.IssueDate = ""            // Fatura tarihi (Yıl-Ay-Gün)
 		request.SalesInvoices.Data.Attributes.Currency = "TRL"          // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
@@ -215,7 +215,7 @@ func main() {
 }
 ```
 
-# Satış faturası bilgilerini görüntüleme
+# Satış faturası kaydını silme
 ```go
 package main
 
@@ -239,7 +239,135 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		response := api.DeleteSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Satış faturası kaydını iptal etme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		response := api.CancelSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Satış faturası kaydını arşivleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		response := api.ArchiveSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Satış faturası kaydını arşivden çıkarma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		response := api.UnarchiveSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Satış faturası kaydını görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -271,7 +399,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = ""                    // Satış Faturası ID
+		request.SalesInvoices.Data.ID = ""                    // Satış faturası ID
 		request.Payments.Data.Type = "payments"               // << Değişiklik yapmayınız !
 		request.Payments.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
 		request.Payments.Data.Attributes.Description = ""     // Ödeme açıklaması
@@ -319,7 +447,7 @@ func main() {
 }
 ```
 
-# Resmileştirilmiş fatura bilgilerini görüntüleme
+# Satış faturasını resmileştirme
 ```go
 package main
 
@@ -343,24 +471,99 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
-		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
-		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
+		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
+		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası sorgulama
+		response := api.ListEInvoiceInboxes(request)
+		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
+			for _, data := range response.EInvoiceInboxes.Data {
+				request := parasut.Request{}
+				request.EInvoices.Data.Type = "e_invoices"                                // << Değişiklik yapmayınız !
+				request.EInvoices.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+				request.EInvoices.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
+
+				request.EInvoices.Data.Attributes.To = data.Attributes.EInvoiceAddress
+				request.EInvoices.Data.Attributes.Scenario = ""               // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
+				request.EInvoices.Data.Attributes.Note = ""                   // Fatura notu
+				request.EInvoices.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
+				request.EInvoices.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
+				request.EInvoices.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
+
+				// Internet satışı (Varsa)
+				request.EInvoices.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
+				request.EInvoices.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
+				request.EInvoices.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
+				request.EInvoices.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
+
+				response := api.CreateEInvoice(request)
+				pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
+				fmt.Println(string(pretty))
+			}
+		} else { // e-Arşiv ise
 			request := parasut.Request{}
-			request.EArchives.Data.Type = "e_archives" // << Değişiklik yapmayınız !
-			request.EArchives.Data.ID = docid
-			response := api.ShowEArchive(request)
+			request.EArchives.Data.Type = "e_archives"                                     // << Değişiklik yapmayınız !
+			request.EArchives.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+			request.EArchives.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+
+			request.EArchives.Data.Attributes.Note = ""                   // Fatura notu
+			request.EArchives.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
+			request.EArchives.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
+			request.EArchives.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
+
+			// Internet satışı (Varsa)
+			request.EArchives.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
+			request.EArchives.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
+			request.EArchives.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
+			request.EArchives.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
+
+			response := api.CreateEArchive(request)
 			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
 			fmt.Println(string(pretty))
 		}
-		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
+	}
+}
+```
+
+# Resmileştirilmiş fatura kaydını görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		response := api.ShowSalesInvoice(request)
+		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
+		if doctype == "e_invoices" { // e-Fatura ise
 			request := parasut.Request{}
-			request.EInvoices.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
+			request.EInvoices.Data.Type = doctype
 			request.EInvoices.Data.ID = docid
 			response := api.ShowEInvoice(request)
 			pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
+			fmt.Println(string(pretty))
+		} else if doctype == "e_archives" { // e-Arşiv ise
+			request := parasut.Request{}
+			request.EArchives.Data.Type = doctype
+			request.EArchives.Data.ID = docid
+			response := api.ShowEArchive(request)
+			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
 			fmt.Println(string(pretty))
 		}
 	}
@@ -391,24 +594,23 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış Faturası ID
+		request.SalesInvoices.Data.ID = "" // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
-		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
-			request := parasut.Request{}
-			request.EArchives.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
-			request.EArchivePDF.Data.ID = docid
-			response := api.ShowEArchivePDF(request)
-			pdfurl := response.EArchivePDF.Data.Attributes.URL
-			fmt.Println(pdfurl)
-		}
-		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
+		if doctype == "e_invoices" { // e-Fatura ise
 			request := parasut.Request{}
 			request.EInvoices.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
+			fmt.Println(pdfurl)
+		} else if doctype == "e_archives" { // e-Arşiv ise
+			request := parasut.Request{}
+			request.EArchives.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
+			request.EArchivePDF.Data.ID = docid
+			response := api.ShowEArchivePDF(request)
+			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
 	}
