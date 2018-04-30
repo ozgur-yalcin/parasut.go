@@ -349,6 +349,7 @@ func main() {
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
 			request := parasut.Request{}
+			request.EArchives.Data.Type = "e_archives" // << Değişiklik yapmayınız !
 			request.EArchives.Data.ID = docid
 			response := api.ShowEArchive(request)
 			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
@@ -356,6 +357,7 @@ func main() {
 		}
 		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
 			request := parasut.Request{}
+			request.EInvoices.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
 			request.EInvoices.Data.ID = docid
 			response := api.ShowEInvoice(request)
 			pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
@@ -395,6 +397,7 @@ func main() {
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_archives" { // Fatura tipi e-Arşiv ise
 			request := parasut.Request{}
+			request.EArchives.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EArchivePDF.Data.ID = docid
 			response := api.ShowEArchivePDF(request)
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
@@ -402,6 +405,7 @@ func main() {
 		}
 		if doctype == "e_invoices" { // Fatura tipi e-Fatura ise
 			request := parasut.Request{}
+			request.EInvoices.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL

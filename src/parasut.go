@@ -143,7 +143,7 @@ type Request struct {
 			} `json:"attributes,omitempty"`
 			Relationships struct {
 				Details struct {
-					Fill struct {
+					Detail struct {
 						Type       string `json:"type,omitempty"`
 						ID         string `json:"id,omitempty"`
 						Attributes struct {
@@ -167,30 +167,7 @@ type Request struct {
 							} `json:"product,omitempty"`
 						} `json:"relationships,omitempty"`
 					} `json:"-"`
-					Data []struct {
-						Type       string `json:"type,omitempty"`
-						ID         string `json:"id,omitempty"`
-						Attributes struct {
-							Quantity              json.Number `json:"quantity,omitempty"`
-							UnitPrice             json.Number `json:"unit_price,omitempty"`
-							VatRate               json.Number `json:"vat_rate,omitempty"`
-							DiscountValue         json.Number `json:"discount_value,omitempty"`
-							ExciseDutyValue       json.Number `json:"excise_duty_value,omitempty"`
-							CommunicationsTaxRate json.Number `json:"communications_tax_rate,omitempty"`
-							ProductID             string      `json:"product_id,omitempty"`
-							Description           string      `json:"description,omitempty"`
-							DiscountType          string      `json:"discount_type,omitempty"`
-							ExciseDutyType        string      `json:"excise_duty_type,omitempty"`
-						} `json:"attributes,omitempty"`
-						Relationships struct {
-							Product struct {
-								Data struct {
-									Type string `json:"type,omitempty"`
-									ID   string `json:"id,omitempty"`
-								} `json:"data,omitempty"`
-							} `json:"product,omitempty"`
-						} `json:"relationships,omitempty"`
-					} `json:"data,omitempty"`
+					Data []interface{} `json:"data,omitempty"`
 				} `json:"details,omitempty"`
 				Contact struct {
 					Data struct {
@@ -1111,6 +1088,37 @@ func (api *API) PaySalesInvoice(request Request) (response Response) {
 	return response
 }
 
+func (api *API) CreateEArchive(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/e_archives"
+	earchivedata, _ := json.Marshal(request.EArchives)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.EArchives)
+	return response
+}
+
 func (api *API) ShowEArchive(request Request) (response Response) {
 	var (
 		apiurl string
@@ -1137,6 +1145,37 @@ func (api *API) ShowEArchive(request Request) (response Response) {
 		return response
 	}
 	json.Unmarshal(bytes, &response.EArchives)
+	return response
+}
+
+func (api *API) CreateEInvoice(request Request) (response Response) {
+	var (
+		apiurl string
+		data   interface{}
+	)
+	apiurl = config.APIURL + config.CompanyID + "/e_invoices"
+	einvoicedata, _ := json.Marshal(request.EInvoices)
+	cli := http.Client{}
+	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	json.NewDecoder(res.Body).Decode(&data)
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return response
+	}
+	json.Unmarshal(bytes, &response.EInvoices)
 	return response
 }
 
