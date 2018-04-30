@@ -52,6 +52,105 @@ func main() {
 }
 ```
 
+# Müşteri/Tedarikçi kaydını silme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.DeleteContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.ArchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivden çıkarma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.UnarchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
 # Müşteri/Tedarikçi kaydını görüntüleme
 ```go
 package main
@@ -76,7 +175,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Contacts.Data.ID = "" // Müşteri/Tedarikçi ID
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
 		response := api.ShowContact(request)
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
 		fmt.Println(string(pretty))
@@ -124,6 +224,105 @@ func main() {
 }
 ```
 
+# Çalışan kaydını silme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
+		request.Employees.Data.ID = ""            // Çalışan ID
+		response := api.DeleteEmployee(request)
+		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Çalışan kaydını arşivleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
+		request.Employees.Data.ID = ""            // Çalışan ID
+		response := api.ArchiveEmployee(request)
+		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Çalışan kaydını arşivden çıkarma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"parasut/config"
+	"parasut/src"
+)
+
+func init() {
+	config.CompanyID = ""    // Firma numarası
+	config.ClientID = ""     // Müşteri numarası
+	config.ClientSecret = "" // Müşteri anahtarı
+	config.Username = ""     // Kullanıcı adı
+	config.Password = ""     // Şifre
+}
+
+func main() {
+	api := parasut.API{}
+	auth := api.Authorize()
+	if auth {
+		request := parasut.Request{}
+		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
+		request.Employees.Data.ID = ""            // Çalışan ID
+		response := api.UnarchiveEmployee(request)
+		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
 # Çalışan kaydını görüntüleme
 ```go
 package main
@@ -148,7 +347,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.Employees.Data.ID = "" // Çalışan ID
+		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
+		request.Employees.Data.ID = ""            // Çalışan ID
 		response := api.ShowEmployee(request)
 		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
 		fmt.Println(string(pretty))
@@ -241,7 +441,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.DeleteSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -273,7 +474,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.CancelSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -305,7 +507,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ArchiveSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -337,7 +540,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.UnarchiveSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -369,7 +573,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
 		fmt.Println(string(pretty))
@@ -401,6 +606,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
+		request.SalesInvoices.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                    // Satış faturası ID
 		request.Payments.Data.Type = "payments"               // << Değişiklik yapmayınız !
 		request.Payments.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
@@ -549,7 +755,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
@@ -596,7 +803,8 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := parasut.Request{}
-		request.SalesInvoices.Data.ID = "" // Satış faturası ID
+		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
