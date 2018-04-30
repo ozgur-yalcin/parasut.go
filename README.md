@@ -197,16 +197,16 @@ func main() {
 		request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
-		request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.ID = ""           // Ürün ID
+		request.SalesInvoices.Data.Relationships.Details.Detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Details.Detail.Relationships.Product.Data.ID = ""           // Ürün ID
 
-		request.SalesInvoices.Data.Relationships.Details.Fill.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.Quantity = "0"          // Ürün miktarı
-		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
-		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.VatRate = "0"           // Ürün KDV oranı
-		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
-		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountValue = "0"     // İndirim oranı
-		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, request.SalesInvoices.Data.Relationships.Details.Fill)
+		request.SalesInvoices.Data.Relationships.Details.Detail.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.Quantity = "0"          // Ürün miktarı
+		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
+		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.VatRate = "0"           // Ürün KDV oranı
+		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
+		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.DiscountValue = "0"     // İndirim oranı
+		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, request.SalesInvoices.Data.Relationships.Details.Detail)
 
 		response := api.CreateSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
