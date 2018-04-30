@@ -286,7 +286,7 @@ func main() {
 }
 ```
 
-# Vergi numarasına göre E-Fatura mükellefine ait bilgileri görüntüleme
+# Vergi numarası ile E-Fatura mükellef bilgileri görüntüleme
 ```go
 package main
 
