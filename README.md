@@ -177,44 +177,40 @@ func main() {
 	api := parasut.API{}
 	auth := api.Authorize()
 	if auth {
-		api := parasut.API{}
-		auth := api.Authorize()
-		if auth {
-			request := parasut.Request{}
-			request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
-			request.SalesInvoices.Data.Attributes.TaxNumber = "11111111111" // Vergi numarası
-			request.SalesInvoices.Data.Attributes.TaxOffice = ""            // Vergi dairesi
-			request.SalesInvoices.Data.Attributes.IssueDate = ""            // Fatura tarihi (Yıl-Ay-Gün)
-			request.SalesInvoices.Data.Attributes.Currency = "TRL"          // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-			request.SalesInvoices.Data.Attributes.BillingPhone = ""         // Telefon numarası
-			request.SalesInvoices.Data.Attributes.BillingFax = ""           // Fax numarası
-			request.SalesInvoices.Data.Attributes.BillingAddress = ""       // Fatura adresi
-			request.SalesInvoices.Data.Attributes.City = ""                 // İl
-			request.SalesInvoices.Data.Attributes.District = ""             // İlçe
+		request := parasut.Request{}
+		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
+		request.SalesInvoices.Data.Attributes.TaxNumber = "11111111111" // Vergi numarası
+		request.SalesInvoices.Data.Attributes.TaxOffice = ""            // Vergi dairesi
+		request.SalesInvoices.Data.Attributes.IssueDate = ""            // Fatura tarihi (Yıl-Ay-Gün)
+		request.SalesInvoices.Data.Attributes.Currency = "TRL"          // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
+		request.SalesInvoices.Data.Attributes.BillingPhone = ""         // Telefon numarası
+		request.SalesInvoices.Data.Attributes.BillingFax = ""           // Fax numarası
+		request.SalesInvoices.Data.Attributes.BillingAddress = ""       // Fatura adresi
+		request.SalesInvoices.Data.Attributes.City = ""                 // İl
+		request.SalesInvoices.Data.Attributes.District = ""             // İlçe
 
-			request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
+		request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
-			request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
+		request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
-			request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.ID = ""           // Ürün ID
+		request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Details.Fill.Relationships.Product.Data.ID = ""           // Ürün ID
 
-			request.SalesInvoices.Data.Relationships.Details.Fill.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
-			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.Quantity = "0"          // Ürün miktarı
-			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
-			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.VatRate = "0"           // Ürün KDV oranı
-			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
-			request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountValue = "0"     // İndirim oranı
-			request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, request.SalesInvoices.Data.Relationships.Details.Fill)
+		request.SalesInvoices.Data.Relationships.Details.Fill.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.Quantity = "0"          // Ürün miktarı
+		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
+		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.VatRate = "0"           // Ürün KDV oranı
+		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
+		request.SalesInvoices.Data.Relationships.Details.Fill.Attributes.DiscountValue = "0"     // İndirim oranı
+		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, request.SalesInvoices.Data.Relationships.Details.Fill)
 
-			response := api.CreateSalesInvoice(request)
-			pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
-			fmt.Println(string(pretty))
-		}
+		response := api.CreateSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		fmt.Println(string(pretty))
 	}
 }
 ```
@@ -273,7 +269,6 @@ func init() {
 func main() {
 	api := parasut.API{}
 	auth := api.Authorize()
-
 	if auth {
 		request := parasut.Request{}
 		request.SalesInvoices.Data.ID = ""                    // Satış Faturası ID
