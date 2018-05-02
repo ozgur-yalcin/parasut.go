@@ -1,4 +1,4 @@
-# parasut
+# Parasut
 An easy-to-use parasut.com API (v4) with golang
 
 # Security
