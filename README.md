@@ -1,6 +1,11 @@
 # parasut
 An easy-to-use parasut.com API (v4) with golang
 
+# Security
+If you discover any security related issues, please email ozguryalcin@outlook.com instead of using the issue tracker.
+
+# License
+The MIT License (MIT). Please see License File for more information.
 
 
 # Müşteri/Tedarikçi kaydı oluşturma
