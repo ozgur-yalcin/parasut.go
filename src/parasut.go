@@ -8,17 +8,17 @@ import (
 	"parasut/config"
 	"strings"
 
-	"github.com/pasztorpisti/qs"
+	"github.com/google/go-querystring/query"
 )
 
 type API struct {
 	Client struct {
-		ClientID     string `json:"client_id,omitempty"`
-		ClientSecret string `json:"client_secret,omitempty"`
-		Username     string `json:"username,omitempty"`
-		Password     string `json:"password,omitempty"`
-		GrantType    string `json:"grant_type,omitempty"`
-		RedirectURI  string `json:"redirect_uri,omitempty"`
+		ClientID     string `url:"client_id,omitempty"`
+		ClientSecret string `url:"client_secret,omitempty"`
+		Username     string `url:"username,omitempty"`
+		Password     string `url:"password,omitempty"`
+		GrantType    string `url:"grant_type,omitempty"`
+		RedirectURI  string `url:"redirect_uri,omitempty"`
 	}
 
 	Authentication struct {
@@ -899,9 +899,9 @@ func (api *API) Authorize() bool {
 	api.Client.Password = config.Password
 	api.Client.GrantType = config.GrantType
 	api.Client.RedirectURI = config.RedirectURI
-	apidata, _ := qs.Marshal(api.Client)
+	apidata, _ := query.Values(api.Client)
 	cli := http.Client{}
-	req, err := http.NewRequest("POST", config.TokenURL, strings.NewReader(apidata))
+	req, err := http.NewRequest("POST", config.TokenURL, strings.NewReader(apidata.Encode()))
 	if err != nil {
 		fmt.Println(err)
 		return false
