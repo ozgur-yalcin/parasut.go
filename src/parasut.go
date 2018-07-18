@@ -895,7 +895,6 @@ type Response struct {
 }
 
 func (api *API) Authorize() bool {
-	var data interface{}
 	api.Client.ClientID = config.ClientID
 	api.Client.ClientSecret = config.ClientSecret
 	api.Client.Username = config.Username
@@ -903,7 +902,7 @@ func (api *API) Authorize() bool {
 	api.Client.GrantType = config.GrantType
 	api.Client.RedirectURI = config.RedirectURI
 	apidata, _ := query.Values(api.Client)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", config.TokenURL, strings.NewReader(apidata.Encode()))
 	if err != nil {
 		fmt.Println(err)
@@ -915,24 +914,17 @@ func (api *API) Authorize() bool {
 		return false
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return false
-	}
-	json.Unmarshal(bytes, &api.Authentication)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&api.Authentication)
 	return true
 }
 
-func (api *API) CreateContact(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
+func (api *API) CreateContact(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
 	contactdata, _ := json.Marshal(request.Contacts)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
 	if err != nil {
 		fmt.Println(err)
@@ -946,23 +938,16 @@ func (api *API) CreateContact(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Contacts)
 	return response
 }
 
-func (api *API) ShowContact(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
-	cli := http.Client{}
+func (api *API) ShowContact(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -975,23 +960,16 @@ func (api *API) ShowContact(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Contacts)
 	return response
 }
 
-func (api *API) DeleteContact(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID
-	cli := http.Client{}
+func (api *API) DeleteContact(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID
+	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1005,23 +983,16 @@ func (api *API) DeleteContact(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Contacts)
 	return response
 }
 
-func (api *API) ArchiveContact(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/archive"
-	cli := http.Client{}
+func (api *API) ArchiveContact(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/archive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1035,23 +1006,16 @@ func (api *API) ArchiveContact(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Contacts)
 	return response
 }
 
-func (api *API) UnarchiveContact(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/unarchive"
-	cli := http.Client{}
+func (api *API) UnarchiveContact(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/unarchive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1065,24 +1029,17 @@ func (api *API) UnarchiveContact(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Contacts)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Contacts)
 	return response
 }
 
-func (api *API) CreateEmployee(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
+func (api *API) CreateEmployee(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
 	employeedata, _ := json.Marshal(request.Employees)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
 	if err != nil {
 		fmt.Println(err)
@@ -1096,23 +1053,16 @@ func (api *API) CreateEmployee(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Employees)
 	return response
 }
 
-func (api *API) ShowEmployee(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
-	cli := http.Client{}
+func (api *API) ShowEmployee(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1125,23 +1075,16 @@ func (api *API) ShowEmployee(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Employees)
 	return response
 }
 
-func (api *API) DeleteEmployee(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID
-	cli := http.Client{}
+func (api *API) DeleteEmployee(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID
+	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1155,23 +1098,16 @@ func (api *API) DeleteEmployee(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Employees)
 	return response
 }
 
-func (api *API) ArchiveEmployee(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/archive"
-	cli := http.Client{}
+func (api *API) ArchiveEmployee(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/archive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1185,23 +1121,16 @@ func (api *API) ArchiveEmployee(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Employees)
 	return response
 }
 
-func (api *API) UnarchiveEmployee(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/unarchive"
-	cli := http.Client{}
+func (api *API) UnarchiveEmployee(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/unarchive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1215,24 +1144,17 @@ func (api *API) UnarchiveEmployee(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Employees)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Employees)
 	return response
 }
 
-func (api *API) CreateSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+func (api *API) CreateSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
 	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
 	if err != nil {
 		fmt.Println(err)
@@ -1246,23 +1168,16 @@ func (api *API) CreateSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) ShowSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
-	cli := http.Client{}
+func (api *API) ShowSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1275,23 +1190,16 @@ func (api *API) ShowSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) CancelSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
-	cli := http.Client{}
+func (api *API) CancelSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
+	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1305,23 +1213,16 @@ func (api *API) CancelSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
-	cli := http.Client{}
+func (api *API) DeleteSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
+	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1335,23 +1236,16 @@ func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
-	cli := http.Client{}
+func (api *API) ArchiveSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1365,23 +1259,16 @@ func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
-	cli := http.Client{}
+func (api *API) UnarchiveSalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
+	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1395,24 +1282,17 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.SalesInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.SalesInvoices)
 	return response
 }
 
-func (api *API) PaySalesInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
+func (api *API) PaySalesInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
 	paymentdata, _ := json.Marshal(request.Payments)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
 	if err != nil {
 		fmt.Println(err)
@@ -1426,24 +1306,17 @@ func (api *API) PaySalesInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.Payments)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Payments)
 	return response
 }
 
-func (api *API) CreateEArchive(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_archives"
+func (api *API) CreateEArchive(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_archives"
 	earchivedata, _ := json.Marshal(request.EArchives)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
 	if err != nil {
 		fmt.Println(err)
@@ -1457,23 +1330,16 @@ func (api *API) CreateEArchive(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EArchives)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EArchives)
 	return response
 }
 
-func (api *API) ShowEArchive(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
-	cli := http.Client{}
+func (api *API) ShowEArchive(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1486,24 +1352,17 @@ func (api *API) ShowEArchive(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EArchives)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EArchives)
 	return response
 }
 
-func (api *API) CreateEInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoices"
+func (api *API) CreateEInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_invoices"
 	einvoicedata, _ := json.Marshal(request.EInvoices)
-	cli := http.Client{}
+	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
 	if err != nil {
 		fmt.Println(err)
@@ -1517,23 +1376,16 @@ func (api *API) CreateEInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EInvoices)
 	return response
 }
 
-func (api *API) ShowEInvoice(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
-	cli := http.Client{}
+func (api *API) ShowEInvoice(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1546,23 +1398,16 @@ func (api *API) ShowEInvoice(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EInvoices)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EInvoices)
 	return response
 }
 
-func (api *API) ShowEArchivePDF(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
-	cli := http.Client{}
+func (api *API) ShowEArchivePDF(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1575,23 +1420,16 @@ func (api *API) ShowEArchivePDF(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EArchivePDF)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EArchivePDF)
 	return response
 }
 
-func (api *API) ShowEInvoicePDF(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
-	cli := http.Client{}
+func (api *API) ShowEInvoicePDF(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1604,23 +1442,16 @@ func (api *API) ShowEInvoicePDF(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EInvoicePDF)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EInvoicePDF)
 	return response
 }
 
-func (api *API) ListEInvoiceInboxes(request *Request) (response Response) {
-	var (
-		apiurl string
-		data   interface{}
-	)
-	apiurl = config.APIURL + config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
-	cli := http.Client{}
+func (api *API) ListEInvoiceInboxes(request *Request) (response *Response) {
+	response = new(Response)
+	apiurl := config.APIURL + config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
+	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
 		fmt.Println(err)
@@ -1633,12 +1464,8 @@ func (api *API) ListEInvoiceInboxes(request *Request) (response Response) {
 		return response
 	}
 	defer res.Body.Close()
-	json.NewDecoder(res.Body).Decode(&data)
-	bytes, err := json.Marshal(data)
-	if err != nil {
-		fmt.Println(err)
-		return response
-	}
-	json.Unmarshal(bytes, &response.EInvoiceInboxes)
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.EInvoiceInboxes)
 	return response
 }
