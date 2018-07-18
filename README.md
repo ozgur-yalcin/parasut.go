@@ -28,10 +28,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
 		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
 		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
@@ -77,10 +79,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
 		response := api.DeleteContact(request)
@@ -110,10 +114,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
 		response := api.ArchiveContact(request)
@@ -143,10 +149,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
 		response := api.UnarchiveContact(request)
@@ -176,10 +184,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
 		response := api.ShowContact(request)
@@ -209,10 +219,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Employees.Data.Type = "employees"    // << Değişiklik yapmayınız !
 		request.Employees.Data.Attributes.Name = ""  // İsim
 		request.Employees.Data.Attributes.Email = "" // E-posta adresi
@@ -249,10 +261,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
 		request.Employees.Data.ID = ""            // Çalışan ID
 		response := api.DeleteEmployee(request)
@@ -282,10 +296,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
 		request.Employees.Data.ID = ""            // Çalışan ID
 		response := api.ArchiveEmployee(request)
@@ -315,10 +331,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
 		request.Employees.Data.ID = ""            // Çalışan ID
 		response := api.UnarchiveEmployee(request)
@@ -348,10 +366,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
 		request.Employees.Data.ID = ""            // Çalışan ID
 		response := api.ShowEmployee(request)
@@ -381,10 +401,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
@@ -442,10 +464,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.DeleteSalesInvoice(request)
@@ -475,10 +499,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.CancelSalesInvoice(request)
@@ -508,10 +534,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ArchiveSalesInvoice(request)
@@ -541,10 +569,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.UnarchiveSalesInvoice(request)
@@ -574,10 +604,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
@@ -607,10 +639,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                    // Satış faturası ID
 		request.Payments.Data.Type = "payments"               // << Değişiklik yapmayınız !
@@ -647,10 +681,12 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
 		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası
 		response := api.ListEInvoiceInboxes(request)
@@ -680,16 +716,18 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
 		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası sorgulama
 		response := api.ListEInvoiceInboxes(request)
 		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
 			for _, data := range response.EInvoiceInboxes.Data {
-				request := parasut.Request{}
+				request := new(parasut.Request)
 				request.EInvoices.Data.Type = "e_invoices"                                // << Değişiklik yapmayınız !
 				request.EInvoices.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 				request.EInvoices.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
@@ -712,7 +750,7 @@ func main() {
 				fmt.Println(string(pretty))
 			}
 		} else { // e-Arşiv ise
-			request := parasut.Request{}
+			request := new(parasut.Request)
 			request.EArchives.Data.Type = "e_archives"                                     // << Değişiklik yapmayınız !
 			request.EArchives.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 			request.EArchives.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
@@ -756,24 +794,26 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_invoices" { // e-Fatura ise
-			request := parasut.Request{}
+			request := new(parasut.Request)
 			request.EInvoices.Data.Type = doctype
 			request.EInvoices.Data.ID = docid
 			response := api.ShowEInvoice(request)
 			pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
 			fmt.Println(string(pretty))
 		} else if doctype == "e_archives" { // e-Arşiv ise
-			request := parasut.Request{}
+			request := new(parasut.Request)
 			request.EArchives.Data.Type = doctype
 			request.EArchives.Data.ID = docid
 			response := api.ShowEArchive(request)
@@ -804,24 +844,26 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
-		request := parasut.Request{}
+		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_invoices" { // e-Fatura ise
-			request := parasut.Request{}
+			request := new(parasut.Request)
 			request.EInvoices.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		} else if doctype == "e_archives" { // e-Arşiv ise
-			request := parasut.Request{}
+			request := new(parasut.Request)
 			request.EArchives.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EArchivePDF.Data.ID = docid
 			response := api.ShowEArchivePDF(request)

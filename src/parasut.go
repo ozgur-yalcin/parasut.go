@@ -7,11 +7,14 @@ import (
 	"net/http"
 	"parasut/config"
 	"strings"
+	"sync"
 
 	"github.com/google/go-querystring/query"
 )
 
 type API struct {
+	sync.Mutex
+
 	Client struct {
 		ClientID     string `url:"client_id,omitempty"`
 		ClientSecret string `url:"client_secret,omitempty"`
@@ -922,7 +925,7 @@ func (api *API) Authorize() bool {
 	return true
 }
 
-func (api *API) CreateContact(request Request) (response Response) {
+func (api *API) CreateContact(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -953,7 +956,7 @@ func (api *API) CreateContact(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowContact(request Request) (response Response) {
+func (api *API) ShowContact(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -982,7 +985,7 @@ func (api *API) ShowContact(request Request) (response Response) {
 	return response
 }
 
-func (api *API) DeleteContact(request Request) (response Response) {
+func (api *API) DeleteContact(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1012,7 +1015,7 @@ func (api *API) DeleteContact(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ArchiveContact(request Request) (response Response) {
+func (api *API) ArchiveContact(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1042,7 +1045,7 @@ func (api *API) ArchiveContact(request Request) (response Response) {
 	return response
 }
 
-func (api *API) UnarchiveContact(request Request) (response Response) {
+func (api *API) UnarchiveContact(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1072,7 +1075,7 @@ func (api *API) UnarchiveContact(request Request) (response Response) {
 	return response
 }
 
-func (api *API) CreateEmployee(request Request) (response Response) {
+func (api *API) CreateEmployee(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1103,7 +1106,7 @@ func (api *API) CreateEmployee(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEmployee(request Request) (response Response) {
+func (api *API) ShowEmployee(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1132,7 +1135,7 @@ func (api *API) ShowEmployee(request Request) (response Response) {
 	return response
 }
 
-func (api *API) DeleteEmployee(request Request) (response Response) {
+func (api *API) DeleteEmployee(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1162,7 +1165,7 @@ func (api *API) DeleteEmployee(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ArchiveEmployee(request Request) (response Response) {
+func (api *API) ArchiveEmployee(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1192,7 +1195,7 @@ func (api *API) ArchiveEmployee(request Request) (response Response) {
 	return response
 }
 
-func (api *API) UnarchiveEmployee(request Request) (response Response) {
+func (api *API) UnarchiveEmployee(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1222,7 +1225,7 @@ func (api *API) UnarchiveEmployee(request Request) (response Response) {
 	return response
 }
 
-func (api *API) CreateSalesInvoice(request Request) (response Response) {
+func (api *API) CreateSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1253,7 +1256,7 @@ func (api *API) CreateSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowSalesInvoice(request Request) (response Response) {
+func (api *API) ShowSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1282,7 +1285,7 @@ func (api *API) ShowSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) CancelSalesInvoice(request Request) (response Response) {
+func (api *API) CancelSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1312,7 +1315,7 @@ func (api *API) CancelSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) DeleteSalesInvoice(request Request) (response Response) {
+func (api *API) DeleteSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1342,7 +1345,7 @@ func (api *API) DeleteSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ArchiveSalesInvoice(request Request) (response Response) {
+func (api *API) ArchiveSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1372,7 +1375,7 @@ func (api *API) ArchiveSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) UnarchiveSalesInvoice(request Request) (response Response) {
+func (api *API) UnarchiveSalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1402,7 +1405,7 @@ func (api *API) UnarchiveSalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) PaySalesInvoice(request Request) (response Response) {
+func (api *API) PaySalesInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1433,7 +1436,7 @@ func (api *API) PaySalesInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) CreateEArchive(request Request) (response Response) {
+func (api *API) CreateEArchive(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1464,7 +1467,7 @@ func (api *API) CreateEArchive(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEArchive(request Request) (response Response) {
+func (api *API) ShowEArchive(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1493,7 +1496,7 @@ func (api *API) ShowEArchive(request Request) (response Response) {
 	return response
 }
 
-func (api *API) CreateEInvoice(request Request) (response Response) {
+func (api *API) CreateEInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1524,7 +1527,7 @@ func (api *API) CreateEInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEInvoice(request Request) (response Response) {
+func (api *API) ShowEInvoice(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1553,7 +1556,7 @@ func (api *API) ShowEInvoice(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEArchivePDF(request Request) (response Response) {
+func (api *API) ShowEArchivePDF(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1582,7 +1585,7 @@ func (api *API) ShowEArchivePDF(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ShowEInvoicePDF(request Request) (response Response) {
+func (api *API) ShowEInvoicePDF(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}
@@ -1611,7 +1614,7 @@ func (api *API) ShowEInvoicePDF(request Request) (response Response) {
 	return response
 }
 
-func (api *API) ListEInvoiceInboxes(request Request) (response Response) {
+func (api *API) ListEInvoiceInboxes(request *Request) (response *Response) {
 	var (
 		apiurl string
 		data   interface{}

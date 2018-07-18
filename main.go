@@ -14,7 +14,9 @@ func init() {
 }
 
 func main() {
-	api := parasut.API{}
+	api := new(parasut.API)
+	api.Lock()
+	defer api.Lock()
 	auth := api.Authorize()
 	if auth {
 	}
