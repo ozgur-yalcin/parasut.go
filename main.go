@@ -1,8 +1,8 @@
 package main
 
 import (
-	"parasut/config"
-	"parasut/src"
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {

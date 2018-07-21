@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"parasut/config"
 	"strings"
 	"sync"
 
+	"github.com/OzqurYalcin/parasut/config"
 	"github.com/google/go-querystring/query"
 )
 

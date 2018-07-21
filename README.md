@@ -7,6 +7,10 @@ If you discover any security related issues, please email ozguryalcin@outlook.co
 # License
 The MIT License (MIT). Please see License File for more information.
 
+# Installation
+```bash
+go get github.com/OzqurYalcin/parasut
+```
 
 # Müşteri/Tedarikçi kaydı oluşturma
 ```go
@@ -15,8 +19,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -66,8 +71,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -101,8 +107,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -136,8 +143,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -171,8 +179,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -206,8 +215,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -248,8 +258,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -283,8 +294,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -318,8 +330,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -353,8 +366,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -388,8 +402,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -451,8 +466,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -486,8 +502,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -521,8 +538,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -556,8 +574,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -591,8 +610,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -626,8 +646,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -668,8 +689,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -703,8 +725,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -781,8 +804,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
@@ -831,8 +855,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"parasut/config"
-	"parasut/src"
+
+	"github.com/OzqurYalcin/parasut/config"
+	"github.com/OzqurYalcin/parasut/src"
 )
 
 func init() {
