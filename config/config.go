@@ -1,8 +1,8 @@
 package config
 
 var (
-	APIURL       = "https://api.parasut.com/v4/"
-	TokenURL     = "https://api.parasut.com/oauth/token"
+	ApiUrl       = "https://api.parasut.com/v4/"
+	TokenUrl     = "https://api.parasut.com/oauth/token"
 	CompanyID    = ""
 	ClientID     = ""
 	ClientSecret = ""
