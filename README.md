@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut)
+
 # Parasut
 An easy-to-use parasut.com API (v4) with golang
 
