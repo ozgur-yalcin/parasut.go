@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut) [![Build Status](https://circleci.com/gh/OzqurYalcin/parasut.svg?style=svg)](https://circleci.com/gh/OzqurYalcin/parasut)
+[![Linux Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/uo0u9dxh5lfw2kfw?svg=true)](https://ci.appveyor.com/project/OzqurYalcin/parasut) [![Build Status](https://circleci.com/gh/OzqurYalcin/parasut.svg?style=svg)](https://circleci.com/gh/OzqurYalcin/parasut)
 
 # Parasut
 An easy-to-use parasut.com API (v4) with golang
