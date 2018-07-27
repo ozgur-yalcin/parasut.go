@@ -1,10 +1,7 @@
-[![Linux Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/uo0u9dxh5lfw2kfw?svg=true)](https://ci.appveyor.com/project/OzqurYalcin/parasut) [![Build Status](https://circleci.com/gh/OzqurYalcin/parasut.svg?style=svg)](https://circleci.com/gh/OzqurYalcin/parasut)
+[![Linux Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/uo0u9dxh5lfw2kfw?svg=true)](https://ci.appveyor.com/project/OzqurYalcin/parasut) [![Build Status](https://circleci.com/gh/OzqurYalcin/parasut.svg?style=svg)](https://circleci.com/gh/OzqurYalcin/parasut) [![license](https://img.shields.io/npm/l/express.svg)](https://github.com/OzqurYalcin/parasut/blob/master/LICENSE.md)
 
 # Parasut
 An easy-to-use parasut.com API (v4) with golang
-
-# License
-The MIT License (MIT). Please see License File for more information.
 
 # Installation
 ```bash
