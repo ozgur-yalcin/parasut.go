@@ -3,7 +3,7 @@ package parasut
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"sync"
@@ -905,12 +905,12 @@ func (api *API) Authorize() bool {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", config.TokenUrl, strings.NewReader(apidata.Encode()))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	defer res.Body.Close()
@@ -927,14 +927,14 @@ func (api *API) CreateContact(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -950,13 +950,13 @@ func (api *API) ShowContact(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -972,14 +972,14 @@ func (api *API) DeleteContact(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -995,14 +995,14 @@ func (api *API) ArchiveContact(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1018,14 +1018,14 @@ func (api *API) UnarchiveContact(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1042,14 +1042,14 @@ func (api *API) CreateEmployee(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1065,13 +1065,13 @@ func (api *API) ShowEmployee(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1087,14 +1087,14 @@ func (api *API) DeleteEmployee(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1110,14 +1110,14 @@ func (api *API) ArchiveEmployee(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1133,14 +1133,14 @@ func (api *API) UnarchiveEmployee(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1157,14 +1157,14 @@ func (api *API) CreateSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1180,13 +1180,13 @@ func (api *API) ShowSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1202,14 +1202,14 @@ func (api *API) CancelSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1225,14 +1225,14 @@ func (api *API) DeleteSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1248,14 +1248,14 @@ func (api *API) ArchiveSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1271,14 +1271,14 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1295,14 +1295,14 @@ func (api *API) PaySalesInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1319,14 +1319,14 @@ func (api *API) CreateEArchive(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1342,13 +1342,13 @@ func (api *API) ShowEArchive(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1365,14 +1365,14 @@ func (api *API) CreateEInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1388,13 +1388,13 @@ func (api *API) ShowEInvoice(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1410,13 +1410,13 @@ func (api *API) ShowEArchivePDF(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1432,13 +1432,13 @@ func (api *API) ShowEInvoicePDF(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
@@ -1454,13 +1454,13 @@ func (api *API) ListEInvoiceInboxes(request *Request) (response *Response) {
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
 	res, err := cli.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return response
 	}
 	defer res.Body.Close()
