@@ -65,24 +65,9 @@ type Request struct {
 				Archived    bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ContactPortal struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_portal,omitempty"`
-				ContactPeople struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_people,omitempty"`
+				Category      SingleRelationShip `json:"category,omitempty"`
+				ContactPortal SingleRelationShip `json:"contact_portal,omitempty"`
+				ContactPeople MultiRelationShip  `json:"contact_people,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -99,24 +84,9 @@ type Request struct {
 				Archived bool   `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ManagedByUser struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user,omitempty"`
-				ManagedByUserRole struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user_role,omitempty"`
+				Category          SingleRelationShip `json:"category,omitempty"`
+				ManagedByUser     SingleRelationShip `json:"managed_by_user,omitempty"`
+				ManagedByUserRole MultiRelationShip  `json:"managed_by_user_role,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -170,34 +140,14 @@ type Request struct {
 							ExciseDutyType        string      `json:"excise_duty_type,omitempty"`
 						} `json:"attributes,omitempty"`
 						Relationships struct {
-							Product struct {
-								Data struct {
-									Type string `json:"type,omitempty"`
-									ID   string `json:"id,omitempty"`
-								} `json:"data,omitempty"`
-							} `json:"product,omitempty"`
+							Product SingleRelationShip `json:"product,omitempty"`
 						} `json:"relationships,omitempty"`
 					} `json:"-"`
 					Data []interface{} `json:"data,omitempty"`
 				} `json:"details,omitempty"`
-				Contact struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact,omitempty"`
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				Tags struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"tags,omitempty"`
+				Contact  SingleRelationShip `json:"contact,omitempty"`
+				Category SingleRelationShip `json:"category,omitempty"`
+				Tags     MultiRelationShip  `json:"tags,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -216,18 +166,8 @@ type Request struct {
 				Notes        string `json:"notes,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Payable struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"payable,omitempty"`
-				Transaction struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"transaction,omitempty"`
+				Payable     SingleRelationShip `json:"payable,omitempty"`
+				Transaction SingleRelationShip `json:"transaction,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -260,12 +200,7 @@ type Request struct {
 				} `json:"shipment,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				SalesInvoice struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"sales_invoice,omitempty"`
+				SalesInvoice SingleRelationShip `json:"sales_invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -300,29 +235,14 @@ type Request struct {
 				} `json:"shipment,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Invoice struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"invoice,omitempty"`
+				Invoice SingleRelationShip `json:"invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
-	EArchivePDF struct {
-		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-	}
+	EArchivePDF SingleRelationShip
 
-	EInvoicePDF struct {
-		Data struct {
-			Type string `json:"type,omitempty"`
-			ID   string `json:"id,omitempty"`
-		} `json:"data,omitempty"`
-	}
+	EInvoicePDF SingleRelationShip
 
 	EInvoiceInboxes struct {
 		Data struct {
@@ -369,24 +289,9 @@ type Response struct {
 				Archived    bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ContactPortal struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_portal,omitempty"`
-				ContactPeople struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact_people,omitempty"`
+				Category      SingleRelationShip `json:"category,omitempty"`
+				ContactPortal SingleRelationShip `json:"contact_portal,omitempty"`
+				ContactPeople MultiRelationShip  `json:"contact_people,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -414,24 +319,9 @@ type Response struct {
 				Archived   bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				ManagedByUser struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user,omitempty"`
-				ManagedByUserRole struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"managed_by_user_role,omitempty"`
+				Category          SingleRelationShip `json:"category,omitempty"`
+				ManagedByUser     SingleRelationShip `json:"managed_by_user,omitempty"`
+				ManagedByUserRole MultiRelationShip  `json:"managed_by_user_role,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -612,18 +502,8 @@ type Response struct {
 				Notes        string `json:"notes,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Payable struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"payable,omitempty"`
-				Transaction struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"transaction,omitempty"`
+				Payable     SingleRelationShip `json:"payable,omitempty"`
+				Transaction SingleRelationShip `json:"transaction,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -679,54 +559,14 @@ type Response struct {
 				Archived               bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Details struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"details,omitempty"`
-				Contact struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"contact,omitempty"`
-				Category struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"category,omitempty"`
-				Tags struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"tags,omitempty"`
-				Payments struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"payments,omitempty"`
-				Sharings struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"sharings,omitempty"`
-				RecurrencePlan struct {
-					Data []struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"recurrence_plan,omitempty"`
-				ActiveEDocument struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"active_e_document,omitempty"`
+				Details         MultiRelationShip  `json:"details,omitempty"`
+				Contact         SingleRelationShip `json:"contact,omitempty"`
+				Category        SingleRelationShip `json:"category,omitempty"`
+				Tags            MultiRelationShip  `json:"tags,omitempty"`
+				Payments        MultiRelationShip  `json:"payments,omitempty"`
+				Sharings        MultiRelationShip  `json:"sharings,omitempty"`
+				RecurrencePlan  MultiRelationShip  `json:"recurrence_plan,omitempty"`
+				ActiveEDocument SingleRelationShip `json:"active_e_document,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -798,12 +638,7 @@ type Response struct {
 				IsSigned         bool   `json:"is_signed,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				SalesInvoice struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"sales_invoice,omitempty"`
+				SalesInvoice SingleRelationShip `json:"sales_invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -840,12 +675,7 @@ type Response struct {
 				IsAnswerable bool        `json:"is_answerable,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Invoice struct {
-					Data struct {
-						Type string `json:"type,omitempty"`
-						ID   string `json:"id,omitempty"`
-					} `json:"data,omitempty"`
-				} `json:"invoice,omitempty"`
+				Invoice SingleRelationShip `json:"invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -900,6 +730,20 @@ type Response struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+}
+
+type SingleRelationShip struct {
+	Data struct {
+		Type string `json:"type,omitempty"`
+		ID   string `json:"id,omitempty"`
+	} `json:"data,omitempty"`
+}
+
+type MultiRelationShip struct {
+	Data []struct {
+		Type string `json:"type,omitempty"`
+		ID   string `json:"id,omitempty"`
+	} `json:"data,omitempty"`
 }
 
 func (api *API) Authorize(config Config) bool {
