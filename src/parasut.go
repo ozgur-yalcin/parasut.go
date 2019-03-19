@@ -746,8 +746,7 @@ type MultiRelationShip struct {
 	} `json:"data,omitempty"`
 }
 
-func (api *API) Authorize(config Config) bool {
-	api.Config = config
+func (api *API) Authorize() bool {
 	api.Config.ApiUrl = "https://api.parasut.com/v4/"
 	api.Config.TokenUrl = "https://api.parasut.com/oauth/token"
 	api.Client.RedirectURI = "urn:ietf:wg:oauth:2.0:oob"

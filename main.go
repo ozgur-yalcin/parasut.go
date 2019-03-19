@@ -5,9 +5,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 
 	}
