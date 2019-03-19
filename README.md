@@ -8,389 +8,6 @@ An easy-to-use parasut.com API (v4) with golang
 go get github.com/OzqurYalcin/parasut
 ```
 
-# Müşteri/Tedarikçi kaydı oluşturma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
-		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
-		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
-		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
-		request.Contacts.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
-		request.Contacts.Data.Attributes.TaxNumber = ""   // Vergi Numarası
-		request.Contacts.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
-		request.Contacts.Data.Attributes.City = ""        // İl
-		request.Contacts.Data.Attributes.District = ""    // İlçe
-		request.Contacts.Data.Attributes.Address = ""     // Adres
-		request.Contacts.Data.Attributes.Phone = ""       // Telefon
-		request.Contacts.Data.Attributes.Fax = ""         // Faks
-		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
-		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
-
-		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
-		request.Contacts.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
-
-		response := api.CreateContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını silme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.DeleteContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını arşivleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.ArchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını arşivden çıkarma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.UnarchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını görüntüleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.ShowContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Çalışan kaydı oluşturma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Employees.Data.Type = "employees"    // << Değişiklik yapmayınız !
-		request.Employees.Data.Attributes.Name = ""  // İsim
-		request.Employees.Data.Attributes.Email = "" // E-posta adresi
-		request.Employees.Data.Attributes.TCKN = ""  // TC Kimlik Numarası
-		request.Employees.Data.Attributes.IBAN = ""  // IBAN numarası
-
-		request.Employees.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
-		request.Employees.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
-
-		response := api.CreateEmployee(request)
-		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Çalışan kaydını silme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
-		request.Employees.Data.ID = ""            // Çalışan ID
-		response := api.DeleteEmployee(request)
-		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Çalışan kaydını arşivleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
-		request.Employees.Data.ID = ""            // Çalışan ID
-		response := api.ArchiveEmployee(request)
-		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Çalışan kaydını arşivden çıkarma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
-		request.Employees.Data.ID = ""            // Çalışan ID
-		response := api.UnarchiveEmployee(request)
-		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Çalışan kaydını görüntüleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
-)
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
-
-func main() {
-	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Employees.Data.Type = "employees" // << Değişiklik yapmayınız !
-		request.Employees.Data.ID = ""            // Çalışan ID
-		response := api.ShowEmployee(request)
-		pretty, _ := json.MarshalIndent(response.Employees, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
 # Satış faturası kaydı oluşturma
 ```go
 package main
@@ -399,23 +16,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
@@ -463,23 +70,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -499,23 +96,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -535,23 +122,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -571,23 +148,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -607,23 +174,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -643,23 +200,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
@@ -686,23 +233,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
@@ -722,23 +259,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
@@ -801,23 +328,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -852,23 +369,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/OzqurYalcin/parasut/config"
-	"github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/OzqurYalcin/parasut/src"
 )
-
-func init() {
-	config.CompanyID = ""    // Firma numarası
-	config.ClientID = ""     // Müşteri numarası
-	config.ClientSecret = "" // Müşteri anahtarı
-	config.Username = ""     // Kullanıcı adı
-	config.Password = ""     // Şifre
-}
 
 func main() {
 	api := new(parasut.API)
-	api.Lock()
-	defer api.Unlock()
-	auth := api.Authorize()
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -891,6 +398,152 @@ func main() {
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydı oluşturma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/OzqurYalcin/parasut/src"
+)
+
+func main() {
+	api := new(parasut.API)
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
+	if auth {
+		request := new(parasut.Request)
+		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
+		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
+		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
+		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
+		request.Contacts.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
+		request.Contacts.Data.Attributes.TaxNumber = ""   // Vergi Numarası
+		request.Contacts.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
+		request.Contacts.Data.Attributes.City = ""        // İl
+		request.Contacts.Data.Attributes.District = ""    // İlçe
+		request.Contacts.Data.Attributes.Address = ""     // Adres
+		request.Contacts.Data.Attributes.Phone = ""       // Telefon
+		request.Contacts.Data.Attributes.Fax = ""         // Faks
+		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
+		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
+
+		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
+		request.Contacts.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
+
+		response := api.CreateContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını silme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/OzqurYalcin/parasut/src"
+)
+
+func main() {
+	api := new(parasut.API)
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
+	if auth {
+		request := new(parasut.Request)
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.DeleteContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/OzqurYalcin/parasut/src"
+)
+
+func main() {
+	api := new(parasut.API)
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
+	if auth {
+		request := new(parasut.Request)
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.ArchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivden çıkarma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/OzqurYalcin/parasut/src"
+)
+
+func main() {
+	api := new(parasut.API)
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
+	if auth {
+		request := new(parasut.Request)
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.UnarchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/OzqurYalcin/parasut/src"
+)
+
+func main() {
+	api := new(parasut.API)
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	auth := api.Authorize(config)
+	if auth {
+		request := new(parasut.Request)
+		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.ShowContact(request)
+		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
+		fmt.Println(string(pretty))
 	}
 }
 ```

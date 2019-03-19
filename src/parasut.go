@@ -6,14 +6,22 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"sync"
 
-	"github.com/OzqurYalcin/parasut/config"
 	"github.com/google/go-querystring/query"
 )
 
+type Config struct {
+	CompanyID    string
+	ClientID     string
+	ClientSecret string
+	Username     string
+	Password     string
+	ApiUrl       string
+	TokenUrl     string
+}
+
 type API struct {
-	sync.Mutex
+	Config Config
 
 	Client struct {
 		ClientID     string `url:"client_id,omitempty"`
@@ -894,16 +902,19 @@ type Response struct {
 	}
 }
 
-func (api *API) Authorize() bool {
-	api.Client.ClientID = config.ClientID
-	api.Client.ClientSecret = config.ClientSecret
-	api.Client.Username = config.Username
-	api.Client.Password = config.Password
-	api.Client.GrantType = config.GrantType
-	api.Client.RedirectURI = config.RedirectURI
+func (api *API) Authorize(config Config) bool {
+	api.Config = config
+	api.Config.ApiUrl = "https://api.parasut.com/v4/"
+	api.Config.TokenUrl = "https://api.parasut.com/oauth/token"
+	api.Client.RedirectURI = "urn:ietf:wg:oauth:2.0:oob"
+	api.Client.GrantType = "password"
+	api.Client.ClientID = api.Config.ClientID
+	api.Client.ClientSecret = api.Config.ClientSecret
+	api.Client.Username = api.Config.Username
+	api.Client.Password = api.Config.Password
 	apidata, _ := query.Values(api.Client)
 	cli := new(http.Client)
-	req, err := http.NewRequest("POST", config.TokenUrl, strings.NewReader(apidata.Encode()))
+	req, err := http.NewRequest("POST", api.Config.TokenUrl, strings.NewReader(apidata.Encode()))
 	if err != nil {
 		log.Println(err)
 		return false
@@ -922,7 +933,7 @@ func (api *API) Authorize() bool {
 
 func (api *API) CreateContact(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
 	contactdata, _ := json.Marshal(request.Contacts)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
@@ -946,7 +957,7 @@ func (api *API) CreateContact(request *Request) (response *Response) {
 
 func (api *API) ShowContact(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -968,7 +979,7 @@ func (api *API) ShowContact(request *Request) (response *Response) {
 
 func (api *API) DeleteContact(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/contacts/" + request.Contacts.Data.ID
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -991,7 +1002,7 @@ func (api *API) DeleteContact(request *Request) (response *Response) {
 
 func (api *API) ArchiveContact(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/archive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1014,7 +1025,7 @@ func (api *API) ArchiveContact(request *Request) (response *Response) {
 
 func (api *API) UnarchiveContact(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/unarchive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1037,7 +1048,7 @@ func (api *API) UnarchiveContact(request *Request) (response *Response) {
 
 func (api *API) CreateEmployee(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
 	employeedata, _ := json.Marshal(request.Employees)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
@@ -1061,7 +1072,7 @@ func (api *API) CreateEmployee(request *Request) (response *Response) {
 
 func (api *API) ShowEmployee(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1083,7 +1094,7 @@ func (api *API) ShowEmployee(request *Request) (response *Response) {
 
 func (api *API) DeleteEmployee(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/employees/" + request.Employees.Data.ID
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -1106,7 +1117,7 @@ func (api *API) DeleteEmployee(request *Request) (response *Response) {
 
 func (api *API) ArchiveEmployee(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/archive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1129,7 +1140,7 @@ func (api *API) ArchiveEmployee(request *Request) (response *Response) {
 
 func (api *API) UnarchiveEmployee(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/employees/" + request.Employees.Data.ID + "/unarchive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1152,7 +1163,7 @@ func (api *API) UnarchiveEmployee(request *Request) (response *Response) {
 
 func (api *API) CreateSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
 	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
@@ -1176,7 +1187,7 @@ func (api *API) CreateSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) ShowSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1198,7 +1209,7 @@ func (api *API) ShowSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) CancelSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -1221,7 +1232,7 @@ func (api *API) CancelSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) DeleteSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -1244,7 +1255,7 @@ func (api *API) DeleteSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) ArchiveSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1267,7 +1278,7 @@ func (api *API) ArchiveSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) UnarchiveSalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1290,7 +1301,7 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response *Response) {
 
 func (api *API) PaySalesInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
 	paymentdata, _ := json.Marshal(request.Payments)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
@@ -1314,7 +1325,7 @@ func (api *API) PaySalesInvoice(request *Request) (response *Response) {
 
 func (api *API) CreateEArchive(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_archives"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_archives"
 	earchivedata, _ := json.Marshal(request.EArchives)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
@@ -1338,7 +1349,7 @@ func (api *API) CreateEArchive(request *Request) (response *Response) {
 
 func (api *API) ShowEArchive(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1360,7 +1371,7 @@ func (api *API) ShowEArchive(request *Request) (response *Response) {
 
 func (api *API) CreateEInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_invoices"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_invoices"
 	einvoicedata, _ := json.Marshal(request.EInvoices)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
@@ -1384,7 +1395,7 @@ func (api *API) CreateEInvoice(request *Request) (response *Response) {
 
 func (api *API) ShowEInvoice(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1406,7 +1417,7 @@ func (api *API) ShowEInvoice(request *Request) (response *Response) {
 
 func (api *API) ShowEArchivePDF(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1428,7 +1439,7 @@ func (api *API) ShowEArchivePDF(request *Request) (response *Response) {
 
 func (api *API) ShowEInvoicePDF(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1450,7 +1461,7 @@ func (api *API) ShowEInvoicePDF(request *Request) (response *Response) {
 
 func (api *API) ListEInvoiceInboxes(request *Request) (response *Response) {
 	response = new(Response)
-	apiurl := config.ApiUrl + config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
+	apiurl := api.Config.ApiUrl + api.Config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
