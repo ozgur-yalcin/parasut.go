@@ -20,9 +20,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
@@ -74,9 +74,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -100,9 +100,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -126,9 +126,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -152,9 +152,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -178,9 +178,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -204,9 +204,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
@@ -237,9 +237,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
@@ -263,9 +263,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
@@ -332,9 +332,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -373,9 +373,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -414,9 +414,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
@@ -456,9 +456,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
@@ -482,9 +482,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
@@ -508,9 +508,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
@@ -534,9 +534,9 @@ import (
 )
 
 func main() {
-	api := new(parasut.API)
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	auth := api.Authorize(config)
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
 		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
