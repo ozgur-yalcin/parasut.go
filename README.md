@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/OzqurYalcin/parasut.svg?branch=master)](https://travis-ci.org/OzqurYalcin/parasut) [![Build Status](https://circleci.com/gh/OzqurYalcin/parasut.svg?style=svg)](https://circleci.com/gh/OzqurYalcin/parasut) [![license](https://img.shields.io/:license-mit-blue.svg)](https://github.com/OzqurYalcin/parasut/blob/master/LICENSE.md)
+[![license](https://img.shields.io/:license-mit-blue.svg)](https://github.com/OzqurYalcin/parasut/blob/master/LICENSE.md)
+[![documentation](https://pkg.go.dev/badge/github.com/OzqurYalcin/parasut)](https://pkg.go.dev/github.com/OzqurYalcin/parasut/src)
 
 # Parasut
 An easy-to-use parasut.com API (v4) with golang
