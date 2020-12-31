@@ -6,7 +6,7 @@ import (
 
 func main() {
 	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := parasut.API{Config: config}
+	api := &parasut.API{Config: config}
 	auth := api.Authorize()
 	if auth {
 
