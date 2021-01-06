@@ -1,4 +1,4 @@
-module github.com/OzqurYalcin/parasut
+module github.com/ozgur-soft/parasut
 
 go 1.15
 

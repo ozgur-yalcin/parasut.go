@@ -1,7 +1,7 @@
 package main
 
 import (
-	parasut "github.com/OzqurYalcin/parasut/src"
+	parasut "github.com/ozgur-soft/parasut/src"
 )
 
 func main() {
