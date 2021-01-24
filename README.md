@@ -26,35 +26,38 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices"              // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Attributes.ItemType = "invoice"      // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Attributes.Description = ""          // Fatura başlığı
-		request.SalesInvoices.Data.Attributes.TaxNumber = ""            // Vergi numarası
-		request.SalesInvoices.Data.Attributes.TaxOffice = ""            // Vergi dairesi
-		request.SalesInvoices.Data.Attributes.IssueDate = ""            // Fatura tarihi (Yıl-Ay-Gün)
-		request.SalesInvoices.Data.Attributes.Currency = "TRL"          // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-		request.SalesInvoices.Data.Attributes.BillingPhone = ""         // Telefon numarası
-		request.SalesInvoices.Data.Attributes.BillingFax = ""           // Fax numarası
-		request.SalesInvoices.Data.Attributes.BillingAddress = ""       // Fatura adresi
-		request.SalesInvoices.Data.Attributes.City = ""                 // İl
-		request.SalesInvoices.Data.Attributes.District = ""             // İlçe
+		request.SalesInvoices.Data.Type = "sales_invoices"         // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Attributes.ItemType = "invoice" // << Değişiklik yapmayınız !
+		request.SalesInvoices.Data.Attributes.Description = ""     // Fatura başlığı
+		request.SalesInvoices.Data.Attributes.TaxNumber = ""       // Vergi numarası
+		request.SalesInvoices.Data.Attributes.TaxOffice = ""       // Vergi dairesi
+		request.SalesInvoices.Data.Attributes.IssueDate = ""       // Fatura tarihi (Yıl-Ay-Gün)
+		request.SalesInvoices.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
+		request.SalesInvoices.Data.Attributes.BillingPhone = ""    // Telefon numarası
+		request.SalesInvoices.Data.Attributes.BillingFax = ""      // Fax numarası
+		request.SalesInvoices.Data.Attributes.BillingAddress = ""  // Fatura adresi
+		request.SalesInvoices.Data.Attributes.City = ""            // İl
+		request.SalesInvoices.Data.Attributes.District = ""        // İlçe
 
+		request.SalesInvoices.Data.Relationships.Contact = new(parasut.SingleRelationShip)
 		request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
+		request.SalesInvoices.Data.Relationships.Category = new(parasut.SingleRelationShip)
 		request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
-		request.SalesInvoices.Data.Relationships.Details.Detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Details.Detail.Relationships.Product.Data.ID = ""           // Ürün ID
-
-		request.SalesInvoices.Data.Relationships.Details.Detail.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.Quantity = "0"          // Ürün miktarı
-		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
-		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.VatRate = "0"           // Ürün KDV oranı
-		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
-		request.SalesInvoices.Data.Relationships.Details.Detail.Attributes.DiscountValue = "0"     // İndirim oranı
-		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, request.SalesInvoices.Data.Relationships.Details.Detail)
+		detail := request.SalesInvoices.Data.Relationships.Details.Detail
+		detail.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
+		detail.Attributes.Quantity = "0"          // Ürün miktarı
+		detail.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
+		detail.Attributes.VatRate = "0"           // Ürün KDV oranı
+		detail.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
+		detail.Attributes.DiscountValue = "0"     // İndirim oranı
+		detail.Relationships.Product = new(parasut.SingleRelationShip)
+		detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
+		detail.Relationships.Product.Data.ID = ""           // Ürün ID
+		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, detail)
 
 		response := api.CreateSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
@@ -275,7 +278,8 @@ func main() {
 		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
 			for _, data := range response.EInvoiceInboxes.Data {
 				request := new(parasut.Request)
-				request.EInvoices.Data.Type = "e_invoices"                                // << Değişiklik yapmayınız !
+				request.EInvoices.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
+				request.EInvoices.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
 				request.EInvoices.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 				request.EInvoices.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
 
@@ -298,7 +302,8 @@ func main() {
 			}
 		} else { // e-Arşiv ise
 			request := new(parasut.Request)
-			request.EArchives.Data.Type = "e_archives"                                     // << Değişiklik yapmayınız !
+			request.EArchives.Data.Type = "e_archives" // << Değişiklik yapmayınız !
+			request.EArchives.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
 			request.EArchives.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 			request.EArchives.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 
@@ -435,8 +440,9 @@ func main() {
 		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
 		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
 
-		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories"  // << Değişiklik yapmayınız !
-		request.Contacts.Data.Relationships.Category.Data.ID = ""                   // Kategori ID (varsa)
+		request.Contacts.Data.Relationships.Category = new(parasut.SingleRelationShip)
+		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
+		request.Contacts.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
 		response := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
