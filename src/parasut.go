@@ -736,18 +736,17 @@ type Response struct {
 	}
 }
 
+type RelationShip struct {
+	Type string `json:"type,omitempty"`
+	ID   string `json:"id,omitempty"`
+}
+
 type SingleRelationShip struct {
-	Data struct {
-		Type string `json:"type,omitempty"`
-		ID   string `json:"id,omitempty"`
-	} `json:"data,omitempty"`
+	Data *RelationShip `json:"data,omitempty"`
 }
 
 type MultiRelationShip struct {
-	Data []struct {
-		Type string `json:"type,omitempty"`
-		ID   string `json:"id,omitempty"`
-	} `json:"data,omitempty"`
+	Data []*RelationShip `json:"data,omitempty"`
 }
 
 func (api *API) Authorize() bool {
