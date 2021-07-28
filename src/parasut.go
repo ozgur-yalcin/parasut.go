@@ -121,6 +121,11 @@ type Request struct {
 				OrderNo             string      `json:"order_no,omitempty"`
 				OrderDate           string      `json:"order_date,omitempty"`
 				ShipmentAddress     string      `json:"shipment_addres,omitempty"`
+				ShipmentIncluded    bool        `json:"shipment_included,omitempty"`
+				PaymentAccountID    string      `json:"payment_account_id,omitempty"`
+				PaymentDate         string      `json:"payment_date,omitempty"`
+				PaymentDescription  string      `json:"payment_description,omitempty"`
+				CashSale            bool        `json:"cash_sale,omitempty"`
 				IsAbroad            bool        `json:"is_abroad,omitempty"`
 				Archived            bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
@@ -559,15 +564,18 @@ type Response struct {
 				OrderNo                string      `json:"order_no,omitempty"`
 				OrderDate              string      `json:"order_date,omitempty"`
 				ShipmentAddress        string      `json:"shipment_addres,omitempty"`
+				ShipmentIncluded       bool        `json:"shipment_included,omitempty"`
+				CashSale               bool        `json:"cash_sale,omitempty"`
 				IsAbroad               bool        `json:"is_abroad,omitempty"`
 				Archived               bool        `json:"archived,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
-				Details         *MultiRelationShip  `json:"details,omitempty"`
-				Contact         *SingleRelationShip `json:"contact,omitempty"`
 				Category        *SingleRelationShip `json:"category,omitempty"`
-				Tags            *MultiRelationShip  `json:"tags,omitempty"`
+				Contact         *SingleRelationShip `json:"contact,omitempty"`
+				Details         *MultiRelationShip  `json:"details,omitempty"`
 				Payments        *MultiRelationShip  `json:"payments,omitempty"`
+				Tags            *MultiRelationShip  `json:"tags,omitempty"`
+				SalesOffer      *SingleRelationShip `json:"sales_offer,omitempty"`
 				Sharings        *MultiRelationShip  `json:"sharings,omitempty"`
 				RecurrencePlan  *MultiRelationShip  `json:"recurrence_plan,omitempty"`
 				ActiveEDocument *SingleRelationShip `json:"active_e_document,omitempty"`
