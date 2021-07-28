@@ -36,6 +36,7 @@ func main() {
 		request.SalesInvoices.Data.Attributes.BillingPhone = ""    // Telefon numarası
 		request.SalesInvoices.Data.Attributes.BillingFax = ""      // Fax numarası
 		request.SalesInvoices.Data.Attributes.BillingAddress = ""  // Fatura adresi
+		request.SalesInvoices.Data.Attributes.Country = ""         // Ülke
 		request.SalesInvoices.Data.Attributes.City = ""            // İl
 		request.SalesInvoices.Data.Attributes.District = ""        // İlçe
 
@@ -283,6 +284,7 @@ func main() {
 				request := new(parasut.Request)
 				request.EInvoices.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
 				request.EInvoices.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
+				request.EInvoices.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
 				request.EInvoices.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 				request.EInvoices.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
 
@@ -307,6 +309,7 @@ func main() {
 			request := new(parasut.Request)
 			request.EArchives.Data.Type = "e_archives" // << Değişiklik yapmayınız !
 			request.EArchives.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
+			request.EArchives.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
 			request.EArchives.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 			request.EArchives.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 
