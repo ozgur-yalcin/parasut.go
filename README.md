@@ -447,6 +447,7 @@ func main() {
 		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
 
 		request.Contacts.Data.Relationships.Category = new(parasut.SingleRelationShip)
+		request.Contacts.Data.Relationships.Category.Data = new(parasut.RelationShip)
 		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 		request.Contacts.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
