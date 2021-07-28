@@ -40,10 +40,12 @@ func main() {
 		request.SalesInvoices.Data.Attributes.District = ""        // İlçe
 
 		request.SalesInvoices.Data.Relationships.Contact = new(parasut.SingleRelationShip)
+		request.SalesInvoices.Data.Relationships.Contact.Data = new(parasut.RelationShip)
 		request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
 		request.SalesInvoices.Data.Relationships.Category = new(parasut.SingleRelationShip)
+		request.SalesInvoices.Data.Relationships.Category.Data = new(parasut.RelationShip)
 		request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
 		request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
@@ -55,6 +57,7 @@ func main() {
 		detail.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
 		detail.Attributes.DiscountValue = "0"     // İndirim oranı
 		detail.Relationships.Product = new(parasut.SingleRelationShip)
+		detail.Relationships.Product.Data = new(parasut.RelationShip)
 		detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
 		detail.Relationships.Product.Data.ID = ""           // Ürün ID
 		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, detail)
