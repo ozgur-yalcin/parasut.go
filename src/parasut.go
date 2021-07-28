@@ -56,6 +56,7 @@ type Request struct {
 				IBAN        string `json:"iban,omitempty"`
 				TaxOffice   string `json:"tax_office,omitempty"`
 				TaxNumber   string `json:"tax_number,omitempty"`
+				Country     string `json:"country,omitempty"`
 				City        string `json:"city,omitempty"`
 				District    string `json:"district,omitempty"`
 				Address     string `json:"address,omitempty"`
@@ -114,6 +115,7 @@ type Request struct {
 				BillingFax          string      `json:"billing_fax,omitempty"`
 				TaxOffice           string      `json:"tax_office,omitempty"`
 				TaxNumber           string      `json:"tax_number,omitempty"`
+				Country             string      `json:"country,omitempty"`
 				City                string      `json:"city,omitempty"`
 				District            string      `json:"district,omitempty"`
 				OrderNo             string      `json:"order_no,omitempty"`
@@ -280,6 +282,7 @@ type Response struct {
 				IBAN        string      `json:"iban,omitempty"`
 				TaxOffice   string      `json:"tax_office,omitempty"`
 				TaxNumber   string      `json:"tax_number,omitempty"`
+				Country     string      `json:"country,omitempty"`
 				City        string      `json:"city,omitempty"`
 				District    string      `json:"district,omitempty"`
 				Address     string      `json:"address,omitempty"`
@@ -550,6 +553,7 @@ type Response struct {
 				BillingFax             string      `json:"billing_fax,omitempty"`
 				TaxOffice              string      `json:"tax_office,omitempty"`
 				TaxNumber              string      `json:"tax_number,omitempty"`
+				Country                string      `json:"country,omitempty"`
 				City                   string      `json:"city,omitempty"`
 				District               string      `json:"district,omitempty"`
 				OrderNo                string      `json:"order_no,omitempty"`
