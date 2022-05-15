@@ -174,31 +174,6 @@ func main() {
 }
 ```
 
-# Satış faturası kaydını iptal etme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.SalesInvoice.Data.ID = "" // Satış faturası ID
-		response := api.CancelSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
 # Satış faturası kaydını görüntüleme
 ```go
 package main
@@ -341,6 +316,31 @@ func main() {
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
+	}
+}
+```
+
+# E-arşiv fatura iptal etme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
+		response := api.CancelSalesInvoice(request)
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
+		fmt.Println(string(pretty))
 	}
 }
 ```
