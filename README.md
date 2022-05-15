@@ -28,11 +28,12 @@ func main() {
 		request := new(parasut.Request)
 		request.Contact.Data.Type = "contacts"           // << Değişiklik yapmayınız !
 		request.Contact.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
+		request.Contact.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
 		request.Contact.Data.Attributes.Name = ""        // Firma Ünvanı
 		request.Contact.Data.Attributes.ShortName = ""   // Kısa İsim
-		request.Contact.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
 		request.Contact.Data.Attributes.TaxNumber = ""   // Vergi Numarası
 		request.Contact.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
+		request.Contact.Data.Attributes.Country = ""     // Ülke
 		request.Contact.Data.Attributes.City = ""        // İl
 		request.Contact.Data.Attributes.District = ""    // İlçe
 		request.Contact.Data.Attributes.Address = ""     // Adres
@@ -40,12 +41,6 @@ func main() {
 		request.Contact.Data.Attributes.Fax = ""         // Faks
 		request.Contact.Data.Attributes.Email = ""       // E-posta adresi
 		request.Contact.Data.Attributes.IBAN = ""        // IBAN numarası
-
-		request.Contact.Data.Relationships.Category = new(parasut.SingleRelationShip)
-		request.Contact.Data.Relationships.Category.Data = new(parasut.RelationShip)
-		request.Contact.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
-		request.Contact.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
-
 		response := api.CreateContact(request)
 		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
 		fmt.Println(string(pretty))
@@ -157,7 +152,7 @@ func main() {
 }
 ```
 
-# Satış faturası kaydı oluşturma
+# Peşin satış faturası oluşturma
 ```go
 package main
 
@@ -174,41 +169,31 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices"         // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.Attributes.ItemType = "invoice" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.Attributes.Description = ""     // Fatura başlığı
-		request.SalesInvoice.Data.Attributes.TaxNumber = ""       // Vergi numarası
-		request.SalesInvoice.Data.Attributes.TaxOffice = ""       // Vergi dairesi
-		request.SalesInvoice.Data.Attributes.IssueDate = ""       // Fatura tarihi (Yıl-Ay-Gün)
-		request.SalesInvoice.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-		request.SalesInvoice.Data.Attributes.BillingPhone = ""    // Telefon numarası
-		request.SalesInvoice.Data.Attributes.BillingFax = ""      // Fax numarası
-		request.SalesInvoice.Data.Attributes.BillingAddress = ""  // Fatura adresi
-		request.SalesInvoice.Data.Attributes.Country = ""         // Ülke
-		request.SalesInvoice.Data.Attributes.City = ""            // İl
-		request.SalesInvoice.Data.Attributes.District = ""        // İlçe
+		request.SalesInvoice.Data.Type = "sales_invoices"             // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Attributes.ItemType = "invoice"     // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Attributes.Description = ""         // Fatura başlığı
+		request.SalesInvoice.Data.Attributes.IssueDate = ""           // Fatura tarihi (Yıl-Ay-Gün)
+		request.SalesInvoice.Data.Attributes.ShipmentIncluded = false // İrsaliyeli fatura
+		request.SalesInvoice.Data.Attributes.CashSale = true          // Peşin satış
+		request.SalesInvoice.Data.Attributes.PaymentDate = ""         // Peşin ödeme tarihi (Yıl-Ay-Gün)
+		request.SalesInvoice.Data.Attributes.PaymentDescription = ""  // Peşin ödeme açıklaması
+		request.SalesInvoice.Data.Attributes.PaymentAccountID = ""    // Paraşüt Banka ID (zorunlu)
+		request.SalesInvoice.Data.Attributes.Currency = "TRL"         // Para birimi : "TRL", "USD", "EUR", "GBP"
 
 		request.SalesInvoice.Data.Relationships.Contact = new(parasut.SingleRelationShip)
 		request.SalesInvoice.Data.Relationships.Contact.Data = new(parasut.RelationShip)
 		request.SalesInvoice.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
 		request.SalesInvoice.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
-		request.SalesInvoice.Data.Relationships.Category = new(parasut.SingleRelationShip)
-		request.SalesInvoice.Data.Relationships.Category.Data = new(parasut.RelationShip)
-		request.SalesInvoice.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
-
 		detail := request.SalesInvoice.Data.Relationships.Details.Detail
-		detail.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
-		detail.Attributes.Quantity = "0"          // Ürün miktarı
-		detail.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
-		detail.Attributes.VatRate = "0"           // Ürün KDV oranı
-		detail.Attributes.DiscountType = "amount" // "amount" || "percentage" (İndirim türü)
-		detail.Attributes.DiscountValue = "0"     // İndirim oranı
+		detail.Type = "sales_invoice_details" // << Değişiklik yapmayınız !
+		detail.Attributes.Quantity = "1"      // Ürün miktarı
+		detail.Attributes.UnitPrice = "1.00"  // Ürün birim fiyatı
+		detail.Attributes.VatRate = "18"      // Ürün KDV oranı
 		detail.Relationships.Product = new(parasut.SingleRelationShip)
 		detail.Relationships.Product.Data = new(parasut.RelationShip)
 		detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
-		detail.Relationships.Product.Data.ID = ""           // Ürün ID
+		detail.Relationships.Product.Data.ID = ""           // Paraşüt Ürün ID (zorunlu)
 		request.SalesInvoice.Data.Relationships.Details.Data = append(request.SalesInvoice.Data.Relationships.Details.Data, detail)
 
 		response := api.CreateSalesInvoice(request)
