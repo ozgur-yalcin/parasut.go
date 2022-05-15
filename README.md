@@ -65,8 +65,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
 		response := api.DeleteContact(request)
 		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
 		fmt.Println(string(pretty))
@@ -91,8 +90,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
 		response := api.ArchiveContact(request)
 		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
 		fmt.Println(string(pretty))
@@ -117,8 +115,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
 		response := api.UnarchiveContact(request)
 		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
 		fmt.Println(string(pretty))
@@ -143,8 +140,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
 		response := api.ShowContact(request)
 		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
 		fmt.Println(string(pretty))
@@ -220,8 +216,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.DeleteSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
@@ -246,8 +241,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.CancelSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
@@ -272,8 +266,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.ArchiveSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
@@ -298,8 +291,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.UnarchiveSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
@@ -324,8 +316,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
@@ -350,8 +341,7 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
-		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası sorgulama
+		request.EInvoiceInboxes.Data.Attributes.VKN = "" // Vergi numarası sorgulama
 		response := api.ListEInvoiceInboxes(request)
 		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
 			for _, data := range response.EInvoiceInboxes.Data {
@@ -360,7 +350,7 @@ func main() {
 				request.EInvoice.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
 				request.EInvoice.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
 				request.EInvoice.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-				request.EInvoice.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
+				request.EInvoice.Data.Relationships.Invoice.Data.ID = ""                 // Paraşüt Fatura ID
 				request.EInvoice.Data.Attributes.To = data.Attributes.EInvoiceAddress
 				request.EInvoice.Data.Attributes.Scenario = "" // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
 				request.EInvoice.Data.Attributes.Note = ""     // Fatura notu
@@ -374,7 +364,7 @@ func main() {
 			request.EArchive.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
 			request.EArchive.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
 			request.EArchive.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-			request.EArchive.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+			request.EArchive.Data.Relationships.SalesInvoice.Data.ID = ""                 // Paraşüt Fatura ID
 			request.EArchive.Data.Attributes.Note = ""                                    // Fatura notu
 			// Internet satışı (Varsa)
 			request.EArchive.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
@@ -384,6 +374,33 @@ func main() {
 			response := api.CreateEArchive(request)
 			pretty, _ := json.MarshalIndent(response.EArchive, " ", "\t")
 			fmt.Println(string(pretty))
+		}
+	}
+}
+```
+
+# Satış faturasının tahsilatlarını silme
+```go
+package main
+
+import (
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
+		response := api.ShowSalesInvoice(request)
+		for _, included := range response.SalesInvoice.Included {
+			if included.Type == "transactions" {
+				request := new(parasut.Request)
+				request.Transaction.Data.ID = included.ID
+				api.DeleteTransaction(request)
+			}
 		}
 	}
 }
@@ -405,21 +422,18 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type
-		switch doctype {
+		switch response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type {
 		case "e_invoices": // e-Fatura ise
 			request := new(parasut.Request)
-			request.EInvoicePDF.Data.ID = docid
+			request.EInvoicePDF.Data.ID = response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		case "e_archives": // e-Fatura ise
 			request := new(parasut.Request)
-			request.EArchivePDF.Data.ID = docid
+			request.EArchivePDF.Data.ID = response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 			response := api.ShowEArchivePDF(request)
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
