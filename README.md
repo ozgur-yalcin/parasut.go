@@ -333,65 +333,6 @@ func main() {
 }
 ```
 
-# Satış faturasına ödeme kaydı oluşturma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                    // Satış faturası ID
-		request.Payment.Data.Type = "payments"               // << Değişiklik yapmayınız !
-		request.Payment.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
-		request.Payment.Data.Attributes.Description = ""     // Ödeme açıklaması
-		request.Payment.Data.Attributes.Date = ""            // Ödeme tarihi (Yıl-Ay-Gün)
-		request.Payment.Data.Attributes.Amount = ""          // Ödeme tutarı
-		request.Payment.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-		request.Payment.Data.Attributes.ExchangeRate = "1.0" // Döviz Kuru
-		response := api.PaySalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.Payment, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Vergi numarası ile E-Fatura mükellef bilgileri görüntüleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.EInvoiceInboxes.Data.Type = "e_invoice_inboxes" // << Değişiklik yapmayınız !
-		request.EInvoiceInboxes.Data.Attributes.VKN = ""        // Vergi numarası
-		response := api.ListEInvoiceInboxes(request)
-		pretty, _ := json.MarshalIndent(response.EInvoiceInboxes, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
 # Satış faturasını resmileştirme
 ```go
 package main
@@ -420,20 +361,9 @@ func main() {
 				request.EInvoice.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
 				request.EInvoice.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 				request.EInvoice.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
-
 				request.EInvoice.Data.Attributes.To = data.Attributes.EInvoiceAddress
-				request.EInvoice.Data.Attributes.Scenario = ""               // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
-				request.EInvoice.Data.Attributes.Note = ""                   // Fatura notu
-				request.EInvoice.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
-				request.EInvoice.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
-				request.EInvoice.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
-
-				// Internet satışı (Varsa)
-				request.EInvoice.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
-				request.EInvoice.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
-				request.EInvoice.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
-				request.EInvoice.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
-
+				request.EInvoice.Data.Attributes.Scenario = "" // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
+				request.EInvoice.Data.Attributes.Note = ""     // Fatura notu
 				response := api.CreateEInvoice(request)
 				pretty, _ := json.MarshalIndent(response.EInvoice, " ", "\t")
 				fmt.Println(string(pretty))
@@ -445,18 +375,12 @@ func main() {
 			request.EArchive.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
 			request.EArchive.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
 			request.EArchive.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
-
-			request.EArchive.Data.Attributes.Note = ""                   // Fatura notu
-			request.EArchive.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
-			request.EArchive.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
-			request.EArchive.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
-
+			request.EArchive.Data.Attributes.Note = ""                                    // Fatura notu
 			// Internet satışı (Varsa)
 			request.EArchive.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
 			request.EArchive.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
 			request.EArchive.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
 			request.EArchive.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
-
 			response := api.CreateEArchive(request)
 			pretty, _ := json.MarshalIndent(response.EArchive, " ", "\t")
 			fmt.Println(string(pretty))
