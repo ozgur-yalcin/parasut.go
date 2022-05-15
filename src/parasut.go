@@ -1178,3 +1178,25 @@ func (api *API) DeleteTransaction(request *Request) (response Response) {
 	decoder.Decode(&response.Transaction)
 	return response
 }
+
+func (api *API) TrackJob(request *Request) (response Response) {
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/trackable_jobs/" + request.TrackableJob.Data.ID
+	cli := new(http.Client)
+	req, err := http.NewRequest("DELETE", apiurl, nil)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.TrackableJob)
+	return response
+}
