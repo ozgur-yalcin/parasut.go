@@ -159,26 +159,6 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	Payment struct {
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Description  string `json:"description,omitempty"`
-				AccountID    string `json:"account_id,omitempty"`
-				Date         string `json:"date,omitempty"`
-				Amount       string `json:"amount,omitempty"`
-				Currency     string `json:"currency,omitempty"`
-				ExchangeRate string `json:"exchange_rate,omitempty"`
-				Notes        string `json:"notes,omitempty"`
-			} `json:"attributes,omitempty"`
-			Relationships struct {
-				Payable     *SingleRelationShip `json:"payable,omitempty"`
-				Transaction *SingleRelationShip `json:"transaction,omitempty"`
-			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
 	EArchive struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
