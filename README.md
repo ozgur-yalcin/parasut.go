@@ -9,6 +9,154 @@ An easy-to-use parasut.com API (v4) with golang
 go get github.com/ozgur-soft/parasut.go
 ```
 
+# Müşteri/Tedarikçi kaydı oluşturma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.Contact.Data.Type = "contacts"           // << Değişiklik yapmayınız !
+		request.Contact.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
+		request.Contact.Data.Attributes.Name = ""        // Firma Ünvanı
+		request.Contact.Data.Attributes.ShortName = ""   // Kısa İsim
+		request.Contact.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
+		request.Contact.Data.Attributes.TaxNumber = ""   // Vergi Numarası
+		request.Contact.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
+		request.Contact.Data.Attributes.City = ""        // İl
+		request.Contact.Data.Attributes.District = ""    // İlçe
+		request.Contact.Data.Attributes.Address = ""     // Adres
+		request.Contact.Data.Attributes.Phone = ""       // Telefon
+		request.Contact.Data.Attributes.Fax = ""         // Faks
+		request.Contact.Data.Attributes.Email = ""       // E-posta adresi
+		request.Contact.Data.Attributes.IBAN = ""        // IBAN numarası
+
+		request.Contact.Data.Relationships.Category = new(parasut.SingleRelationShip)
+		request.Contact.Data.Relationships.Category.Data = new(parasut.RelationShip)
+		request.Contact.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
+		request.Contact.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
+
+		response := api.CreateContact(request)
+		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını silme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.DeleteContact(request)
+		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.ArchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını arşivden çıkarma
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.UnarchiveContact(request)
+		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
+# Müşteri/Tedarikçi kaydını görüntüleme
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	parasut "github.com/ozgur-soft/parasut.go/src"
+)
+
+func main() {
+	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
+	api := &parasut.API{Config: config}
+	auth := api.Authorize()
+	if auth {
+		request := new(parasut.Request)
+		request.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.Contact.Data.ID = ""           // Müşteri/Tedarikçi ID
+		response := api.ShowContact(request)
+		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
+		fmt.Println(string(pretty))
+	}
+}
+```
+
 # Satış faturası kaydı oluşturma
 ```go
 package main
@@ -26,31 +174,31 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices"         // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Attributes.ItemType = "invoice" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Attributes.Description = ""     // Fatura başlığı
-		request.SalesInvoices.Data.Attributes.TaxNumber = ""       // Vergi numarası
-		request.SalesInvoices.Data.Attributes.TaxOffice = ""       // Vergi dairesi
-		request.SalesInvoices.Data.Attributes.IssueDate = ""       // Fatura tarihi (Yıl-Ay-Gün)
-		request.SalesInvoices.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-		request.SalesInvoices.Data.Attributes.BillingPhone = ""    // Telefon numarası
-		request.SalesInvoices.Data.Attributes.BillingFax = ""      // Fax numarası
-		request.SalesInvoices.Data.Attributes.BillingAddress = ""  // Fatura adresi
-		request.SalesInvoices.Data.Attributes.Country = ""         // Ülke
-		request.SalesInvoices.Data.Attributes.City = ""            // İl
-		request.SalesInvoices.Data.Attributes.District = ""        // İlçe
+		request.SalesInvoice.Data.Type = "sales_invoices"         // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Attributes.ItemType = "invoice" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Attributes.Description = ""     // Fatura başlığı
+		request.SalesInvoice.Data.Attributes.TaxNumber = ""       // Vergi numarası
+		request.SalesInvoice.Data.Attributes.TaxOffice = ""       // Vergi dairesi
+		request.SalesInvoice.Data.Attributes.IssueDate = ""       // Fatura tarihi (Yıl-Ay-Gün)
+		request.SalesInvoice.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
+		request.SalesInvoice.Data.Attributes.BillingPhone = ""    // Telefon numarası
+		request.SalesInvoice.Data.Attributes.BillingFax = ""      // Fax numarası
+		request.SalesInvoice.Data.Attributes.BillingAddress = ""  // Fatura adresi
+		request.SalesInvoice.Data.Attributes.Country = ""         // Ülke
+		request.SalesInvoice.Data.Attributes.City = ""            // İl
+		request.SalesInvoice.Data.Attributes.District = ""        // İlçe
 
-		request.SalesInvoices.Data.Relationships.Contact = new(parasut.SingleRelationShip)
-		request.SalesInvoices.Data.Relationships.Contact.Data = new(parasut.RelationShip)
-		request.SalesInvoices.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
+		request.SalesInvoice.Data.Relationships.Contact = new(parasut.SingleRelationShip)
+		request.SalesInvoice.Data.Relationships.Contact.Data = new(parasut.RelationShip)
+		request.SalesInvoice.Data.Relationships.Contact.Data.Type = "contacts" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Relationships.Contact.Data.ID = ""           // Müşteri ID
 
-		request.SalesInvoices.Data.Relationships.Category = new(parasut.SingleRelationShip)
-		request.SalesInvoices.Data.Relationships.Category.Data = new(parasut.RelationShip)
-		request.SalesInvoices.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
+		request.SalesInvoice.Data.Relationships.Category = new(parasut.SingleRelationShip)
+		request.SalesInvoice.Data.Relationships.Category.Data = new(parasut.RelationShip)
+		request.SalesInvoice.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
 
-		detail := request.SalesInvoices.Data.Relationships.Details.Detail
+		detail := request.SalesInvoice.Data.Relationships.Details.Detail
 		detail.Type = "sales_invoice_details"     // << Değişiklik yapmayınız !
 		detail.Attributes.Quantity = "0"          // Ürün miktarı
 		detail.Attributes.UnitPrice = "0"         // Ürün birim fiyatı
@@ -61,10 +209,10 @@ func main() {
 		detail.Relationships.Product.Data = new(parasut.RelationShip)
 		detail.Relationships.Product.Data.Type = "products" // << Değişiklik yapmayınız !
 		detail.Relationships.Product.Data.ID = ""           // Ürün ID
-		request.SalesInvoices.Data.Relationships.Details.Data = append(request.SalesInvoices.Data.Relationships.Details.Data, detail)
+		request.SalesInvoice.Data.Relationships.Details.Data = append(request.SalesInvoice.Data.Relationships.Details.Data, detail)
 
 		response := api.CreateSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -87,10 +235,10 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.DeleteSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -113,10 +261,10 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.CancelSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -139,10 +287,10 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.ArchiveSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -165,10 +313,10 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.UnarchiveSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -191,10 +339,10 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoices, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -217,17 +365,17 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                    // Satış faturası ID
-		request.Payments.Data.Type = "payments"               // << Değişiklik yapmayınız !
-		request.Payments.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
-		request.Payments.Data.Attributes.Description = ""     // Ödeme açıklaması
-		request.Payments.Data.Attributes.Date = ""            // Ödeme tarihi (Yıl-Ay-Gün)
-		request.Payments.Data.Attributes.Amount = ""          // Ödeme tutarı
-		request.Payments.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
-		request.Payments.Data.Attributes.ExchangeRate = "1.0" // Döviz Kuru
+		request.SalesInvoice.Data.Type = "sales_invoices"    // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                    // Satış faturası ID
+		request.Payment.Data.Type = "payments"               // << Değişiklik yapmayınız !
+		request.Payment.Data.Attributes.AccountID = ""       // Ödeme yapılan hesap ID
+		request.Payment.Data.Attributes.Description = ""     // Ödeme açıklaması
+		request.Payment.Data.Attributes.Date = ""            // Ödeme tarihi (Yıl-Ay-Gün)
+		request.Payment.Data.Attributes.Amount = ""          // Ödeme tutarı
+		request.Payment.Data.Attributes.Currency = "TRL"     // "TRL" || "USD" || "EUR" || "GBP" (Para birimi)
+		request.Payment.Data.Attributes.ExchangeRate = "1.0" // Döviz Kuru
 		response := api.PaySalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.Payments, " ", "\t")
+		pretty, _ := json.MarshalIndent(response.Payment, " ", "\t")
 		fmt.Println(string(pretty))
 	}
 }
@@ -282,50 +430,50 @@ func main() {
 		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
 			for _, data := range response.EInvoiceInboxes.Data {
 				request := new(parasut.Request)
-				request.EInvoices.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
-				request.EInvoices.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
-				request.EInvoices.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
-				request.EInvoices.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-				request.EInvoices.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
+				request.EInvoice.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
+				request.EInvoice.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
+				request.EInvoice.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
+				request.EInvoice.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+				request.EInvoice.Data.Relationships.Invoice.Data.ID = ""                 // Satış faturası ID
 
-				request.EInvoices.Data.Attributes.To = data.Attributes.EInvoiceAddress
-				request.EInvoices.Data.Attributes.Scenario = ""               // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
-				request.EInvoices.Data.Attributes.Note = ""                   // Fatura notu
-				request.EInvoices.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
-				request.EInvoices.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
-				request.EInvoices.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
+				request.EInvoice.Data.Attributes.To = data.Attributes.EInvoiceAddress
+				request.EInvoice.Data.Attributes.Scenario = ""               // "basic" (Temel e-Fatura) || "commercial" (Ticari e-Fatura)
+				request.EInvoice.Data.Attributes.Note = ""                   // Fatura notu
+				request.EInvoice.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
+				request.EInvoice.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
+				request.EInvoice.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
 
 				// Internet satışı (Varsa)
-				request.EInvoices.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
-				request.EInvoices.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
-				request.EInvoices.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
-				request.EInvoices.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
+				request.EInvoice.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
+				request.EInvoice.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
+				request.EInvoice.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
+				request.EInvoice.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
 
 				response := api.CreateEInvoice(request)
-				pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
+				pretty, _ := json.MarshalIndent(response.EInvoice, " ", "\t")
 				fmt.Println(string(pretty))
 			}
 		} else { // e-Arşiv ise
 			request := new(parasut.Request)
-			request.EArchives.Data.Type = "e_archives" // << Değişiklik yapmayınız !
-			request.EArchives.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
-			request.EArchives.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
-			request.EArchives.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-			request.EArchives.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
+			request.EArchive.Data.Type = "e_archives" // << Değişiklik yapmayınız !
+			request.EArchive.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
+			request.EArchive.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
+			request.EArchive.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+			request.EArchive.Data.Relationships.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 
-			request.EArchives.Data.Attributes.Note = ""                   // Fatura notu
-			request.EArchives.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
-			request.EArchives.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
-			request.EArchives.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
+			request.EArchive.Data.Attributes.Note = ""                   // Fatura notu
+			request.EArchive.Data.Attributes.VatExemptionReasonCode = "" // Firma KDV den muaf ise muafiyet sebebi kodu (Varsa)
+			request.EArchive.Data.Attributes.VatExemptionReason = ""     // Firma KDV den muaf ise muafiyet sebebi açıklaması (Varsa)
+			request.EArchive.Data.Attributes.VatWithholdingCode = ""     // Tevkifat oranına ait vergi kodu (Varsa)
 
 			// Internet satışı (Varsa)
-			request.EArchives.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
-			request.EArchives.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
-			request.EArchives.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
-			request.EArchives.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
+			request.EArchive.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
+			request.EArchive.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
+			request.EArchive.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
+			request.EArchive.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
 
 			response := api.CreateEArchive(request)
-			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
+			pretty, _ := json.MarshalIndent(response.EArchive, " ", "\t")
 			fmt.Println(string(pretty))
 		}
 	}
@@ -349,24 +497,24 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
+		docid := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_invoices" { // e-Fatura ise
 			request := new(parasut.Request)
-			request.EInvoices.Data.Type = doctype
-			request.EInvoices.Data.ID = docid
+			request.EInvoice.Data.Type = doctype
+			request.EInvoice.Data.ID = docid
 			response := api.ShowEInvoice(request)
-			pretty, _ := json.MarshalIndent(response.EInvoices, " ", "\t")
+			pretty, _ := json.MarshalIndent(response.EInvoice, " ", "\t")
 			fmt.Println(string(pretty))
 		} else if doctype == "e_archives" { // e-Arşiv ise
 			request := new(parasut.Request)
-			request.EArchives.Data.Type = doctype
-			request.EArchives.Data.ID = docid
+			request.EArchive.Data.Type = doctype
+			request.EArchive.Data.ID = docid
 			response := api.ShowEArchive(request)
-			pretty, _ := json.MarshalIndent(response.EArchives, " ", "\t")
+			pretty, _ := json.MarshalIndent(response.EArchive, " ", "\t")
 			fmt.Println(string(pretty))
 		}
 	}
@@ -378,7 +526,6 @@ func main() {
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 
 	parasut "github.com/ozgur-soft/parasut.go/src"
@@ -390,174 +537,26 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoices.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoices.Data.ID = ""                 // Satış faturası ID
+		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
+		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
 		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoices.Data.Relationships.ActiveEDocument.Data.Type
+		docid := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
+		doctype := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type
 		if doctype == "e_invoices" { // e-Fatura ise
 			request := new(parasut.Request)
-			request.EInvoices.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
+			request.EInvoice.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		} else if doctype == "e_archives" { // e-Arşiv ise
 			request := new(parasut.Request)
-			request.EArchives.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
+			request.EArchive.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EArchivePDF.Data.ID = docid
 			response := api.ShowEArchivePDF(request)
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		}
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydı oluşturma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts"           // << Değişiklik yapmayınız !
-		request.Contacts.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
-		request.Contacts.Data.Attributes.Name = ""        // Firma Ünvanı
-		request.Contacts.Data.Attributes.ShortName = ""   // Kısa İsim
-		request.Contacts.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
-		request.Contacts.Data.Attributes.TaxNumber = ""   // Vergi Numarası
-		request.Contacts.Data.Attributes.TaxOffice = ""   // Vergi Dairesi
-		request.Contacts.Data.Attributes.City = ""        // İl
-		request.Contacts.Data.Attributes.District = ""    // İlçe
-		request.Contacts.Data.Attributes.Address = ""     // Adres
-		request.Contacts.Data.Attributes.Phone = ""       // Telefon
-		request.Contacts.Data.Attributes.Fax = ""         // Faks
-		request.Contacts.Data.Attributes.Email = ""       // E-posta adresi
-		request.Contacts.Data.Attributes.IBAN = ""        // IBAN numarası
-
-		request.Contacts.Data.Relationships.Category = new(parasut.SingleRelationShip)
-		request.Contacts.Data.Relationships.Category.Data = new(parasut.RelationShip)
-		request.Contacts.Data.Relationships.Category.Data.Type = "item_categories" // << Değişiklik yapmayınız !
-		request.Contacts.Data.Relationships.Category.Data.ID = ""                  // Kategori ID (varsa)
-
-		response := api.CreateContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını silme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.DeleteContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını arşivleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.ArchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını arşivden çıkarma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.UnarchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını görüntüleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contacts.Data.Type = "contacts" // << Değişiklik yapmayınız !
-		request.Contacts.Data.ID = ""           // Müşteri/Tedarikçi ID
-		response := api.ShowContact(request)
-		pretty, _ := json.MarshalIndent(response.Contacts, " ", "\t")
-		fmt.Println(string(pretty))
 	}
 }
 ```
