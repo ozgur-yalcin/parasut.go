@@ -260,6 +260,8 @@ type Request struct {
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
+
+	Transaction SingleRelationShip
 }
 
 type Response struct {
@@ -334,188 +336,6 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	Accounts struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Balance             json.Number `json:"balance,omitempty"`
-				UsedFor             string      `json:"used_for,omitempty"`
-				LastUsedAt          string      `json:"last_used_at,omitempty"`
-				LastAdjustmentDate  string      `json:"last_adjustment_date,omitempty"`
-				AssociateEmail      string      `json:"associate_email,omitempty"`
-				CreatedAt           string      `json:"created_at,omitempty"`
-				UpdatedAt           string      `json:"updated_at,omitempty"`
-				Name                string      `json:"name,omitempty"`
-				Currency            string      `json:"currency,omitempty"`
-				AccountType         string      `json:"account_type,omitempty"`
-				BankName            string      `json:"bank_name,omitempty"`
-				BankBranch          string      `json:"bank_branch,omitempty"`
-				BankAccountNo       string      `json:"bank_account_no,omitempty"`
-				BankIntegrationType string      `json:"bank_integration_type,omitempty"`
-				IBAN                string      `json:"iban,omitempty"`
-				Archived            bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Products struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				CreatedAt                   string      `json:"created_at,omitempty"`
-				UpdatedAt                   string      `json:"updated_at,omitempty"`
-				Code                        string      `json:"code,omitempty"`
-				Name                        string      `json:"name,omitempty"`
-				VatRate                     json.Number `json:"vat_rate,omitempty"`
-				SalesExciseDuty             json.Number `json:"sales_excise_duty,omitempty"`
-				SalesExciseDutyCode         string      `json:"sales_excise_duty_code,omitempty"`
-				SalesExciseDutyType         string      `json:"sales_excise_duty_type,omitempty"`
-				SalesInvoiceDetailsCount    json.Number `json:"sales_invoice_details_count,omitempty"`
-				PurchaseExciseDuty          json.Number `json:"purchase_excise_duty,omitempty"`
-				PurchaseExciseDutyType      string      `json:"purchase_excise_duty_type,omitempty"`
-				PurchaseInvoiceDetailsCount json.Number `json:"purchase_invoice_details_count,omitempty"`
-				Unit                        string      `json:"unit,omitempty"`
-				Currency                    string      `json:"currency,omitempty"`
-				BuyingCurrency              string      `json:"buying_currency,omitempty"`
-				ListPrice                   json.Number `json:"list_price,omitempty"`
-				ListPriceInTrl              json.Number `json:"list_price_in_trl,omitempty"`
-				BuyingPrice                 json.Number `json:"buying_price,omitempty"`
-				BuyingPriceInTrl            json.Number `json:"buying_price_in_trl,omitempty"`
-				InitialStockCount           json.Number `json:"initial_stock_count,omitempty"`
-				StockCount                  json.Number `json:"stock_count,omitempty"`
-				CommunicationsTaxRate       json.Number `json:"communications_tax_rate,omitempty"`
-				InventoryTracking           bool        `json:"inventory_tracking,omitempty"`
-				Archived                    bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	BankFees struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Remaining      json.Number `json:"remaining,omitempty"`
-				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
-				TotalPaid      json.Number `json:"total_paid,omitempty"`
-				NetTotal       json.Number `json:"net_total,omitempty"`
-				ExchangeRate   json.Number `json:"exchange_rate,omitempty"`
-				Currency       string      `json:"currency,omitempty"`
-				CreatedAt      string      `json:"created_at,omitempty"`
-				UpdatedAt      string      `json:"updated_at,omitempty"`
-				IssueDate      string      `json:"issue_date,omitempty"`
-				DueDate        string      `json:"due_date,omitempty"`
-				Description    string      `json:"description,omitempty"`
-				Archived       bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Salaries struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Remaining      json.Number `json:"remaining,omitempty"`
-				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
-				TotalPaid      json.Number `json:"total_paid,omitempty"`
-				NetTotal       json.Number `json:"net_total,omitempty"`
-				ExchangeRate   json.Number `json:"exchange_rate,omitempty"`
-				Currency       string      `json:"currency,omitempty"`
-				CreatedAt      string      `json:"created_at,omitempty"`
-				UpdatedAt      string      `json:"updated_at,omitempty"`
-				IssueDate      string      `json:"issue_date,omitempty"`
-				DueDate        string      `json:"due_date,omitempty"`
-				Description    string      `json:"description,omitempty"`
-				Archived       bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Taxes struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Remaining      json.Number `json:"remaining,omitempty"`
-				RemainingInTrl json.Number `json:"remaining_in_trl,omitempty"`
-				TotalPaid      json.Number `json:"total_paid,omitempty"`
-				NetTotal       json.Number `json:"net_total,omitempty"`
-				CreatedAt      string      `json:"created_at,omitempty"`
-				UpdatedAt      string      `json:"updated_at,omitempty"`
-				IssueDate      string      `json:"issue_date,omitempty"`
-				DueDate        string      `json:"due_date,omitempty"`
-				Description    string      `json:"description,omitempty"`
-				Archived       bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Transactions struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				TransactionType   string      `json:"transaction_type,omitempty"`
-				HumanizedTypeName string      `json:"humanized_type_name,omitempty"`
-				CreatedAt         string      `json:"created_at,omitempty"`
-				UpdatedAt         string      `json:"updated_at,omitempty"`
-				Date              string      `json:"date,omitempty"`
-				DebitAmount       json.Number `json:"debit_amount,omitempty"`
-				AmountInTrl       json.Number `json:"amount_in_trl,omitempty"`
-				DebitCurrency     string      `json:"debit_currency,omitempty"`
-				CreditAmount      json.Number `json:"credit_amount,omitempty"`
-				CreditCurrency    string      `json:"credit_currency,omitempty"`
-			} `json:"attributes,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	Payment struct {
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				Description  string `json:"description,omitempty"`
-				AccountID    string `json:"account_id,omitempty"`
-				Date         string `json:"date,omitempty"`
-				Amount       string `json:"amount,omitempty"`
-				Currency     string `json:"currency,omitempty"`
-				ExchangeRate string `json:"exchange_rate,omitempty"`
-				Notes        string `json:"notes,omitempty"`
-			} `json:"attributes,omitempty"`
-			Relationships struct {
-				Payable     *SingleRelationShip `json:"payable,omitempty"`
-				Transaction *SingleRelationShip `json:"transaction,omitempty"`
-			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
 	SalesInvoice struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
@@ -580,51 +400,6 @@ type Response struct {
 				RecurrencePlan  *MultiRelationShip  `json:"recurrence_plan,omitempty"`
 				ActiveEDocument *SingleRelationShip `json:"active_e_document,omitempty"`
 			} `json:"relationships,omitempty"`
-		} `json:"data,omitempty"`
-	}
-
-	PurchaseBill struct {
-		Errors []struct {
-			Title  string `json:"title,omitempty"`
-			Detail string `json:"detail,omitempty"`
-		} `json:"errors,omitempty"`
-		Data struct {
-			Type       string `json:"type,omitempty"`
-			ID         string `json:"id,omitempty"`
-			Attributes struct {
-				TotalPaid                   json.Number `json:"total_paid,omitempty"`
-				NetTotal                    json.Number `json:"net_total,omitempty"`
-				GrossTotal                  json.Number `json:"gross_total,omitempty"`
-				TotalExciseDuty             json.Number `json:"total_excise_duty,omitempty"`
-				TotalCommunicationsTax      json.Number `json:"total_communications_tax,omitempty"`
-				TotalVat                    json.Number `json:"total_vat,omitempty"`
-				TotalDiscount               json.Number `json:"total_discount,omitempty"`
-				TotalInvoiceDiscount        json.Number `json:"total_invoice_discount,omitempty"`
-				Remaining                   json.Number `json:"remaining,omitempty"`
-				RemainingInTrl              json.Number `json:"remaining_in_trl,omitempty"`
-				SharingsCount               json.Number `json:"sharings_count,omitempty"`
-				EInvoicesCount              json.Number `json:"e_invoices_count,omitempty"`
-				RemainingReimbursement      json.Number `json:"remaining_reimbursement,omitempty"`
-				RemainingReimbursementInTrl json.Number `json:"remaining_reimbursement_in_trl,omitempty"`
-				ExchangeRate                json.Number `json:"exchange_rate,omitempty"`
-				VatWithholding              json.Number `json:"vat_withholding,omitempty"`
-				Withholding                 json.Number `json:"withholding,omitempty"`
-				WithholdingRate             json.Number `json:"withholding_rate,omitempty"`
-				VatWithholdingRate          json.Number `json:"vat_withholding_rate,omitempty"`
-				InvoiceDiscount             json.Number `json:"invoice_discount,omitempty"`
-				PaymentStatus               string      `json:"payment_status,omitempty"`
-				CreatedAt                   string      `json:"created_at,omitempty"`
-				UpdatedAt                   string      `json:"updated_at,omitempty"`
-				ItemType                    string      `json:"item_type,omitempty"`
-				Description                 string      `json:"description,omitempty"`
-				IssueDate                   string      `json:"issue_date,omitempty"`
-				DueDate                     string      `json:"due_date,omitempty"`
-				InvoiceNo                   string      `json:"invoice_no,omitempty"`
-				Currency                    string      `json:"currency,omitempty"`
-				InvoiceDiscountType         string      `json:"invoice_discount_type,omitempty"`
-				IsDetailed                  bool        `json:"is_detailed,omitempty"`
-				Archived                    bool        `json:"archived,omitempty"`
-			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
 
@@ -739,6 +514,29 @@ type Response struct {
 				RegisteredAt        string `json:"registered_at,omitempty"`
 				CreatedAt           string `json:"created_at,omitempty"`
 				UpdatedAt           string `json:"updated_at,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
+	}
+
+	Transaction struct {
+		Errors []struct {
+			Title  string `json:"title,omitempty"`
+			Detail string `json:"detail,omitempty"`
+		} `json:"errors,omitempty"`
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Description    string      `json:"description,omitempty"`
+				Type           string      `json:"transaction_type,omitempty"`
+				Date           string      `json:"date,omitempty"`
+				AmountInTrl    json.Number `json:"amount_in_trl,omitempty"`
+				DebitAmount    json.Number `json:"debit_amount,omitempty"`
+				DebitCurrency  string      `json:"debit_currency,omitempty"`
+				CreditAmount   json.Number `json:"credit_amount,omitempty"`
+				CreditCurrency string      `json:"credit_currency,omitempty"`
+				CreatedAt      string      `json:"created_at,omitempty"`
+				UpdatedAt      string      `json:"updated_at,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
 	}
@@ -1135,29 +933,6 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
 	return response
 }
 
-func (api *API) PaySalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/payments"
-	paymentdata, _ := json.Marshal(request.Payment)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
-	if err != nil {
-		log.Println(err)
-		return response
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
-	if err != nil {
-		log.Println(err)
-		return response
-	}
-	defer res.Body.Close()
-	decoder := json.NewDecoder(res.Body)
-	decoder.UseNumber()
-	decoder.Decode(&response.Payment)
-	return response
-}
-
 func (api *API) CreateEArchive(request *Request) (response Response) {
 	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives"
 	earchivedata, _ := json.Marshal(request.EArchive)
@@ -1306,5 +1081,48 @@ func (api *API) ListEInvoiceInboxes(request *Request) (response Response) {
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
 	decoder.Decode(&response.EInvoiceInboxes)
+	return response
+}
+
+func (api *API) ShowTransaction(request *Request) (response Response) {
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID + "?include=debit_account,credit_account,payments"
+	cli := new(http.Client)
+	req, err := http.NewRequest("GET", apiurl, nil)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Transaction)
+	return response
+}
+
+func (api *API) DeleteTransaction(request *Request) (response Response) {
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID
+	cli := new(http.Client)
+	req, err := http.NewRequest("DELETE", apiurl, nil)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
+	res, err := cli.Do(req)
+	if err != nil {
+		log.Println(err)
+		return response
+	}
+	defer res.Body.Close()
+	decoder := json.NewDecoder(res.Body)
+	decoder.UseNumber()
+	decoder.Decode(&response.Transaction)
 	return response
 }
