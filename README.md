@@ -73,56 +73,6 @@ func main() {
 }
 ```
 
-# Müşteri/Tedarikçi kaydını arşivleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
-		response := api.ArchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Müşteri/Tedarikçi kaydını arşivden çıkarma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.Contact.Data.ID = "" // Müşteri/Tedarikçi ID
-		response := api.UnarchiveContact(request)
-		pretty, _ := json.MarshalIndent(response.Contact, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
 # Müşteri/Tedarikçi kaydını görüntüleme
 ```go
 package main
@@ -243,56 +193,6 @@ func main() {
 		request := new(parasut.Request)
 		request.SalesInvoice.Data.ID = "" // Satış faturası ID
 		response := api.CancelSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Satış faturası kaydını arşivleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.SalesInvoice.Data.ID = "" // Satış faturası ID
-		response := api.ArchiveSalesInvoice(request)
-		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
-		fmt.Println(string(pretty))
-	}
-}
-```
-
-# Satış faturası kaydını arşivden çıkarma
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.SalesInvoice.Data.ID = "" // Satış faturası ID
-		response := api.UnarchiveSalesInvoice(request)
 		pretty, _ := json.MarshalIndent(response.SalesInvoice, " ", "\t")
 		fmt.Println(string(pretty))
 	}
