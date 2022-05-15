@@ -389,48 +389,7 @@ func main() {
 }
 ```
 
-# Resmileştirilmiş fatura kaydını görüntüleme
-```go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-
-	parasut "github.com/ozgur-soft/parasut.go/src"
-)
-
-func main() {
-	config := parasut.Config{CompanyID: "", ClientID: "", ClientSecret: "", Username: "", Password: ""}
-	api := &parasut.API{Config: config}
-	auth := api.Authorize()
-	if auth {
-		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
-		request.SalesInvoice.Data.ID = ""                 // Satış faturası ID
-		response := api.ShowSalesInvoice(request)
-		docid := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
-		doctype := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type
-		if doctype == "e_invoices" { // e-Fatura ise
-			request := new(parasut.Request)
-			request.EInvoice.Data.Type = doctype
-			request.EInvoice.Data.ID = docid
-			response := api.ShowEInvoice(request)
-			pretty, _ := json.MarshalIndent(response.EInvoice, " ", "\t")
-			fmt.Println(string(pretty))
-		} else if doctype == "e_archives" { // e-Arşiv ise
-			request := new(parasut.Request)
-			request.EArchive.Data.Type = doctype
-			request.EArchive.Data.ID = docid
-			response := api.ShowEArchive(request)
-			pretty, _ := json.MarshalIndent(response.EArchive, " ", "\t")
-			fmt.Println(string(pretty))
-		}
-	}
-}
-```
-
-# Resmileştirilmiş faturaya ait PDF url adresini görüntüleme
+# E-arşiv/E-fatura pdf adresi görüntüleme
 ```go
 package main
 
@@ -451,16 +410,15 @@ func main() {
 		response := api.ShowSalesInvoice(request)
 		docid := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 		doctype := response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type
-		if doctype == "e_invoices" { // e-Fatura ise
+		switch doctype {
+		case "e_invoices": // e-Fatura ise
 			request := new(parasut.Request)
-			request.EInvoice.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EInvoicePDF.Data.ID = docid
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
-		} else if doctype == "e_archives" { // e-Arşiv ise
+		case "e_archives": // e-Fatura ise
 			request := new(parasut.Request)
-			request.EArchive.Data.Type = "e_document_pdfs" // << Değişiklik yapmayınız !
 			request.EArchivePDF.Data.ID = docid
 			response := api.ShowEArchivePDF(request)
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
