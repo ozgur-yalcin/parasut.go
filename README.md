@@ -431,7 +431,7 @@ func main() {
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
-		case "e_archives": // e-Fatura ise
+		case "e_archives": // e-Arşiv ise
 			request := new(parasut.Request)
 			request.EArchivePDF.Data.ID = response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 			response := api.ShowEArchivePDF(request)
