@@ -378,7 +378,7 @@ func main() {
 			request.EArchive.Data.Attributes.Note = ""                                    // Fatura notu
 			// Internet satışı (Varsa)
 			request.EArchive.Data.Attributes.InternetSale.URL = ""             // İnternet satışının yapıldığı url
-			request.EArchive.Data.Attributes.InternetSale.PaymentType = ""     // "KREDIKARTI/BANKAKARTI" "EFT/HAVALE" "KAPIDAODEME" "ODEMEARACISI" (Ödeme yöntemi)
+			request.EArchive.Data.Attributes.InternetSale.PaymentType = ""     // Ödeme yöntemi : "KREDIKARTI/BANKAKARTI", "EFT/HAVALE", "KAPIDAODEME", "ODEMEARACISI"
 			request.EArchive.Data.Attributes.InternetSale.PaymentPlatform = "" // Ödeme platformu (iyzico,payu,banka adı vb.)
 			request.EArchive.Data.Attributes.InternetSale.PaymentDate = ""     // Ödeme tarihi (Yıl-Ay-Gün)
 			response := api.CreateEArchive(request)
