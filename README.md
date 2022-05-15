@@ -398,6 +398,7 @@ func main() {
 		for _, included := range response.SalesInvoice.Included {
 			if included.Type == "transactions" {
 				request := new(parasut.Request)
+				request.Transaction.Data = new(parasut.RelationShip)
 				request.Transaction.Data.ID = included.ID
 				api.DeleteTransaction(request)
 			}
@@ -427,12 +428,14 @@ func main() {
 		switch response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.Type {
 		case "e_invoices": // e-Fatura ise
 			request := new(parasut.Request)
+			request.EInvoicePDF.Data = new(parasut.RelationShip)
 			request.EInvoicePDF.Data.ID = response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 			response := api.ShowEInvoicePDF(request)
 			pdfurl := response.EInvoicePDF.Data.Attributes.URL
 			fmt.Println(pdfurl)
 		case "e_archives": // e-Arşiv ise
 			request := new(parasut.Request)
+			request.EArchivePDF.Data = new(parasut.RelationShip)
 			request.EArchivePDF.Data.ID = response.SalesInvoice.Data.Relationships.ActiveEDocument.Data.ID
 			response := api.ShowEArchivePDF(request)
 			pdfurl := response.EArchivePDF.Data.Attributes.URL
