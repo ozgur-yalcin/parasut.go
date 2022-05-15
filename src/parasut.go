@@ -262,6 +262,8 @@ type Request struct {
 	}
 
 	Transaction SingleRelationShip
+
+	TrackableJob SingleRelationShip
 }
 
 type Response struct {
@@ -304,6 +306,12 @@ type Response struct {
 				ContactPeople *MultiRelationShip  `json:"contact_people,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
 	}
 
 	Employee struct {
@@ -334,6 +342,12 @@ type Response struct {
 				ManagedByUserRole *MultiRelationShip  `json:"managed_by_user_role,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
 	}
 
 	SalesInvoice struct {
@@ -401,6 +415,12 @@ type Response struct {
 				ActiveEDocument *SingleRelationShip `json:"active_e_document,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
 	}
 
 	EArchive struct {
@@ -428,6 +448,12 @@ type Response struct {
 				SalesInvoice *SingleRelationShip `json:"sales_invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
 	}
 
 	EInvoice struct {
@@ -465,6 +491,12 @@ type Response struct {
 				Invoice *SingleRelationShip `json:"invoice,omitempty"`
 			} `json:"relationships,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
 	}
 
 	EArchivePDF struct {
@@ -539,12 +571,32 @@ type Response struct {
 				UpdatedAt      string      `json:"updated_at,omitempty"`
 			} `json:"attributes,omitempty"`
 		} `json:"data,omitempty"`
+		Included []struct {
+			ID            string      `json:"id,omitempty"`
+			Type          string      `json:"type,omitempty"`
+			Attributes    interface{} `json:"attributes,omitempty"`
+			Relationships interface{} `json:"relationships,omitempty"`
+		} `json:"included,omitempty"`
+	}
+
+	TrackableJob struct {
+		Errors []struct {
+			Title  string `json:"title,omitempty"`
+			Detail string `json:"detail,omitempty"`
+		} `json:"errors,omitempty"`
+		Data struct {
+			Type       string `json:"type,omitempty"`
+			ID         string `json:"id,omitempty"`
+			Attributes struct {
+				Status string `json:"status,omitempty"`
+			} `json:"attributes,omitempty"`
+		} `json:"data,omitempty"`
 	}
 }
 
 type RelationShip struct {
-	Type string `json:"type,omitempty"`
 	ID   string `json:"id,omitempty"`
+	Type string `json:"type,omitempty"`
 }
 
 type SingleRelationShip struct {
