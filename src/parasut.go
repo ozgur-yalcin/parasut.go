@@ -43,7 +43,7 @@ type API struct {
 }
 
 type Request struct {
-	Contacts struct {
+	Contact struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -73,7 +73,7 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	Employees struct {
+	Employee struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -92,7 +92,7 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	SalesInvoices struct {
+	SalesInvoice struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -159,7 +159,7 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	Payments struct {
+	Payment struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -179,7 +179,7 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	EArchives struct {
+	EArchive struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -212,7 +212,7 @@ type Request struct {
 		} `json:"data,omitempty"`
 	}
 
-	EInvoices struct {
+	EInvoice struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -263,7 +263,7 @@ type Request struct {
 }
 
 type Response struct {
-	Contacts struct {
+	Contact struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -304,7 +304,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	Employees struct {
+	Employee struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -496,7 +496,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	Payments struct {
+	Payment struct {
 		Data struct {
 			Type       string `json:"type,omitempty"`
 			ID         string `json:"id,omitempty"`
@@ -516,7 +516,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	SalesInvoices struct {
+	SalesInvoice struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -583,7 +583,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	PurchaseBills struct {
+	PurchaseBill struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -628,7 +628,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	EArchives struct {
+	EArchive struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -655,7 +655,7 @@ type Response struct {
 		} `json:"data,omitempty"`
 	}
 
-	EInvoices struct {
+	EInvoice struct {
 		Errors []struct {
 			Title  string `json:"title,omitempty"`
 			Detail string `json:"detail,omitempty"`
@@ -785,7 +785,7 @@ func (api *API) Authorize() bool {
 
 func (api *API) CreateContact(request *Request) (response Response) {
 	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
-	contactdata, _ := json.Marshal(request.Contacts)
+	contactdata, _ := json.Marshal(request.Contact)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
 	if err != nil {
@@ -802,12 +802,12 @@ func (api *API) CreateContact(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Contacts)
+	decoder.Decode(&response.Contact)
 	return response
 }
 
 func (api *API) ShowContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "?include=category,contact_portal,contact_people"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "?include=category,contact_portal,contact_people"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -823,12 +823,12 @@ func (api *API) ShowContact(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Contacts)
+	decoder.Decode(&response.Contact)
 	return response
 }
 
 func (api *API) DeleteContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -845,12 +845,12 @@ func (api *API) DeleteContact(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Contacts)
+	decoder.Decode(&response.Contact)
 	return response
 }
 
 func (api *API) ArchiveContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/archive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -867,12 +867,12 @@ func (api *API) ArchiveContact(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Contacts)
+	decoder.Decode(&response.Contact)
 	return response
 }
 
 func (api *API) UnarchiveContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contacts.Data.ID + "/unarchive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -889,13 +889,13 @@ func (api *API) UnarchiveContact(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Contacts)
+	decoder.Decode(&response.Contact)
 	return response
 }
 
 func (api *API) CreateEmployee(request *Request) (response Response) {
 	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
-	employeedata, _ := json.Marshal(request.Employees)
+	employeedata, _ := json.Marshal(request.Employee)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
 	if err != nil {
@@ -912,12 +912,12 @@ func (api *API) CreateEmployee(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Employees)
+	decoder.Decode(&response.Employee)
 	return response
 }
 
 func (api *API) ShowEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -933,12 +933,12 @@ func (api *API) ShowEmployee(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Employees)
+	decoder.Decode(&response.Employee)
 	return response
 }
 
 func (api *API) DeleteEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -955,12 +955,12 @@ func (api *API) DeleteEmployee(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Employees)
+	decoder.Decode(&response.Employee)
 	return response
 }
 
 func (api *API) ArchiveEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "/archive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -977,12 +977,12 @@ func (api *API) ArchiveEmployee(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Employees)
+	decoder.Decode(&response.Employee)
 	return response
 }
 
 func (api *API) UnarchiveEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employees.Data.ID + "/unarchive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -999,13 +999,13 @@ func (api *API) UnarchiveEmployee(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Employees)
+	decoder.Decode(&response.Employee)
 	return response
 }
 
 func (api *API) CreateSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
-	salesinvoicedata, _ := json.Marshal(request.SalesInvoices)
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
+	salesinvoicedata, _ := json.Marshal(request.SalesInvoice)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
 	if err != nil {
@@ -1022,12 +1022,12 @@ func (api *API) CreateSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) ShowSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "?include=category,contact,details,payments,tags,sharings,recurrence_plan,active_e_document"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1043,12 +1043,12 @@ func (api *API) ShowSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) CancelSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/cancel"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/cancel"
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -1065,12 +1065,12 @@ func (api *API) CancelSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("DELETE", apiurl, nil)
 	if err != nil {
@@ -1087,12 +1087,12 @@ func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/archive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/archive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1109,12 +1109,12 @@ func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/unarchive"
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/unarchive"
 	cli := new(http.Client)
 	req, err := http.NewRequest("PATCH", apiurl, nil)
 	if err != nil {
@@ -1131,13 +1131,13 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.SalesInvoices)
+	decoder.Decode(&response.SalesInvoice)
 	return response
 }
 
 func (api *API) PaySalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoices.Data.ID + "/payments"
-	paymentdata, _ := json.Marshal(request.Payments)
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/payments"
+	paymentdata, _ := json.Marshal(request.Payment)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(paymentdata))
 	if err != nil {
@@ -1154,13 +1154,13 @@ func (api *API) PaySalesInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.Payments)
+	decoder.Decode(&response.Payment)
 	return response
 }
 
 func (api *API) CreateEArchive(request *Request) (response Response) {
 	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives"
-	earchivedata, _ := json.Marshal(request.EArchives)
+	earchivedata, _ := json.Marshal(request.EArchive)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
 	if err != nil {
@@ -1177,12 +1177,12 @@ func (api *API) CreateEArchive(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.EArchives)
+	decoder.Decode(&response.EArchive)
 	return response
 }
 
 func (api *API) ShowEArchive(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchives.Data.ID
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchive.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1198,13 +1198,13 @@ func (api *API) ShowEArchive(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.EArchives)
+	decoder.Decode(&response.EArchive)
 	return response
 }
 
 func (api *API) CreateEInvoice(request *Request) (response Response) {
 	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices"
-	einvoicedata, _ := json.Marshal(request.EInvoices)
+	einvoicedata, _ := json.Marshal(request.EInvoice)
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
 	if err != nil {
@@ -1221,12 +1221,12 @@ func (api *API) CreateEInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.EInvoices)
+	decoder.Decode(&response.EInvoice)
 	return response
 }
 
 func (api *API) ShowEInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoices.Data.ID
+	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoice.Data.ID
 	cli := new(http.Client)
 	req, err := http.NewRequest("GET", apiurl, nil)
 	if err != nil {
@@ -1242,7 +1242,7 @@ func (api *API) ShowEInvoice(request *Request) (response Response) {
 	defer res.Body.Close()
 	decoder := json.NewDecoder(res.Body)
 	decoder.UseNumber()
-	decoder.Decode(&response.EInvoices)
+	decoder.Decode(&response.EInvoice)
 	return response
 }
 
