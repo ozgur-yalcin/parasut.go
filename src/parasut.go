@@ -5,9 +5,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
-
-	"github.com/google/go-querystring/query"
 )
 
 type Config struct {
@@ -22,15 +21,6 @@ type Config struct {
 
 type API struct {
 	Config Config
-
-	Client struct {
-		ClientID     string `url:"client_id,omitempty"`
-		ClientSecret string `url:"client_secret,omitempty"`
-		Username     string `url:"username,omitempty"`
-		Password     string `url:"password,omitempty"`
-		GrantType    string `url:"grant_type,omitempty"`
-		RedirectURI  string `url:"redirect_uri,omitempty"`
-	}
 
 	Authentication struct {
 		AccessToken  string `json:"access_token,omitempty"`
@@ -588,13 +578,13 @@ type MultiRelationShip struct {
 }
 
 func (api *API) Authorize() bool {
-	api.Client.RedirectURI = "urn:ietf:wg:oauth:2.0:oob"
-	api.Client.GrantType = "password"
-	api.Client.ClientID = api.Config.ClientID
-	api.Client.ClientSecret = api.Config.ClientSecret
-	api.Client.Username = api.Config.Username
-	api.Client.Password = api.Config.Password
-	apidata, _ := query.Values(api.Client)
+	apidata := url.Values{}
+	apidata.Add("client_id", api.Config.ClientID)
+	apidata.Add("client_secret", api.Config.ClientSecret)
+	apidata.Add("username", api.Config.Username)
+	apidata.Add("password", api.Config.Password)
+	apidata.Add("grant_type", "password")
+	apidata.Add("redirect_uri", "urn:ietf:wg:oauth:2.0:oob")
 	cli := new(http.Client)
 	req, err := http.NewRequest("POST", "https://api.parasut.com/oauth/token", strings.NewReader(apidata.Encode()))
 	if err != nil {
