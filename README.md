@@ -26,7 +26,6 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.Contact.Data.Type = "contacts"           // << Değişiklik yapmayınız !
 		request.Contact.Data.Attributes.AccountType = "" // "customer" (Müşteri) || "supplier" (Tedarikçi)
 		request.Contact.Data.Attributes.ContactType = "" // "company" (Şirket) || "person" (Şahıs)
 		request.Contact.Data.Attributes.Name = ""        // Firma Ünvanı
@@ -115,7 +114,6 @@ func main() {
 	auth := api.Authorize()
 	if auth {
 		request := new(parasut.Request)
-		request.SalesInvoice.Data.Type = "sales_invoices"             // << Değişiklik yapmayınız !
 		request.SalesInvoice.Data.Attributes.ItemType = "invoice"     // << Değişiklik yapmayınız !
 		request.SalesInvoice.Data.Attributes.Description = ""         // Fatura başlığı
 		request.SalesInvoice.Data.Attributes.IssueDate = ""           // Fatura tarihi (Yıl-Ay-Gün)
@@ -221,7 +219,6 @@ func main() {
 		if len(response.EInvoiceInboxes.Data) > 0 { // e-Fatura ise
 			for _, data := range response.EInvoiceInboxes.Data {
 				request := new(parasut.Request)
-				request.EInvoice.Data.Type = "e_invoices" // << Değişiklik yapmayınız !
 				request.EInvoice.Data.Relationships.Invoice = new(parasut.SingleRelationShip)
 				request.EInvoice.Data.Relationships.Invoice.Data = new(parasut.RelationShip)
 				request.EInvoice.Data.Relationships.Invoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
@@ -235,7 +232,6 @@ func main() {
 			}
 		} else { // e-Arşiv ise
 			request := new(parasut.Request)
-			request.EArchive.Data.Type = "e_archives" // << Değişiklik yapmayınız !
 			request.EArchive.Data.Relationships.SalesInvoice = new(parasut.SingleRelationShip)
 			request.EArchive.Data.Relationships.SalesInvoice.Data = new(parasut.RelationShip)
 			request.EArchive.Data.Relationships.SalesInvoice.Data.Type = "sales_invoices" // << Değişiklik yapmayınız !
