@@ -15,8 +15,6 @@ type Config struct {
 	ClientSecret string
 	Username     string
 	Password     string
-	ApiUrl       string
-	TokenUrl     string
 }
 
 type API struct {
@@ -585,13 +583,13 @@ func (api *API) Authorize() bool {
 	apidata.Add("password", api.Config.Password)
 	apidata.Add("grant_type", "password")
 	apidata.Add("redirect_uri", "urn:ietf:wg:oauth:2.0:oob")
-	cli := new(http.Client)
+	client := new(http.Client)
 	req, err := http.NewRequest("POST", "https://api.parasut.com/oauth/token", strings.NewReader(apidata.Encode()))
 	if err != nil {
 		log.Println(err)
 		return false
 	}
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return false
@@ -604,17 +602,18 @@ func (api *API) Authorize() bool {
 }
 
 func (api *API) CreateContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
+	request.Contact.Data.Type = "contacts"
 	contactdata, _ := json.Marshal(request.Contact)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(contactdata))
+	client := new(http.Client)
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(contactdata))
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -627,15 +626,15 @@ func (api *API) CreateContact(request *Request) (response Response) {
 }
 
 func (api *API) ShowContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "?include=category,contact_portal,contact_people"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "?include=category,contact_portal,contact_people"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -648,16 +647,16 @@ func (api *API) ShowContact(request *Request) (response Response) {
 }
 
 func (api *API) DeleteContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -670,16 +669,16 @@ func (api *API) DeleteContact(request *Request) (response Response) {
 }
 
 func (api *API) ArchiveContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/archive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/archive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -692,16 +691,16 @@ func (api *API) ArchiveContact(request *Request) (response Response) {
 }
 
 func (api *API) UnarchiveContact(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/unarchive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts/" + request.Contact.Data.ID + "/unarchive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -714,17 +713,18 @@ func (api *API) UnarchiveContact(request *Request) (response Response) {
 }
 
 func (api *API) CreateEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
+	request.Employee.Data.Type = "employees"
 	employeedata, _ := json.Marshal(request.Employee)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(employeedata))
+	client := new(http.Client)
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(employeedata))
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -737,15 +737,15 @@ func (api *API) CreateEmployee(request *Request) (response Response) {
 }
 
 func (api *API) ShowEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "?include=category,managed_by_user,managed_by_user_role"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -758,16 +758,16 @@ func (api *API) ShowEmployee(request *Request) (response Response) {
 }
 
 func (api *API) DeleteEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -780,16 +780,16 @@ func (api *API) DeleteEmployee(request *Request) (response Response) {
 }
 
 func (api *API) ArchiveEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/archive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/archive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -802,16 +802,16 @@ func (api *API) ArchiveEmployee(request *Request) (response Response) {
 }
 
 func (api *API) UnarchiveEmployee(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/unarchive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees/" + request.Employee.Data.ID + "/unarchive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -824,17 +824,18 @@ func (api *API) UnarchiveEmployee(request *Request) (response Response) {
 }
 
 func (api *API) CreateSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
+	request.SalesInvoice.Data.Type = "sales_invoices"
 	salesinvoicedata, _ := json.Marshal(request.SalesInvoice)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(salesinvoicedata))
+	client := new(http.Client)
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(salesinvoicedata))
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -847,15 +848,15 @@ func (api *API) CreateSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) ShowSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -868,16 +869,16 @@ func (api *API) ShowSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) CancelSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/cancel"
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/cancel"
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -890,16 +891,16 @@ func (api *API) CancelSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -912,16 +913,16 @@ func (api *API) DeleteSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/archive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/archive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -934,16 +935,16 @@ func (api *API) ArchiveSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/unarchive"
-	cli := new(http.Client)
-	req, err := http.NewRequest("PATCH", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices/" + request.SalesInvoice.Data.ID + "/unarchive"
+	client := new(http.Client)
+	req, err := http.NewRequest("PATCH", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -956,17 +957,18 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
 }
 
 func (api *API) CreateEArchive(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives"
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives"
+	request.EArchive.Data.Type = "e_archives"
 	earchivedata, _ := json.Marshal(request.EArchive)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(earchivedata))
+	client := new(http.Client)
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(earchivedata))
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -979,15 +981,15 @@ func (api *API) CreateEArchive(request *Request) (response Response) {
 }
 
 func (api *API) ShowEArchive(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchive.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchive.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1000,17 +1002,18 @@ func (api *API) ShowEArchive(request *Request) (response Response) {
 }
 
 func (api *API) CreateEInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices"
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices"
+	request.EInvoice.Data.Type = "e_invoices"
 	einvoicedata, _ := json.Marshal(request.EInvoice)
-	cli := new(http.Client)
-	req, err := http.NewRequest("POST", apiurl, bytes.NewReader(einvoicedata))
+	client := new(http.Client)
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(einvoicedata))
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1023,15 +1026,15 @@ func (api *API) CreateEInvoice(request *Request) (response Response) {
 }
 
 func (api *API) ShowEInvoice(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoice.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoice.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1044,15 +1047,15 @@ func (api *API) ShowEInvoice(request *Request) (response Response) {
 }
 
 func (api *API) ShowEArchivePDF(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives/" + request.EArchivePDF.Data.ID + "/pdf"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1065,15 +1068,15 @@ func (api *API) ShowEArchivePDF(request *Request) (response Response) {
 }
 
 func (api *API) ShowEInvoicePDF(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices/" + request.EInvoicePDF.Data.ID + "/pdf"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1086,15 +1089,15 @@ func (api *API) ShowEInvoicePDF(request *Request) (response Response) {
 }
 
 func (api *API) ListEInvoiceInboxes(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoice_inboxes?filter[vkn]=" + request.EInvoiceInboxes.Data.Attributes.VKN
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1107,15 +1110,15 @@ func (api *API) ListEInvoiceInboxes(request *Request) (response Response) {
 }
 
 func (api *API) ShowTransaction(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID + "?include=debit_account,credit_account,payments"
-	cli := new(http.Client)
-	req, err := http.NewRequest("GET", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID + "?include=debit_account,credit_account,payments"
+	client := new(http.Client)
+	req, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1128,16 +1131,16 @@ func (api *API) ShowTransaction(request *Request) (response Response) {
 }
 
 func (api *API) DeleteTransaction(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/transactions/" + request.Transaction.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1150,16 +1153,16 @@ func (api *API) DeleteTransaction(request *Request) (response Response) {
 }
 
 func (api *API) TrackJob(request *Request) (response Response) {
-	apiurl := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/trackable_jobs/" + request.TrackableJob.Data.ID
-	cli := new(http.Client)
-	req, err := http.NewRequest("DELETE", apiurl, nil)
+	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/trackable_jobs/" + request.TrackableJob.Data.ID
+	client := new(http.Client)
+	req, err := http.NewRequest("DELETE", endpoint, nil)
 	if err != nil {
 		log.Println(err)
 		return response
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+api.Authentication.AccessToken)
-	res, err := cli.Do(req)
+	res, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
 		return response
