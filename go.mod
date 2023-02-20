@@ -1,3 +1,3 @@
-module github.com/ozgur-soft/parasut.go
+module github.com/ozgur-yalcin/parasut.go
 
 go 1.17
