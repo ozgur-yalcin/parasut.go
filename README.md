@@ -1,12 +1,12 @@
-[![license](https://img.shields.io/:license-mit-blue.svg)](https://github.com/ozgur-soft/parasut.go/blob/master/LICENSE.md)
-[![documentation](https://pkg.go.dev/badge/github.com/ozgur-soft/parasut.go)](https://pkg.go.dev/github.com/ozgur-soft/parasut.go/src)
+[![license](https://img.shields.io/:license-mit-blue.svg)](https://github.com/ozgur-yalcin/parasut.go/blob/master/LICENSE.md)
+[![documentation](https://pkg.go.dev/badge/github.com/ozgur-yalcin/parasut.go)](https://pkg.go.dev/github.com/ozgur-yalcin/parasut.go/src)
 
 # Parasut.go
 An easy-to-use parasut.com API (v4) with golang
 
 # Installation
 ```bash
-go get github.com/ozgur-soft/parasut.go
+go get github.com/ozgur-yalcin/parasut.go
 ```
 
 # Müşteri/Tedarikçi kaydı oluşturma
@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -55,7 +55,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -80,7 +80,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -105,7 +105,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -155,7 +155,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -180,7 +180,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -205,7 +205,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -255,7 +255,7 @@ func main() {
 package main
 
 import (
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -285,7 +285,7 @@ package main
 import (
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
@@ -324,7 +324,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	parasut "github.com/ozgur-soft/parasut.go/src"
+	parasut "github.com/ozgur-yalcin/parasut.go/src"
 )
 
 func main() {
