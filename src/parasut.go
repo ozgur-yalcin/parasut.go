@@ -103,6 +103,7 @@ type Request struct {
 				BillingFax          string      `json:"billing_fax,omitempty"`
 				TaxOffice           string      `json:"tax_office,omitempty"`
 				TaxNumber           string      `json:"tax_number,omitempty"`
+				PayerTaxNumbers     []string    `json:"payer_tax_numbers,omitempty"`
 				Country             string      `json:"country,omitempty"`
 				City                string      `json:"city,omitempty"`
 				District            string      `json:"district,omitempty"`
@@ -208,6 +209,20 @@ type Request struct {
 					TCKN  string `json:"tckn,omitempty"`
 					Date  string `json:"date,omitempty"`
 				} `json:"shipment,omitempty"`
+				CustomRequirementParams struct {
+					Products    []*EInvoiceProduct `json:"products,omitempty"`
+					Integration struct {
+						Data struct {
+							AdditionalInvoiceType string `json:"additional_invoice_type,omitempty"`
+							SupplierCode          string `json:"supplier_code,omitempty"`
+							TaxPayerCode          string `json:"tax_payer_code,omitempty"`
+							TaxPayerName          string `json:"tax_payer_name,omitempty"`
+							FileNumber            string `json:"file_number,omitempty"`
+							TermStartDate         string `json:"term_start_date,omitempty"`
+							TermEndDate           string `json:"term_end_date,omitempty"`
+						} `json:"data,omitempty"`
+					} `json:"integration,omitempty"`
+				} `json:"custom_requirement_params,omitempty"`
 			} `json:"attributes,omitempty"`
 			Relationships struct {
 				Invoice *SingleRelationShip `json:"invoice,omitempty"`
@@ -360,6 +375,7 @@ type Response struct {
 				BillingFax             string      `json:"billing_fax,omitempty"`
 				TaxOffice              string      `json:"tax_office,omitempty"`
 				TaxNumber              string      `json:"tax_number,omitempty"`
+				PayerTaxNumbers        []string    `json:"payer_tax_numbers,omitempty"`
 				Country                string      `json:"country,omitempty"`
 				City                   string      `json:"city,omitempty"`
 				District               string      `json:"district,omitempty"`
@@ -573,6 +589,13 @@ type SingleRelationShip struct {
 
 type MultiRelationShip struct {
 	Data []*RelationShip `json:"data,omitempty"`
+}
+
+type EInvoiceProduct struct {
+	ID   string `json:"product_id,omitempty"`
+	Data struct {
+		BuyerCode string `json:"buyer_code,omitempty"`
+	} `json:"data,omitempty"`
 }
 
 func (api *API) Authorize() bool {
