@@ -627,9 +627,9 @@ func (api *API) Authorize() bool {
 func (api *API) CreateContact(request *Request) (response Response) {
 	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/contacts?include=category,contact_portal,contact_people"
 	request.Contact.Data.Type = "contacts"
-	contactdata, _ := json.Marshal(request.Contact)
+	payload, _ := json.Marshal(request.Contact)
 	client := new(http.Client)
-	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(contactdata))
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(payload))
 	if err != nil {
 		log.Println(err)
 		return response
@@ -738,9 +738,9 @@ func (api *API) UnarchiveContact(request *Request) (response Response) {
 func (api *API) CreateEmployee(request *Request) (response Response) {
 	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/employees?include=category,managed_by_user,managed_by_user_role"
 	request.Employee.Data.Type = "employees"
-	employeedata, _ := json.Marshal(request.Employee)
+	payload, _ := json.Marshal(request.Employee)
 	client := new(http.Client)
-	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(employeedata))
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(payload))
 	if err != nil {
 		log.Println(err)
 		return response
@@ -849,9 +849,9 @@ func (api *API) UnarchiveEmployee(request *Request) (response Response) {
 func (api *API) CreateSalesInvoice(request *Request) (response Response) {
 	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/sales_invoices?include=category,contact,details,details.product,details.warehouse,payments,payments.transaction,tags,sharings,recurrence_plan,active_e_document"
 	request.SalesInvoice.Data.Type = "sales_invoices"
-	salesinvoicedata, _ := json.Marshal(request.SalesInvoice)
+	payload, _ := json.Marshal(request.SalesInvoice)
 	client := new(http.Client)
-	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(salesinvoicedata))
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(payload))
 	if err != nil {
 		log.Println(err)
 		return response
@@ -982,9 +982,9 @@ func (api *API) UnarchiveSalesInvoice(request *Request) (response Response) {
 func (api *API) CreateEArchive(request *Request) (response Response) {
 	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_archives"
 	request.EArchive.Data.Type = "e_archives"
-	earchivedata, _ := json.Marshal(request.EArchive)
+	payload, _ := json.Marshal(request.EArchive)
 	client := new(http.Client)
-	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(earchivedata))
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(payload))
 	if err != nil {
 		log.Println(err)
 		return response
@@ -1027,9 +1027,9 @@ func (api *API) ShowEArchive(request *Request) (response Response) {
 func (api *API) CreateEInvoice(request *Request) (response Response) {
 	endpoint := "https://api.parasut.com/v4/" + api.Config.CompanyID + "/e_invoices"
 	request.EInvoice.Data.Type = "e_invoices"
-	einvoicedata, _ := json.Marshal(request.EInvoice)
+	payload, _ := json.Marshal(request.EInvoice)
 	client := new(http.Client)
-	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(einvoicedata))
+	req, err := http.NewRequest("POST", endpoint, bytes.NewReader(payload))
 	if err != nil {
 		log.Println(err)
 		return response
